@@ -28,7 +28,7 @@ app.delete("/sayhello",function(req,res){
 })
 
 
-
+//template routes
 app.get("/sayhello/:num",function(req,res){
     console.log("data",req.params.num);
     let n = req.params.num;
