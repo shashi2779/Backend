@@ -10,10 +10,24 @@ app.get("/sayhello",function(req,res){
     res.end("get route se msg")
 })
 
+// NOTE:=> post,patch,delete kuchh jada phark nhi h ek jaise routes h 
 app.post("/sayhello",function(req,res){
     console.log("data",req.body)     // backend prr output
     res.end("hello from post route") // frontend prr output(postman)
 })
+
+
+app.patch("/sayhello",function(req,res){
+    console.log("data",req.body)     
+    res.end("hello from patch route") 
+})
+
+app.delete("/sayhello",function(req,res){
+    console.log("data",req.body)     
+    res.end("hello from delete route") 
+})
+
+
 
 app.get("/sayhello/:num",function(req,res){
     console.log("data",req.params.num);
