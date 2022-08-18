@@ -5,25 +5,49 @@ const app = express();
 app.use(express.json());
 
 app.get("/sayhello",function(req,res){
-    //frontend
-    res.end("hello from server")
-})
-
-app.get("/saybye",function(req,res){
-    //frontend
-    res.send("bye from route")
+    res.send("hello from get router")
 })
 
 app.post("/sayhello",function(req,res){
-    console.log("data",req.body)
+    console.log("data->",req.body)
     res.end("hello from post route")
 })
 
 
+app.get("/getsquare/:num",function(req,res){
+    console.log("data->",req.params.num)
+    let n1 = req.params.num;
+    let sq = n1*n1
+    res.end(sq+" ")
+})
+
+app.get("/getsquare/:num/:num1",function(req,res){
+    console.log("data->",req.params.num)
+    console.log("data->",req.params.num1)
+
+    let n1 = req.params.num;
+    let n2 = req.params.num1;
+
+    let sq = n1*n2
+    res.end(sq+" ")
+})
+
+
+app.patch("/sayhello",function(req,res){
+    console.log("data->",req.body)
+    res.end("hello from update route")
+})
+
+app.delete("/sayhello",function(req,res){
+    console.log("data->",req.body)
+    res.end("hello from delete route")
+})
+
 
 app.listen(3000,function(req,res){
- console.log("server started at port 3000");
+    console.log("server running on 3000 port")
 })
+
 
 
 //===========================================================================
