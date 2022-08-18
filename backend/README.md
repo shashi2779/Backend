@@ -27,7 +27,7 @@
      app.listen(3000,function(req,res){
         console.log("server running on 3000 route id")
     })
-### points
+### Notes
 
      Route is a noun
      CRUD is a verb
@@ -48,4 +48,80 @@
           2-koi chij read karna ho toh "get" route lagega
           3-create k liye post route
           4-read k liye get route
-           
+
+
+### Notes
+      1- post : a> creation
+                b> data-submit(data bhejna)
+      
+      2- postman : a> replacement for frontend 
+                   b> backend testing
+
+      3- aapka data jo aata h wo { req.body } k ander 
+
+       - { req.body } se data node(backend) prr print karega , postman(frontend) prr nahi   
+
+      4- req.end("data from server") 
+
+       - { req.end } se data postman(frontend) prr print karega 
+
+      5- req.body me data aaye eske liye [ app.use(express.json()); ] use kiye file me
+       
+       - if you want to accept data in backend
+       - esko [ app.use(express.json()); ] post route k upar hi likhana padta h ,
+         aur ye line likhane se aapka data put ho jata h
+
+### codes on create,read,update,delete route
+
+    //require 
+    const express = require("express")
+
+    //call 
+    const app = express();
+
+    app.get("/sayhello",function(req,res){
+         res.end("get route se msg")
+    })
+
+    // NOTE:=> post,patch,delete kuchh jada phark nhi h ek jaise routes h 
+    app.post("/sayhello",function(req,res){
+        console.log("data",req.body)     // backend prr output
+        res.end("hello from post route") // frontend prr output(postman)
+    })
+
+
+    app.patch("/sayhello",function(req,res){
+        console.log("data",req.body)     
+        res.end("hello from patch route") 
+    })
+
+    app.delete("/sayhello",function(req,res){
+        console.log("data",req.body)     
+        res.end("hello from delete route") 
+    })
+
+
+    //template routes
+    app.get("/sayhello/:num",function(req,res){
+        console.log("data",req.params.num);
+        let n = req.params.num;
+        let sq = req.params.num*req.params.num;
+        res.end(sq+" ")
+    })
+
+    app.get("/sayhello/:num1/:num2",function(req,res){
+        console.log("param1 se data",req.params.num1)
+        console.log("param2 se data",req.params.num2)
+    
+        let sq = req.params.num1*req.params.num2;
+
+        res.end(sq+" ") 
+
+    })
+
+
+
+    //listen
+    app.listen(3000,function(req,res){
+        console.log("server running on 3000 route id")
+    })
