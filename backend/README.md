@@ -73,6 +73,15 @@
 
 ### post route -create data
      
+     -----------------------------------
+     * postman se data bheje
+    ----------------------------------
+     
+     {
+        "name":"frontend kuchh bola"
+     }
+
+     
      app.post("/sayhello",function(req,res){
         console.log("data->",req.body);
         res.end("post wala hello from server")
@@ -80,7 +89,7 @@
 
     
     #output : 
-    
+
     backend output (node):
                             data -> undefined
 
