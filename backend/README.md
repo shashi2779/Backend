@@ -136,7 +136,13 @@
     const app = express();
 
     app.get("/sayhello",function(req,res){
-         res.end("get route se msg")
+        //frontend
+         res.end("hello from get route")
+    })
+
+    app.get("/saybye",function(req,res){
+        //frontend
+         res.send("bye from get route")
     })
 
     // NOTE:=> post,patch,delete kuchh jada phark nhi h ek jaise routes h 

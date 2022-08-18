@@ -2,6 +2,8 @@ const express = require("express");
 
 const app = express();
 
+app.use(express.json());
+
 app.get("/sayhello",function(req,res){
     //frontend
     res.end("hello from server")
@@ -13,7 +15,8 @@ app.get("/saybye",function(req,res){
 })
 
 app.post("/sayhello",function(req,res){
-    
+    console.log("data",req.body)
+    res.end("hello from post route")
 })
 
 
