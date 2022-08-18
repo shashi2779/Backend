@@ -135,7 +135,7 @@
     //call 
     const app = express();
 
-    app.get("/sayhello",function(req,res){ // res.end, res.send are same to "print data on frontend"
+    app.get("/sayhello",function(req,res){    // res.end, res.send are same to "print data on frontend"
         //frontend
          res.end("hello from get route")
     })
