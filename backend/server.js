@@ -3,8 +3,6 @@ const express = require("express")
 
 //call kiye
 const app = express();
-//if you want to accept data in backend then use it with post route.
-app.use(express.json())
 
 app.get("/sayhello",function(req,res){
     res.end("get route se msg")
