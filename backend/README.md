@@ -71,6 +71,53 @@
        - esko [ app.use(express.json()); ] post route k upar hi likhana padta h ,
          aur ye line likhane se aapka data put ho jata h
 
+### post route -create data
+     
+     app.post("/sayhello",function(req,res){
+        console.log("data->",req.body);
+        res.end("post wala hello from server")
+     })
+
+    
+    #output : 
+    
+    backend output (node):
+                            data -> undefined
+
+    
+    frontend output (postman) :
+                                post wala hello from server          
+    
+    
+    
+    * req.body me data aaye uske liye [ app.use(express.json()); ] karegen route k upar    
+
+    
+     app.use(express.json());      
+      
+     app.post("/sayhello",function(req,res){
+        console.log("data->",req.body);
+        res.end("post wala hello from server")
+     })  
+     
+    -----------------------------------
+     * postman se data bheje
+    ----------------------------------
+     
+     {
+        "name":"frontend kuchh bola"
+     }
+
+     
+     #output :
+
+     backend output (node):
+                            data -> frontend kuchh bola
+
+    
+    frontend output (postman) :
+                                post wala hello from server               
+
 ### codes on create,read,update,delete route
 
     //require 
