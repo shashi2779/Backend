@@ -73,10 +73,9 @@
 
 ### post route -create data
      
-     -----------------------------------
-     * postman se data bheje
-    ----------------------------------
      
+     * postman se data bheje
+        
      {
         "name":"frontend kuchh bola"
      }
@@ -109,10 +108,9 @@
         res.end("post wala hello from server")
      })  
      
-    -----------------------------------
+    
      * postman se data bheje
-    ----------------------------------
-     
+    
      {
         "name":"frontend kuchh bola"
      }
