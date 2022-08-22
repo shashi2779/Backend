@@ -98,9 +98,17 @@
     
     
     
-    * req.body me data aaye uske liye [ app.use(express.json()); ] karegen route k upar    
+    * req.body me data aaye uske liye [ app.use(express.json()); ] 
+      karegen route k upar    
 
     
+    * postman se data bheje
+    
+     {
+        "name":"frontend kuchh bola"
+     }
+
+
      app.use(express.json());      
       
      app.post("/sayhello",function(req,res){
@@ -108,12 +116,6 @@
         res.end("post wala hello from server")
      })  
      
-    
-     * postman se data bheje
-    
-     {
-        "name":"frontend kuchh bola"
-     }
 
      
      #output :
