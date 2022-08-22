@@ -71,7 +71,7 @@
        - esko [ app.use(express.json()); ] post route k upar hi likhana padta h ,
          aur ye line likhane se aapka data put ho jata h
 
-### post route -create data
+## post route -create data
      
      
      * postman se data bheje
@@ -87,7 +87,7 @@
      })
 
     
-    #output : 
+#### output : 
 
     backend output (node):
                             data -> undefined
@@ -98,7 +98,8 @@
     
     
     
-    * req.body me data aaye uske liye [ app.use(express.json()); ] 
+ ###
+     req.body me data aaye uske liye [ app.use(express.json()); ] 
       karegen route k upar    
 
     
@@ -118,7 +119,7 @@
      
 
      
-     #output :
+#### output :
 
      backend output (node):
                             data -> frontend kuchh bola
@@ -127,7 +128,7 @@
     frontend output (postman) :
                                 post wala hello from server               
 
-### codes on create,read,update,delete route
+## codes on create,read,update,delete route
 
     //require 
     const express = require("express")
