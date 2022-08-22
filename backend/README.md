@@ -184,6 +184,7 @@
 
 
     //listen
+   // address of server on given machine
     app.listen(3000,function(req,res){
         console.log("server running on 3000 route id")
     })
