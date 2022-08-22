@@ -189,3 +189,7 @@
     app.listen(3000,function(req,res){
         console.log("server running on 3000 route id")
     })
+
+
+### create a cluster in mongoDb atlas
+[link](https://www.youtube.com/watch?v=rPqRyYJmx2g) setup mongoDb atlas  
