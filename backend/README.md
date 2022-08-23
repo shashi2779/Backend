@@ -271,7 +271,7 @@
     const mongoose = require("mongoose")
 
      
-     //mongoDb atlas se link nikale
+     //mongoDb atlas se link nikale (connect with app)
     let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
 
     mongoose.connect(dblink)
