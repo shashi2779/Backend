@@ -370,6 +370,8 @@
     frontend out (postamn):
           
                         post wala route se data
+    
+    
     Backend output (node):
 
          server running on 3000 port
