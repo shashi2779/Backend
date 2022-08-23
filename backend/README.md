@@ -191,6 +191,30 @@
     })
 
 
+# database solution
+
+#### product knowledge
+ - user data  -->  store
+     
+     - name
+     - email
+     - phoneNumber
+     - pic
+     - password
+     - address
+
+#### Tech knowledge
+- Schema -
+
+   - Follow
+   - how to create a db --> link share
+   - connect to my app --> with mongoose tools
+    
+    [connect karne k liye ek tools lagane wala h , jiska naam mongoose h (npm i mongoose)]
+
+   - how to create a schema
+   - how store values in it  
+
 ### create a cluster in mongoDb atlas
 [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) setup mongoDb atlas  
 
@@ -219,11 +243,18 @@
     
     userModel.js
     ----------------
-
+    //mongoose require
     const mongoose = require("mongoose")
-
+    
+    //mongoDb atlas se
+    //connect karne k liye apne app se link chahiye toh mongoDb atlas par 
+      "connect" m ja krr "connect your app" m ja krr link nikal legen
+    //link m apna email,password put karna padta h 
+    
     let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
-
+    
+    // mongoose connect 
+    //mongoose.connect() fun ye promise base h
     mongoose.connect(dblink)
     .then(function(){
         console.log("connected")
