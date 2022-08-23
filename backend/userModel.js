@@ -9,3 +9,41 @@ mongoose.connect(dblink)
     console.log("error",err)
 })
 
+
+// how to create a schema  
+// kahi kahi maine "required" nahi kar rkha toh eska matlab wo "entry" na bhi doge na , 
+// "user" banate wakt toh bhi kam chal jayega (required de diya toh wo entry jarur deni padegi)
+let userSchema = new mongoose.Schema({
+  name:{
+    type: String,
+    required:true
+  },
+   password:{
+    type:String,
+    required:true
+  },
+  conformPassword:{
+    type:String,
+    required:true
+  },
+  email:{
+    type:String,
+    required:true
+  },
+  phonenumber:{
+    type:Number,
+    min:10,
+    max:10
+  },
+  pic:{
+    type:String,
+    default:"shashidp.jpg"
+  },
+  address:{
+    type:String
+  }
+})
+
+
+let userModel = mongoose.model('foodUserModel',userSchema)
+module.exports = userModel;

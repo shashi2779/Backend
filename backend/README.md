@@ -263,5 +263,127 @@
         console.log("error",err)
     })
 
+## solution-1   
+    
+    userModel.js
+    ----------------
+
+    const mongoose = require("mongoose")
+
+    let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
+
+    mongoose.connect(dblink)
+    .then(function(){
+        console.log("connected")
+    }).catch(function(err){
+        console.log("error",err)
+    })
+
+
+    // how to create a schema  
+    let userSchema = new mongoose.Schema({
+      name:{
+        type: String,
+        required:true
+      },
+      password:{
+        type:String,
+        required:true
+      },
+      conformPassword:{
+        type:String,
+        required:true
+      },
+      email:{
+        type:String,
+        required:true
+      },
+      phonenumber:{
+        type:Number,
+        min:10,
+        max:10
+      },
+      pic:{
+        type:String,
+        default:"shashidp.jpg"
+      },
+      address:{
+        type:String
+      }
+    })
+
+
+    Note: 
+        kahi kahi maine "required" nahi kar rkha toh eska matlab wo "entry" na bhi doge na , 
+        "user" banate wakt toh bhi kam chal jayega (required de diya toh wo entry jarur deni padegi)
+
+    
+    
+    let userModel = mongoose.model('foodUserModel',userSchema)
+    module.exports = userModel;
+
+
+===========================================
+
+
+    server.js
+    ---------------
+
+    const express = require("express")
+
+    const app = express();
+
+    const userModel = require("./userModel")
+
+    app.use(express.json())
+
+    app.post("/signout",function(req,res){
+      let data = req.body;
+      console.log(data);
+      res.end("post wala route se data")
+    })
+
+    app.listen(3000,function(){
+       console.log("server running on 3000 port")
+    })
+
+====================================
+
+    # POSTMAN SE:
+    -----------------------------
+    post(route)->localhost/3000/signout
+    ------------------------------
+    body->raw->Json
+    ----------------
+
+    {
+     "name":"shashi",
+     "password":"abcd",
+     "conformPassword":"abcd",
+     "email":"abc@gmail.com",
+     "phonenumber":6200215488
+    }
+
+
+==================================
+
+    frontend out (postamn):
+          
+                        post wala route se data
+    Backend output (node):
+
+         server running on 3000 port
+         connected
+         {
+            name:'shashi',
+            password:'abcd',
+            conformPassword:'abcd',
+            email:'abc@gmail.com',
+            phonenumber:6200215488
+         }
+
+
+
+
    
     
