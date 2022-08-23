@@ -6,9 +6,13 @@ const userModel = require("./userModel")
 
 app.use(express.json())
 
-app.post("/signout",function(req,res){
+app.post("/signout", async function(req,res){
   let data = req.body;
   console.log(data);
+ 
+  // apna jo data postman se aa rha h database se use jodna h
+  let newUser = await userModel.create(data)
+  console.log(newUser);
   res.end("post wala route se data")
 })
 

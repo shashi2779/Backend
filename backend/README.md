@@ -384,6 +384,146 @@
             phonenumber:6200215488
          }
 
+## solution-2
+
+    userModel.js
+    -------------
+
+    const mongoose = require("mongoose")
+
+    let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
+
+    mongoose.connect(dblink)
+    .then(function(){
+        console.log("connected")
+    }).catch(function(err){
+        console.log("error",err)
+    })
+
+
+    // how to create a schema  
+
+    let userSchema = new mongoose.Schema({
+      name:{
+        type: String,
+        required:true
+      },
+      password:{
+        type:String,
+        required:true
+      },
+      conformPassword:{
+         type:String,
+         required:true
+      },
+      email:{
+        type:String,
+        required:true
+      },
+      phonenumber:{
+         type:"String",
+         minLength:10,
+         maxLength:10
+      },
+      pic:{
+        type:String,
+        default:"shashidp.jpg"
+      },
+      address:{
+        type:String
+      }
+    })
+
+
+    let userModel = mongoose.model('foodUserModel',userSchema)
+    module.exports = userModel;
+
+======================================
+    
+    server.js
+    --------------
+
+    const express = require("express")
+
+    const app = express();
+
+    const userModel = require("./userModel")
+
+    app.use(express.json())
+
+    app.post("/signout", async function(req,res){
+       let data = req.body;
+       console.log(data);
+ 
+      // apna jo data postman se aa rha h database se use jodna h
+      let newUser = await userModel.create(data)
+      console.log(newUser);
+      res.end("post wala route se data")
+    })
+
+    app.listen(3000,function(){
+        console.log("server running on 3000 port")
+    })
+
+
+
+===================================    
+
+    # POSTMAN SE:
+    -----------------------------
+    post(route)->localhost/3000/signout
+    ------------------------------
+    body->raw->Json
+    ----------------
+
+    {
+     "name":"shashi",
+     "password":"abcd",
+     "conformPassword":"abcd",
+     "email":"abc@gmail.com",
+     "phonenumber":6200215488
+    }
+
+========================================
+
+    frontend out (postamn):
+      
+                    post wala route se data
+
+
+    Backend output (node):
+
+         server running on 3000 port
+         connected
+         {
+            name:'shashi',
+            password:'abcd',
+            conformPassword:'abcd',
+            email:'abc@gmail.com',
+            phonenumber:6200215488
+         }
+
+         {
+            name:'shashi',
+            password:'abcd',
+            conformPassword:'abcd',
+            email:'abc@gmail.com',
+            phonenumber:6200215488,
+            pic:'shashidp.jpg',
+            _id:new objectId("6304c80176c3ac80fce13f96),
+            __v:0
+         }
+
+         
+         
+         note:
+              jo mongoDb h na har ek ko "unique_id" dega
+
+              _id:new objectId("6304c80176c3ac80fce13f96)
+         
+
+
+
 
 
 
