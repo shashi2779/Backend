@@ -250,7 +250,6 @@
     //connect karne k liye apne app se link chahiye toh mongoDb atlas par 
       "connect" m ja krr "connect your app" m ja krr link nikal legen
     //link m apna email,password put karna padta h 
-    
     let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
     
     // mongoose connect 
