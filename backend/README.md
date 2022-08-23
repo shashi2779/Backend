@@ -455,7 +455,7 @@
        let data = req.body;
        console.log(data);
  
-      // apna jo data postman se aa rha h database se use jodna h
+      // apna jo data postman se aa rha h database se usse jodna h
       let newUser = await userModel.create(data)
       console.log(newUser);
       res.end("post wala route se data")
