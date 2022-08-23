@@ -193,3 +193,43 @@
 
 ### create a cluster in mongoDb atlas
 [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) setup mongoDb atlas  
+
+
+## connect mongoDb
+    - npm init -y
+    - npm i mongoose
+    - database ko connect k liye mongoose tools use kate h 
+   
+==================================== 
+
+    server.js
+    -----------
+
+    const express = require("express")
+
+    const app = express();
+
+    const userModel = require("./userModel")
+
+    app.listen(3000,function(){
+        console.log("server running on 3000 port")
+    })
+
+==============================
+    
+    userModel.js
+    ----------------
+
+    const mongoose = require("mongoose")
+
+    let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
+
+    mongoose.connect(dblink)
+    .then(function(){
+        console.log("connected")
+    }).catch(function(err){
+        console.log("error",err)
+    })
+
+   
+    
