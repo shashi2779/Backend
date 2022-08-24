@@ -1,6 +1,6 @@
 # Meal Plans delivery website -> EatFit clone
 
-## pages
+### pages
 
 * Home :
    * Majorly Static
@@ -21,15 +21,15 @@
     * Discreption of the plan (price... etc)
     * Buy Now Button
     * Reviews
-## Backend Arcitecture : MVC(Model-View-Controller) arcitecture ,REST API 
-## Database : mongoDb,Mongoose
-## Authentication : Json web token
-## 3rd party : 
+### Backend Arcitecture : MVC(Model-View-Controller) arcitecture ,REST API 
+### Database : mongoDb,Mongoose
+### Authentication : Json web token
+### 3rd party : 
          * Payment Gateway : RazorPay
          * Email : nodemailer,gmail
-## Testing : PostMan
-## Frontend : React , Backend : Express
-## Deployment :
+### Testing : PostMan
+### Frontend : React , Backend : Express
+### Deployment :
     * Backend : Heroku
     * Frontend : Netlify
     * Codebase : Github
