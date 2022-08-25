@@ -209,7 +209,7 @@
 - Schema -
 
    - Follow
-   - how to create a db --> [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) share     (setup mongoDb atlas)
+   - how to create a db --> [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) share  (setup mongoDb atlas)
    - connect to my app --> with mongoose tools
     
     [connect karne k liye ek tools lagane wala h , jiska naam mongoose h (npm i mongoose)]
@@ -264,6 +264,20 @@
     }).catch(function(err){
         console.log("error",err)
     })
+
+
+
+ #### output
+
+     backend output:
+
+                 server running on 3000 port
+                 connected
+
+
+      
+
+
 
 ## solution-1   
     
