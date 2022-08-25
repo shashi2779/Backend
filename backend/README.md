@@ -209,7 +209,7 @@
 - Schema -
 
    - Follow
-   - how to create a db --> link share
+   - how to create a db --> [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) link share
    - connect to my app --> with mongoose tools
     
     [connect karne k liye ek tools lagane wala h , jiska naam mongoose h (npm i mongoose)]
