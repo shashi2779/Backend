@@ -192,8 +192,132 @@
         console.log("server running on 3000 route id")
     })
 
+## lec-2
+* What is an API --> Backend API = ?
+* Express :
+    * routes ka order --> IMP
+    * why Express is a middleware = ?
+* Database --> mongoDb --> setup   
 
-# database solution
+### eg-1
+
+    
+    
+    const express = require("express");
+    
+    const app = express();
+    
+    app.use(express.json());    // predefined middleware
+    
+    app.post("/sayhello",function(req,res){
+      console.log("data->",req.body);
+      res.end("post wala hello");
+    })
+    
+    app.listen(3000,function(){
+      console.log("server started at port 3000")
+    })
+
+----------------------------------------    
+    
+    * postman se data bheje
+        
+     {
+        "name":"shashi"
+     }
+
+
+--------------------------------
+     Frontend(postman):
+
+          post wala hello
+
+     
+     
+     Backend(node):
+
+         server started at port 3000
+         shashi     
+
+
+- Note :
+      
+       middleware ka order matter karta h 
+
+### eg-2
+
+      use - if any request enters then it will execute , it's function.
+
+     app.use() :
+                - koi bhi request aayi ho "i will always run"
+                
+                - router k req par bhi depends nahi karta ..(post,get) 
+                  request koi bhi aayi ho ye chalega hi chalega
+      
+
+
+      const express = require("express");
+
+      const app = express();
+
+      app.use(express.json());
+
+      app.use(function(req,res){
+        res.end("i will always run");
+      })
+
+      app.post("/sayhello",function(req,res){
+        console.log("data->",req.body);
+      })
+
+      app.listen(3000,function(){
+        console.log("server running on port 3000")
+      })
+
+
+=================================================     
+
+* postman se 
+
+-------------------
+       
+        get->localhost:3000/sayhello
+        -------------------------------
+
+
+        Frontend output:
+
+                        i will always run
+        
+        
+    
+
+
+* postman se 
+  -------------------
+        post->localhost:3000/sayhello
+        -------------------------------
+
+         
+        Frontend output:
+
+                        i will always run
+
+* postman se 
+  -------------------
+        get->localhost:3000/
+        -------------------------------
+
+         
+        Frontend output:
+
+                        i will always run
+
+
+                  
+                  
+
+# database handle
 
 #### product knowledge
  - user data  -->  store
