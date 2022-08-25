@@ -79,7 +79,7 @@
      * postman se data bheje
         
      {
-        "name":"frontend kuchh bola"
+        "name":"shashi"
      }
 
      
@@ -101,14 +101,14 @@
     
     
  ###
-     req.body me data aaye uske liye [ app.use(express.json()); ] 
+     req.body me data aaye uske liye [ app.use(express.json()); ] add
       karegen route k upar    
 
     
     * postman se data bheje
     
      {
-        "name":"frontend kuchh bola"
+        "name":"shashi"
      }
 
 
@@ -124,7 +124,7 @@
 #### output :
 
      backend output (node):
-                            data -> frontend kuchh bola
+                            data -> shashi
 
     
     frontend output (postman) :
