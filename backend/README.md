@@ -61,9 +61,11 @@
 
        - { req.body } se data node(backend) prr print karega , postman(frontend) prr nahi   
 
-      4- req.end("data from server") 
+      4- res.end("data from server") 
 
-       - { req.end } se data postman(frontend) prr print karega 
+       - { res.end } se data postman(frontend) prr print karega 
+       - { res.send } se data postman(frontend) prr print karega 
+
 
       5- req.body me data aaye eske liye [ app.use(express.json()); ] use kiye file me
        
