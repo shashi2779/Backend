@@ -704,6 +704,10 @@
           bcz database m gaye create karega time lagega
           toh database ki jitni bi call hoti h async hoti h
 
+          - koi bhi data ko aane me ya create hone me time lag rha 
+            (promise based h )
+            toh async,await lga degen
+
 
 
 
