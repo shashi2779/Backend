@@ -666,6 +666,18 @@
 
 ### lec-4    mongoose (schema) - getting started 
 
+     # topics:
+        * mongoDb
+        * mongoDb atlas [db server]
+        * collection & documents = ?
+        * mongoose
+        * schema & model = ?
+            - majorly used dataType
+
+
+
+===================================================================     
+
     - server.js
     ==================
     
