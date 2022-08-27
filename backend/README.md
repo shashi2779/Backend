@@ -837,7 +837,7 @@
     app.post("/login",async function(req,res){
       try{
           let data = req.body;
-          // jo hmne email , password login karte wakt diya "data" m wahi aaya
+          // jo hmne email , password login karte wakt frontend se diya , "data" m wahi aaya
           let {email,password} = data; 
           if(email){ 
             //jo hmne email diya tha login k wakt , wo "user" database mai hai toh aaya
