@@ -678,12 +678,16 @@
     app.use(express.json())
 
     app.post("/signout", async function(req,res){
-      let data = req.body;
-      console.log(data);
-    
-      let newUser = await userModel.create(data)
-      console.log(newUser);
-      res.end("post wala route se data")
+      try{
+            let data = req.body;
+            console.log(data);
+        
+            let newUser = await userModel.create(data)
+            console.log(newUser);
+            res.end("post wala route se data")
+          }catch(err){
+                res.end(err.message)
+           }
     })
 
     app.listen(3000,function(){
@@ -709,7 +713,11 @@
             toh async,await lga degen
 
 
-
+          - try,catch
+            
+            maine request mari response aaya hi nhi code phat sa gya 
+            toh aap client ko batate ho na kya error hai ,
+            toh hme yha prr try,catch use karna chahiye 
 
 
 
