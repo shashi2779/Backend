@@ -717,7 +717,7 @@
             
             maine request mari response aaya hi nhi code phat sa gya 
             toh aap client ko batate ho na kya error hai ,
-            toh hme yha prr try,catch use karna chahiye 
+            toh hme yha prr try,catch se handle karna chahiye 
 
 
 
