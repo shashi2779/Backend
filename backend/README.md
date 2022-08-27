@@ -681,7 +681,6 @@
       let data = req.body;
       console.log(data);
     
-      
       let newUser = await userModel.create(data)
       console.log(newUser);
       res.end("post wala route se data")
