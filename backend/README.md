@@ -689,7 +689,7 @@
 
     app.use(express.json())
 
-    app.post("/signout", async function(req,res){
+    app.post("/signup", async function(req,res){
       try{
             let data = req.body;
             console.log(data);
@@ -815,6 +815,50 @@
     //2nd- the set of rules this collection should follow (schema k set of rules apply hogen) - userSchema 
     let userModel = mongoose.model('foodUserModel',userSchema)
     module.exports = userModel;
+
+
+### lec - 5  Login route
+
+    Login :
+            [email,password]
+               |
+               * on the basis of email (check kiye)
+                       |
+                       * USER mila 
+                          |
+                          * password compair kiye
+                                 1> login
+                                 2> wrong email or password
+
+
+
+    
+    
+    app.post("/login",async function(req,res){
+      try{
+          let data = req.body;
+          // jo hmne email , password login karte wakt diya "data" m wahi aaya
+          let {email,password} = data; 
+          if(email){ 
+            //jo hmne email diya tha login k wakt , wo "user" database mai hai toh aaya
+            let user = await FooduserModel.findOne({email : email})
+            if(user){
+                
+              if(user.password == password){
+                  res.send("user logged In")
+                }else{
+                  res.send("email or password does't match")
+                }
+            }else{
+              res.end("user with this email Id is not found. kindly sign up")
+            }
+          }else{
+            res.end("kindly enter email & password both")
+          }
+      }catch(err){
+          res.end(err.message)
+      }
+    })
          
 
 

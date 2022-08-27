@@ -6,7 +6,7 @@ const FooduserModel = require("./userModel")
 
 app.use(express.json())
 
-app.post("/signout", async function(req,res){
+app.post("/signup", async function(req,res){
   try{
     let data = req.body;
     console.log(data);
@@ -18,6 +18,32 @@ app.post("/signout", async function(req,res){
   }catch(err){
     res.end(err.message)
   }
+})
+
+app.post("/login",async function(req,res){
+   try{
+      let data = req.body;
+      // jo hmne email , password login karte wakt diya "data" m wahi aaya
+      let {email,password} = data; 
+      if(email){ 
+         //jo hmne email diya tha login k wakt , wo "user" database mai hai toh aaya
+        let user = await FooduserModel.findOne({email : email})
+        if(user){
+            
+          if(user.password == password){
+               res.send("user logged In")
+            }else{
+              res.send("email or password does't match")
+            }
+        }else{
+          res.end("user with this email Id is not found. kindly sign up")
+        }
+      }else{
+        res.end("kindly enter email & password both")
+      }
+   }catch(err){
+       res.end(err.message)
+   }
 })
 
 app.listen(3000,function(){
