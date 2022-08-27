@@ -2,7 +2,7 @@ const express = require("express")
 
 const app = express();
 
-const userModel = require("./userModel")
+const FooduserModel = require("./userModel")
 
 app.use(express.json())
 
@@ -12,7 +12,7 @@ app.post("/signout", async function(req,res){
     console.log(data);
  
     // apna jo data postman se aa rha h database se use jodna h
-    let newUser = await userModel.create(data)
+    let newUser = await FooduserModel.create(data)
     console.log(newUser);
     res.end("post wala route se data")
   }catch(err){

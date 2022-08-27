@@ -664,7 +664,7 @@
               _id:new objectId("6304c80176c3ac80fce13f96)
 
 
-### lec-4     
+### lec-4    schema
 
     - server.js
     ==================
