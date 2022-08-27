@@ -695,6 +695,7 @@
     })
 
 
+======================================
 
     Note :- 
           [ let newUser = await userModel.create(data) ]
