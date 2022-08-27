@@ -662,6 +662,130 @@
               jo mongoDb h na har ek ko "unique_id" dega
 
               _id:new objectId("6304c80176c3ac80fce13f96)
+
+
+### lec-4     
+
+    - server.js
+    ==================
+    
+    const express = require("express")
+
+    const app = express();
+
+    const userModel = require("./userModel")
+
+    app.use(express.json())
+
+    app.post("/signout", async function(req,res){
+      let data = req.body;
+      console.log(data);
+    
+      // apna jo data postman se aa rha h database se use jodna h
+      let newUser = await userModel.create(data)
+      console.log(newUser);
+      res.end("post wala route se data")
+    })
+
+    app.listen(3000,function(){
+        console.log("server running on 3000 port")
+    })
+
+
+
+    Note :- 
+          [ let newUser = await userModel.create(data) ]
+
+         * await kyun lga h = ?
+
+          bcz express ka server hai wo alag jagah par hai ,
+          aur jo mongoDb ka server hai wo mongoDb atlas k upar h ,
+          toh ye create ki call async hoti h esliye hmne await lga diya 
+          ( promised based h )
+          bcz database m gaye create karega time lagega
+          toh database ki jitni bi call hoti h async hoti h
+
+
+
+
+
+
+
+=========================================================
+    
+    - userModel.js [how to write schema]
+    =========================================
+
+    const mongoose = require("mongoose")
+
+
+    //db server se connect --> mongoDb atlas se connect
+    let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
+
+
+    mongoose.connect(dblink)
+    .then(function(){
+        console.log("connected")
+    }).catch(function(err){
+        console.log("error",err)
+    })
+
+
+    // how to create a schema  
+    // kahi kahi maine "required" nahi kar rkha toh eska matlab wo "entry" na bhi doge na , 
+    // "user" banate wakt toh bhi kam chal jayega (required de diya toh wo entry jarur deni padegi)
+    let userSchema = new mongoose.Schema({
+      name:{
+        type: String,
+        required:[true,"Name is not send"]
+      },
+      password:{
+        type:String,
+        required:[true,"password is missing"]
+      },
+      conformPassword:{
+        type:String,
+        required:[true,"conformPassword is missing"],
+        //custom validator
+        validate:{
+          validator:function(){
+              // "this" referes to the current entry
+              return this.password == this.conformPassword
+          },
+          //error message
+          message:"password is miss match"
+        }
+      },
+      email:{
+        type:String,
+        required:[true,"email is missing"],
+        unique:true
+      },
+      phonenumber:{
+        type:"String",
+        minLength:[10,"less than 10 number"],
+        maxLength:10
+      },
+      pic:{
+        type:String,
+        default:"shashidp.jpg"
+      },
+      days:{
+        type:String,
+        enum:["mon","tue","wed"]
+      },
+      address:{
+        type:String
+      }
+    })
+
+
+
+    //model is similar to your collection
+    //1st- name of collection - fooduserModel
+    //2nd- the set of rules this collection should follow (schema k set of rules apply hogen) - userSchema 
+    let userModel = mongoose.model('foodUserModel',userSchema)
+    module.exports = userModel;
          
 
 
