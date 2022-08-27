@@ -1,6 +1,9 @@
 const mongoose = require("mongoose")
 
+
+//db server se connect --> mongoDb atlas se connect
 let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
+
 
 mongoose.connect(dblink)
 .then(function(){
@@ -16,28 +19,42 @@ mongoose.connect(dblink)
 let userSchema = new mongoose.Schema({
   name:{
     type: String,
-    required:true
+    required:[true,"Name is not send"]
   },
    password:{
     type:String,
-    required:true
+    required:[true,"password is missing"]
   },
   conformPassword:{
     type:String,
-    required:true
+    required:[true,"conformPassword is missing"],
+    //custom validator
+    validate:{
+       validator:function(){
+          // "this" referes to the current entry
+          return this.password == this.conformPassword
+       },
+       //error message
+       message:"password is miss match"
+    }
   },
   email:{
     type:String,
-    required:true
+    required:[true,"email is missing"],
+    unique:true
   },
   phonenumber:{
     type:"String",
-    minLength:10,
+    minLength:[10,"less than 10 number"],
     maxLength:10
   },
   pic:{
     type:String,
     default:"shashidp.jpg"
+  },
+  days:{
+    type:String,
+    enum:["mon","tue","wed"]
   },
   address:{
     type:String
@@ -45,5 +62,9 @@ let userSchema = new mongoose.Schema({
 })
 
 
+
+//model is similar to your collection
+//1st- name of collection - fooduserModel
+//2nd- the set of rules this collection should follow (ye set of rules apply hogen) - userSchema 
 let userModel = mongoose.model('foodUserModel',userSchema)
 module.exports = userModel;
