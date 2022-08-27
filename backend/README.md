@@ -817,7 +817,7 @@
     module.exports = userModel;
 
 
-### lec - 5  Login route
+### lec - 5  Login , signup , JSON web token (JWT) , protect route , cookies
 
     Login :
             [email,password]
@@ -859,9 +859,53 @@
           res.end(err.message)
       }
     })
+
+
+* Mongoose Queries
+
+    * Model.deleteMany()
+    * Model.deleteOne()
+    * Model.find()
+    * Model.findById()
+    * Model.findByIdAndDelete()
+    * Model.findByIdAndUpdate()
+    * Model.findOne()
+    * Model.findOneAndDelete()
+    * Model.findOneAndReplace()
+    * Model.findOneAndUpdate()
+    * Model.updateMany()
+
+======================================
+
+* delete - 
+    * delete your document
+
+* find -
+   *  search karega - return document
+
+* replace -
+    * replace whole document
+
+* update -
+   * properties update          
          
 
+===================================================
 
+
+* byId -
+   * search on the basis of that id
+
+* One -
+   * input - give one or more properties
+   * do the task for first matching document
+
+* Many - 
+   * input - give one or more properties
+   * do the task for all matching entries(sabko)    
+
+
+==================================================   
 
 
 
