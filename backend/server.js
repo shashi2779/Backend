@@ -46,6 +46,18 @@ app.post("/login",async function(req,res){
    }
 })
 
+
+// users -> get all the users -> sensitive route -> protect route -> logged In i will only allow that person
+app.get("/users",async function(req,res){
+  try{
+    let users = await FooduserModel.find();
+    //to send json data
+    res.json(users)
+  }catch(err){
+    res.end(err.message);
+  }
+})
+
 app.listen(3000,function(){
     console.log("server running on 3000 port")
 })

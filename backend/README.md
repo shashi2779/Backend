@@ -908,6 +908,61 @@
 ==================================================   
 
 
+### Get all the users
+
+     
+    // users -> get all the users -> sensitive route -> protect route -> logged In i will only allow that person
+    app.get("/users",async function(req,res){
+      try{
+        let users = await FooduserModel.find();
+        //to send json data
+        res.json(users)
+      }catch(err){
+        res.end(err.message);
+      }
+    })
+
+========================================================
+
+    output :
+             Jitne sare users hai , aa gye sare k sare
+
+    
+    
+    [ 
+        {
+            "_id": "6304c80176c3ac80fce13f96",
+            "name": "shashi",
+            "password": "abcd",
+            "conformPassword": "abcd",
+            "email": "abc@gmail.com",
+            "phonenumber": "6200215488",
+            "pic": "shashidp.jpg",
+            "__v": 0
+        },
+        {
+            "_id": "6309f28d9945c299d0e30384",
+            "name": "shashi",
+            "password": "abcd",
+            "conformPassword": "abcd",
+            "email": "abd@gmail.com",
+            "phonenumber": "6200215488",
+            "pic": "shashidp.jpg",
+            "__v": 0
+        },
+        {
+            "_id": "6309f9bc7b86fb66df9705e8",
+            "name": "shashi",
+            "password": "abcd",
+            "conformPassword": "abcd",
+            "email": "add@gmail.com",
+            "phonenumber": "6200215488",
+            "pic": "shashidp.jpg",
+            "__v": 0
+        }
+    ]
+        
+
 
 
    
