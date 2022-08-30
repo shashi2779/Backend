@@ -908,7 +908,7 @@
 ==================================================   
 
 
-### Get all the users
+## Get all the users
 
      
     // users -> get all the users -> sensitive route -> protect route -> logged In i will only allow that person
