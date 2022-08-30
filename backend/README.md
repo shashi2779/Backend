@@ -989,6 +989,58 @@
     Note :
            protectRoute middleware ki tarah kam krr rha h 
 
+
+    
+--------------------------------------------------------------    
+    
+    
+    output:
+
+          
+           frontend:  (sare users aa gaye)
+
+                  [
+                    {
+                        "_id": "6304c80176c3ac80fce13f96",
+                        "name": "shashi",
+                        "password": "abcd",
+                        "conformPassword": "abcd",
+                        "email": "abc@gmail.com",
+                        "phonenumber": "6200215488",
+                        "pic": "shashidp.jpg",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "6309f28d9945c299d0e30384",
+                        "name": "shashi",
+                        "password": "abcd",
+                        "conformPassword": "abcd",
+                        "email": "abd@gmail.com",
+                        "phonenumber": "6200215488",
+                        "pic": "shashidp.jpg",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "6309f9bc7b86fb66df9705e8",
+                        "name": "shashi",
+                        "password": "abcd",
+                        "conformPassword": "abcd",
+                        "email": "add@gmail.com",
+                        "phonenumber": "6200215488",
+                        "pic": "shashidp.jpg",
+                        "__v": 0
+                    }
+                ]
+
+
+
+
+         
+         backend:
+
+                 server running on 3000 port
+                 connected
+                 protect route encountered
       
 
 
