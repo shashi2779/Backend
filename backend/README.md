@@ -983,6 +983,12 @@
       //you are logged In then it will allow next fun to run
       next();
     }
+
+
+    
+    Note :
+           protectRoute middleware ki tarah kam krr rha h 
+
       
 
 
