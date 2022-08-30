@@ -986,8 +986,12 @@
 
 
     
+   
     Note :
            protectRoute middleware ki tarah kam krr rha h 
+           [ protectRoute m ye code likhegen ki agar aap logged In 
+           ho toh mai "next" wale prr jane du.
+           agar logged In nahi ho toh mai na jane du. ] 
 
 
     
