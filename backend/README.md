@@ -978,6 +978,8 @@
     })
 
 
+    
+    
     function protectRoute(req,res,next){
       console.log("protect route encountered")
       //you are logged In then it will allow next fun to run
