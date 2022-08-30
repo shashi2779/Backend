@@ -964,6 +964,27 @@
         
 
 
+#### mai chahta hu banda ek bar login kare uske bad   jitni bar marji kare users(route) prr jana chahe chala jaye.[login na mange token se ho jaye]
+
+    // users -> get all the users -> sensitive route -> protect route -> logged In i will only allow that person
+    app.get("/users",protectRoute,async function(req,res){
+      try{
+        let users = await FooduserModel.find();
+        //to send json data
+        res.json(users)
+      }catch(err){
+        res.end(err.message);
+      }
+    })
+
+
+    function protectRoute(req,res,next){
+      console.log("protect route encountered")
+      //you are logged In then it will allow next fun to run
+      next();
+    }
+      
+
 
    
     

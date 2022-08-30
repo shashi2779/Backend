@@ -48,7 +48,7 @@ app.post("/login",async function(req,res){
 
 
 // users -> get all the users -> sensitive route -> protect route -> logged In i will only allow that person
-app.get("/users",async function(req,res){
+app.get("/users",protectRoute,async function(req,res){
   try{
     let users = await FooduserModel.find();
     //to send json data
@@ -57,6 +57,13 @@ app.get("/users",async function(req,res){
     res.end(err.message);
   }
 })
+
+
+function protectRoute(req,res,next){
+  console.log("protect route encountered")
+  //you are logged In then it will allow next fun to run
+  next();
+}
 
 app.listen(3000,function(){
     console.log("server running on 3000 port")
