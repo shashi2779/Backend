@@ -1049,7 +1049,6 @@
                  connected
                  protect route encountered
       
-## Notes - 
 
 ![CHEESE!](image/users-1.jpg)
 
