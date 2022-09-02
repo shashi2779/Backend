@@ -9,7 +9,7 @@
     -> add  "start":"nodemon server.js" 
        to package.json 
  
-     -> npm start (run for you application)
+     -> npm start (ye command chalane se server.js apne se run hota rehega)
 
 // if you want to accept data in backend then use it with  "post" route. 
 
