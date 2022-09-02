@@ -252,6 +252,7 @@
 ### eg-2
 
       use - if any request enters then it will execute , it's function.
+            (koi bhi request aaye pahle "use" wala chalega)
 
      app.use() :
                 - koi bhi request aayi ho "i will always run"
