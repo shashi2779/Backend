@@ -374,7 +374,7 @@
 ### Note :
     
       1=> app.use(express.json())
-          ---------------------------
+          ==========================
        <a>
        app.use kyun likha h = ?
        bcz kabhi bhi koi banda mujhe data bhej sakta h. toh "app.use" 
@@ -387,7 +387,7 @@
        
        
        2=> userdefined middleware
-          -------------------------------
+          =========================
        <a> 
          agar aapne "userdefined middleware" khud banaya hai , 
          toh next() call krna pdega.
@@ -412,12 +412,12 @@
              
         
         3=> get/post/delete
-            ------------------
+            ==================
              i request method matches , 
              then route will be matches.
 
          4=> req.end() / req.send()
-             -----------------------
+             ========================
              
              jaise response frontend prr gya , backend ka kam khatam ho jata hai,
              jab tak response nahi gya tab tak ye niche-2 travel karta rahega .
@@ -430,7 +430,7 @@
 
 
            5=> In express
-               ----------
+               ============
 
                code execution start when request is send---> serially (top to bottom)
 
