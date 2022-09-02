@@ -4,7 +4,7 @@
 
 2- npm install express
 
-3- npm i -g nodemon (bar bar server ko run na karna pade)
+3- npm i -g nodemon (bar bar server.js ko run na karna pade)
 
     -> add  "start":"nodemon server.js" 
        to package.json 
