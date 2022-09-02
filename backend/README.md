@@ -48,8 +48,8 @@
 
      
      note - 
-          1-koi chij create karna ho toh "post" route lagega
-          2-koi chij read karna ho toh "get" route lagega
+          1-koi chij "create" karna ho toh "post" route lagega
+          2-koi chij "read" karna ho toh "get" route lagega
           
           -create k liye post route
           -read k liye get route
@@ -320,7 +320,60 @@
                         i will always run
 
 
-                  
+### eg-3
+
+    const express = require("express")
+    
+    const app = express();
+    
+    app.use(express.json());
+
+    app.use(function(req,res,next){    // user define middle ware
+      console.log("i will always ran")
+      next();
+    })
+
+    app.post("/sayhello",function(req,res){
+      console.log("data->",req.body);
+      res.end("post wala hello")
+    })
+
+    app.listen(3000,function(){
+      console.log("server started at port 3000")
+    })
+
+
+------------------------------------------------------
+     
+     
+    * postman se data bheje
+    ---------------------------------------------
+    post->localhost:3000/sayhello
+    --------------------------------
+        
+     {
+        "name":"shashi"
+     }
+
+
+-------------------------------------------------------
+     
+     #output:
+
+     Frontend output[postman]:
+
+                              post wala hello
+
+
+     Backend output[node]:
+                          
+                             i will always run
+                             data-> {name:"shashi"}
+                               
+
+
+
+
                   
 
 # database handle
