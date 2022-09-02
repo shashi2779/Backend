@@ -29,7 +29,7 @@
 
     //listen kiye
      app.listen(3000,function(req,res){
-        console.log("server running on 3000 route id")
+        console.log("server running on 3000 port")
     })
 ### Notes
 
