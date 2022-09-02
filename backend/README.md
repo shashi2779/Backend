@@ -50,6 +50,7 @@
      note - 
           1-koi chij create karna ho toh "post" route lagega
           2-koi chij read karna ho toh "get" route lagega
+          
           -create k liye post route
           -read k liye get route
 
