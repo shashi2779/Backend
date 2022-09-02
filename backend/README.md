@@ -31,7 +31,7 @@
      app.listen(3000,function(req,res){
         console.log("server running on 3000 port")
     })
-### Notes
+### CRUD Notes
 
      Route is a noun
      CRUD is a verb
