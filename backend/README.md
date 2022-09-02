@@ -283,7 +283,7 @@
 
 =================================================     
 
-* postman se - get route
+* postman se - (get route)
 
 -------------------
        
@@ -299,7 +299,7 @@
     
 
 
-* postman se - post route
+* postman se - (post route)
   -------------------
         post->localhost:3000/sayhello
         -------------------------------
