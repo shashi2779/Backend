@@ -377,27 +377,66 @@
           ---------------------------
        <a>
        app.use kyun likha h = ?
-       bcz kabhi bhi koi banda mujhe
-       data bhej sakta h. toh "app.use" toh hmesha chalega . jo data aaya hai req.body me put krr diye.
+       bcz kabhi bhi koi banda mujhe data bhej sakta h. toh "app.use" 
+       toh hmesha chalega . jo data aaya hai req.body me put krr diye.
        
        <b>
        "express.json()" is inbuilt middleware & this fun made by us.
 
        
+       
+       
        2=> userdefined middleware
-
+          -------------------------------
        <a> 
-         agar aapne "userdefined middleware" khud banaya hai , toh next() call krna pdega.
+         agar aapne "userdefined middleware" khud banaya hai , 
+         toh next() call krna pdega.
 
-         app.use(function(req,res,next){
-          console.log("i will always run");
-          next();
-         })
+              app.use(function(req,res,next){
+                console.log("i will always run");
+                next();
+              })
 
          
-         <b>
-            use -
+         <b>  use -
                    if any request enters then it will execute  , it's function.
+
+         <c> next() -
+                    next kya karta h = ?
+
+                    - apne se agale wale route/fun hai uss prr bhej deta hai
+                    
+                    - next nahi likhe toh wahi prr rook jata hai
+
+
+             
+        
+        3=> get/post/delete
+            ------------------
+             i request method matches , 
+             then route will be matches.
+
+         4=> req.end() / req.send()
+             -----------------------
+             
+             jaise response frontend prr gya , backend ka kam khatam ho jata hai,
+             jab tak response nahi gya tab tak ye niche-2 travel karta rahega .
+
+                   res.end("") 
+                   res.send("")
+
+             - jaise hi aapne res.end() krr diya aapni kahani khatam 
+             - res.end msg bhej diya frontend prr 
+
+
+           5=> In express
+               ----------
+
+               code execution start when request is send---> serially (top to bottom)
+
+               after response you can not send anythings to frontend
+
+                  
 
 
 
