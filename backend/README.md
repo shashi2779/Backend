@@ -135,7 +135,7 @@
     frontend output (postman) :
                                 post wala hello from server               
 
-## codes on create,read,update,delete route
+## codes on CRUD
 
     //require 
     const express = require("express")
