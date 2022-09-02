@@ -371,7 +371,41 @@
                              data-> {name:"shashi"}
                                
 
+### Note :
+    
+      1=> app.use(express.json())
+          ---------------------------
+       <a>
+       app.use kyun likha h = ?
+       bcz kabhi bhi koi banda mujhe
+       data bhej sakta h. toh "app.use" toh hmesha chalega . jo data aaya hai req.body me put krr diye.
+       
+       <b>
+       "express.json()" is inbuilt middleware & this fun made by us.
 
+       
+       2=> userdefined middleware
+
+       <a> 
+         agar aapne "userdefined middleware" khud banaya hai , toh next() call krna pdega.
+
+         app.use(function(req,res,next){
+          console.log("i will always run");
+          next();
+         })
+
+         
+         <b>
+            use -
+                   if any request enters then it will execute  , it's function.
+
+
+
+
+
+        
+    
+  
 
 
                   
