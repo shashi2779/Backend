@@ -1215,7 +1215,8 @@
             if(user){
                 
               if(user.password == password){
-                  res.cookie("token","sample value")
+                //cookie bheje h
+                  res.cookie("token","sample value")  
                   res.send("user logged In")
                 }else{
                   res.send("email or password does't match")
@@ -1264,6 +1265,7 @@
 
 
       function protectRoute(req,res,next){
+        //cookie milega
         console.log(req.cookies)            // req.cookie k ander data aaya 
         console.log("protect route encountered")
         //you are logged In then it will allow next fun to run
@@ -1284,7 +1286,7 @@
 
 
  ![CHEESE!](image/users-4.jpg)
- 
+
 - cookies bhejegen 
    
    - res.cookie()
