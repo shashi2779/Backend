@@ -1,9 +1,10 @@
 const express = require("express")
-
+const cookieParser = require("cookie-parser")
 const app = express();
 
 const FooduserModel = require("./userModel")
 
+app.use(cookieParser())
 app.use(express.json())
 
 app.post("/signup", async function(req,res){
@@ -61,6 +62,7 @@ app.get("/users",protectRoute,async function(req,res){
 
 
 function protectRoute(req,res,next){
+  console.log(req.cookies)
   console.log("protect route encountered")
   //you are logged In then it will allow next fun to run
   next();

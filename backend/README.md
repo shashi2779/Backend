@@ -1231,3 +1231,66 @@
       }
     })
         
+
+- aapke pas ek function hota hai , jab banda req marta h ,toh "req.cookie" k ander data aata hai 
+
+   cookie lene k liye ek module hota h ,that is cookie-parser toh esko pahle install kiye ,phir require kiye , phir call kiye.
+
+   install - npm i cookie-parser
+
+   
+   require - const cookieParser = require("cookie-parser");
+
+   
+   call kiye - app.use(cookieParser())
+
+  #
+
+      
+      // npm i cookie-parser
+      //const cookieParser = require("cookie-Parser");
+      //app.use(cookieParser())
+
+      // users -> get all the users -> sensitive route -> protect route -> logged In i will only allow that person
+      app.get("/users",protectRoute,async function(req,res){
+        try{
+          let users = await FooduserModel.find();
+          //to send json data
+          res.json(users)
+        }catch(err){
+          res.end(err.message);
+        }
+      })
+
+
+      function protectRoute(req,res,next){
+        console.log(req.cookies)            // req.cookie k ander data aaya 
+        console.log("protect route encountered")
+        //you are logged In then it will allow next fun to run
+        next();
+      }
+
+--------------------------------------------------------------
+
+      #output
+
+      backend output :
+                     
+                      server running on 3000 port
+                      connected                 - db mongoose se
+                      {token : 'sample value'}    - "/login" route k "res.cookie()" se jo data bheja gya tha "req.cookie" me aaya 
+                      protect route encountered
+
+
+
+ ![CHEESE!](image/users-4.jpg)
+ 
+- cookies bhejegen 
+   
+   - res.cookie()
+
+- cookies milega 
+
+   - req.cookie
+
+
