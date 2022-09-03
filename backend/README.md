@@ -1215,7 +1215,7 @@
             if(user){
                 
               if(user.password == password){
-                //cookie bheje h
+                  //cookie bheje h
                   res.cookie("token","sample value")  
                   res.send("user logged In")
                 }else{
