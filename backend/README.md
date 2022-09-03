@@ -1187,4 +1187,47 @@
 ![CHEESE!](image/users-2.jpg)
 
 ![CHEESE!](image/users-3.jpg)
-    
+
+
+#### cookies+JWT 
+
+ ![CHEESE!](image/users-4.jpg)
+
+- jab aap email , password put karte ho login k samay toh uske response me "res+token" bhi bhejte  hai
+
+   toh aapke pas ek function hota hai , jisme aap data bhejte ho "res.cookie()"
+
+   jaise aap kuchh bhi bhejte ho key:value pair me data bhej pao
+
+    res.cookie("token","sample value");
+
+# 
+      
+
+    app.post("/login",async function(req,res){
+      try{
+          let data = req.body;
+          // jo hmne email , password login karte wakt frontend se diya ,  "data" m wahi aaya
+          let {email,password} = data; 
+          if(email){ 
+            //jo hmne email diya tha login k wakt , wo "user" database mai hai toh aaya
+            let user = await FooduserModel.findOne({email : email})
+            if(user){
+                
+              if(user.password == password){
+                  res.cookie("token","sample value")
+                  res.send("user logged In")
+                }else{
+                  res.send("email or password does't match")
+                }
+            }else{
+              res.end("user with this email Id is not found. kindly sign up")
+            }
+          }else{
+            res.end("kindly enter email & password both")
+          }
+      }catch(err){
+          res.end(err.message)
+      }
+    })
+        
