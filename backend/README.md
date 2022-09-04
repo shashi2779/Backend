@@ -1295,4 +1295,6 @@
 
    - req.cookie
 
+- initially server cookie bhejta h phir jo bhi client request marega sath me cookie le krr aayega.  
+
 

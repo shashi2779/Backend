@@ -1,11 +1,17 @@
 const express = require("express")
+
+//npm i cookie-parser
 const cookieParser = require("cookie-parser")
+
 const app = express();
 
 const FooduserModel = require("./userModel")
 
-app.use(cookieParser())
+// to add post body data to req.body
 app.use(express.json())
+
+//add cookies to req.cookie
+app.use(cookieParser())
 
 app.post("/signup", async function(req,res){
   try{
