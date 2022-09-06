@@ -1191,6 +1191,8 @@
 
 # cookies+JWT 
 
+## cookie
+
  ![CHEESE!](image/users-4.jpg)
 
 - jab aap email , password put karte ho login k samay toh uske response me "res+token" bhi bhejte  hai
@@ -1298,3 +1300,97 @@
 - initially server cookie bhejta h phir jo bhi client request marega sath me cookie le krr aayega.  
 
 
+
+## JWT (json web token) 
+
+![CHEESE!](image/users-5.jpg)
+
+- if verify that if your current user ia already logged In or not.
+
+- cookie k ander hi bhejna hai JWT ko
+
+- Secret : only server know this secret
+
+- plain text
+
+    - _id
+    - normal text - sab padh sakte h
+    - esko bolte h payload 
+    - use :
+       - kuchh data bhejna hai , jo hamare kam ka ho
+
+- signature : me 3 cheeje hoti h 
+   
+   - encrypted text that is formed using 
+      
+      (encrypted text - ye text hi hai esse koui bhi change karr sakta hai)
+     - payload 
+     - encryption algorithm 
+     - secret
+   
+   - token hai jo na payload , algorithm & signature ka part hota hai , sabse important signature hota h 
+
+   - ess algorithm ki help se esko encrypt karr diya jata hai
+
+   - ye sab mill krr token banta hai , aap ye teeno me se ek cheej nahi bhejte , aap bhejte h token .
+
+   - plain text ( _id ) ->-> payload
+
+![CHEESE!](image/users-6.jpg)
+
+- eg
+  
+  - cocacola :
+     
+     - water , soda , sugar ye sab sabke pas hai , prr secret unko hi pta hai 
+
+     - mtlb aap bina ess secret k aap ess signature ko kabi bhi decrept nahi krr sakte 
+
+![CHEESE!](image/users-6.jpg)
+      
+      - esi tarah har bande ko pta hai payload kya hai , har bande ko pta hai algorithm kaun sa use hua h , but uske pas ek missing
+      piece hai , that is secret wo kisi ko pta nahi hai , only server know this secret.
+
+
+
+![CHEESE!](image/users-7.jpg) 
+
+- same id , same algorithms & same secret se "same hi signature banna chahiye ". 
+
+- given by client jo token(signature) aur jo new signature bna , dono match karte hai eska matlab yahi hua , yah wahi token haii jo aapne kabhi bheja tha . 
+
+##### JWT purpose
+
+ - it verify that if your current user is already loggedIn or not
+
+      [mtlab dubara aane prr login Id & password share na karna pade]
+
+ - cookie k ander JWT hota hai 
+ - cookie k ander token bhej dete hai
+ - that our token is not tempered
+   
+    [ agar token change nahi hua toh matlab user wahi hai ]     
+
+-   JWT work
+
+![CHEESE!](image/users-4.jpg) 
+
+- login dubara na karna pade  , eske liye cookie k ander token bhej dete hai 
+
+  [login hone ka token mil jata hai]
+
+  abb wo banda dubara aata hai toh browser apne aap khud token le krr aata hai , apne aap khud token le krr aat hai 
+
+  [mtlab req k sath cookie le krr jata hai , cookie me token hota hai ]
+
+  jo ess cookie k sath token hota hai , uska naam Json web token hai .
+
+- mai chahta hun jo banda pahle se logged In hai wahi access krr paye toh "/users" route me middleware lga diya protectRoute
+
+  protectRoute pahle se logged In bande ko access karne dega ya valid karega
+
+- "/login" route se bhejte hai cookie ko aur varify karne k liye protectRoute middleware 
+"/users" route prr lga dete hai , ki jo pahle se logged In hai , usi ko access de
+
+- "/login"   ->->  JWT.sign()
+- "/users"   ->->  JWT.verify()
