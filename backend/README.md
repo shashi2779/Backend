@@ -31,6 +31,10 @@
 
 
 ### create server
+```js
+   // npm init -y
+   // npm i express
+
     //require kiye
     const express = require("express")
 
@@ -41,6 +45,7 @@
      app.listen(3000,function(req,res){
         console.log("server running on 3000 port")
     })
+```    
 ### CRUD Notes
 
      Route is a noun
