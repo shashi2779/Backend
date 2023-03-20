@@ -1,3 +1,12 @@
+# Backend :
+- Express.js -> Rest Api
+- postman
+- DB -> mongoDB,sql
+- Authentication and Authorization
+- Creadit card payment 
+- Email -> nodemailer
+- Backend security and scalability
+
 # install
 
 1- npm init -y

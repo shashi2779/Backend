@@ -1,9 +1,15 @@
 const express = require("express")
 
+const app = express();
+
 //npm i cookie-parser
 const cookieParser = require("cookie-parser")
 
-const app = express();
+// read doc "json web token npm"
+//jsonwebtoken
+const jwt = require("jsonwebtoken")
+
+const secrets = require("./secrets")
 
 const FooduserModel = require("./userModel")
 
@@ -38,6 +44,9 @@ app.post("/login",async function(req,res){
         if(user){
             
           if(user.password == password){
+               // create JWT ->-> payload,secret text , algorithm --> SHA256
+               var token = jwt.sign({data:user["_id"],exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)},secrets.JWTSECRET);
+               // put token into cookie
                res.cookie("token","sample value")
                res.send("user logged In")
             }else{
