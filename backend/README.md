@@ -6,6 +6,7 @@
 - Creadit card payment 
 - Email -> nodemailer
 - Backend security and scalability
+- socket.io
 
 # install
 
