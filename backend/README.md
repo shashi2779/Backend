@@ -60,7 +60,7 @@
      C - create  --> post --> send krr sakte h
      R - Read --> get --> get krr sakte h
      U - update --> patch --> send
-     D - delete -->delete --> send
+     D - delete --> delete --> send
 
      
      note - 
