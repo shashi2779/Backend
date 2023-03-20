@@ -34,6 +34,7 @@
 ```js
    // npm init -y
    // npm i express
+   // require -> call -> listen 
 
     //require kiye
     const express = require("express")
