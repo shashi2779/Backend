@@ -26,7 +26,7 @@
 ### app.use(express.json())
 - if you want to accept data in backend
 - req.body me data aaye eske liye  [ app.use(express.json()) ] use kiye apne file m
-- esko post route k upar likhana padta h 
+- esko "post" route k upar likhana padta h 
 - ye line likhane se aapka data put ho jata h
 
 
