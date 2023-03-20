@@ -1,6 +1,6 @@
 # Backend :
 - Express.js -> Rest Api
-- postman
+- postman -> replacement for frontend 
 - DB -> mongoDB,sql
 - Authentication and Authorization
 - Creadit card payment 
