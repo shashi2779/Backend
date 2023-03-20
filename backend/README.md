@@ -94,7 +94,7 @@
        - esko [ app.use(express.json()); ] post route k upar hi likhana padta h ,
          aur ye line likhane se aapka data put ho jata h
 
-## post route -create data
+## post route - create data
      
      
      * postman se data bheje
