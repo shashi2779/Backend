@@ -215,6 +215,8 @@
 
 ## lec-2
 * What is an API --> Backend API = ?
+   
+   * API : logic of the backend
 * Express :
     * routes ka order --> IMP
     * why Express is a middleware = ?
