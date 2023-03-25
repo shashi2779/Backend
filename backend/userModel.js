@@ -64,7 +64,7 @@ let userSchema = new mongoose.Schema({
 
 
 //model is similar to your collection
-//1st- name of collection - fooduserModel
+//1st- name of collection(data base ka nam) - fooduserModel
 //2nd- the set of rules this collection should follow (schema k set of rules apply hogen) - userSchema 
 let FooduserModel = mongoose.model('foodUserModel',userSchema)
 module.exports = FooduserModel;
