@@ -453,10 +453,75 @@
                after response you can not send anythings to frontend
 
                   
+### In Express :
+- code execution start when request is send---> serially (top to bottom) 
+  
+  after response you can not send anythings to frontend
+
+#### aap k pas teen "get" hai , teeno same hai
+- chal kaun sa rha = ?  
+    
+    - response dete hi aapka code rook jayega ( first wala hi chala )
+    - after response you can not send anythings to frontend
+- step : 1
+```js
+
+const express = require("express")
+
+const app = express()
+
+app.get("/simple",function(req,res){
+    res.end("simple output")
+})
+
+app.get("/simple",function(req,res){
+    res.end("simple1 output")
+})
+
+app.get("/simple",function(req,res){
+    res.end("simple2 output")
+})
+
+app.listen(4000,function(){
+    console.log("server started at port 4000")
+})
+
+```
+##### output :
+```js
+simple output
+
+```
+------------------
+```js
+
+const express = require("express")
+
+const app = express()
 
 
+app.get("/simple",function(req,res){
+    res.end("simple1 output")
+})
 
+app.get("/simple",function(req,res){
+    res.end("simple output")
+})
 
+app.get("/simple",function(req,res){
+    res.end("simple2 output")
+})
+
+app.listen(4000,function(){
+    console.log("server started at port 4000")
+})
+
+```
+##### output :
+```js
+simple1 output
+
+```
 
         
     

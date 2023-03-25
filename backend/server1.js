@@ -1,20 +1,43 @@
-const express = require("express");
+// const express = require("express");
 
-const app = express();
+// const app = express();
 
-app.use(express.json());
+// app.use(express.json());
 
-app.use(function(req,res,next){
-    // res.end("msg from use route");
-    console.log("data from user route");
-    next();
+// app.use(function(req,res,next){
+//     // res.end("msg from use route");
+//     console.log("data from user route");
+//     next();
+// })
+
+// app.post("/sayhello",function(req,res){
+//     console.log("data",req.body)    // frontend se data aaya backend prr
+//     res.end("post wala hello ")    //  frontend prr print hua
+// })
+
+// app.listen(4000,function(){
+//     console.log("server running on 4000 port")
+// })
+
+
+
+
+const express = require("express")
+
+const app = express()
+
+app.get("/simple",function(req,res){
+    res.end("simple output")
 })
 
-app.post("/sayhello",function(req,res){
-    console.log("data",req.body)    // frontend se data aaya backend prr
-    res.end("post wala hello ")    //  frontend prr print hua
+app.get("/simple",function(req,res){
+    res.end("simple1 output")
+})
+
+app.get("/simple",function(req,res){
+    res.end("simple2 output")
 })
 
 app.listen(4000,function(){
-    console.log("server running on 4000 port")
+    console.log("server started at port 4000")
 })
