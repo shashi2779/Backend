@@ -6,9 +6,10 @@ app.use(express.json());
 
 app.post("/simple",function bodychecker(req,res,next){
   let data = req.body;
+  // obj ki length nikale yha 
   let len = Object.keys(data).length;
   if(len == 0){
-    res.end("kindly enter data ")
+    res.end("kindly enter data in the body")
   }else{
     next();
   }
