@@ -11,8 +11,8 @@ app.use(function(req,res,next){
 })
 
 app.post("/sayhello",function(req,res){
-    console.log("data",req.body)
-    res.end("post wala hello ")
+    console.log("data",req.body)    // frontend se data aaya backend prr
+    res.end("post wala hello ")    //  frontend prr print hua
 })
 
 app.listen(4000,function(){

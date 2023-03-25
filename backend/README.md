@@ -298,10 +298,9 @@
         console.log("server running on port 3000")
       })
 
+   
 
-=================================================     
-
-* postman se - (get route)
+#### postman se - (get route) :
 
 -------------------
        
@@ -360,11 +359,7 @@
       console.log("server started at port 3000")
     })
 
-
-------------------------------------------------------
-     
-     
-    * postman se data bheje
+#### postman se data bheje
     ---------------------------------------------
     post->localhost:3000/sayhello
     --------------------------------
@@ -383,7 +378,7 @@
                               post wala hello
 
 
-     Backend output[node]:
+     Backend output[node]: ( "console.log" wala backend prr hi print hota hai)
                           
                              i will always run
                              data-> {name:"shashi"}
