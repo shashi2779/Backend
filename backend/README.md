@@ -772,7 +772,7 @@ backend output : shashi
 ## connect mongoDb
     - npm init -y
     - npm i mongoose
-    - database ko connect k liye mongoose tools use kate h 
+    - database ko connect k liye "mongoose" tools use kate h 
    
 ==================================== 
 
