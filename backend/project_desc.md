@@ -35,3 +35,25 @@
     * Codebase : Github
     * Database server : mongoDb atlas  
 * Futher improvement : videos , feedback , meal level            
+
+
+-----------------------
+
+## steps:
+- user :
+      
+      - profile
+      - login
+      - signup
+      - forget
+      - reset
+- plans :
+     
+     - display -> all pages
+               -> description
+
+- reviews :
+     
+     - reviews , books
+
+- top 3 plans
