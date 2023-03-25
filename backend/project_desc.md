@@ -51,8 +51,9 @@
       - reset
 - plans :
      
-     - display -> all pages
+     - display 
                
+               -> all pages
                -> description
 
 - reviews :
