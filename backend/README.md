@@ -732,7 +732,7 @@ backend output : shashi
 
 ```
 
-### lec - 3
+# lec - 3
 # database handle
 
 #### product knowledge
