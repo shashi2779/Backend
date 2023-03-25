@@ -737,6 +737,7 @@ backend output : shashi
 - backend <------req----- frontend
 - "/user" <--- "/isAuthorized" <--- "/isLogin" <--- "/bodyChecker" <------req-------- frontend
 - jo jo fun aapke ess cycle ko change kar sakte hai unhe middleware kahte hai
+
 --------------------
 
 ## lec - 3
