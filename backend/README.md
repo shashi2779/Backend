@@ -275,6 +275,9 @@
      app.use() :
                 - koi bhi request aayi ho "i will always run"
                 
+                - app.use() me "res.end" or "res.send" se data frontend prr hi print hoga.
+                - app.use() me "console.log()" or "req.body" se data backend prr print hoga
+  
                 - router k req par bhi depends nahi karta ..(post,get) 
                   request koi bhi aayi ho ye chalega hi chalega
       
