@@ -463,7 +463,7 @@
     
     - response dete hi aapka code rook jayega ( first wala hi chala )
     - after response you can not send anythings to frontend
-- step : 1
+##### case : 1
 ```js
 
 const express = require("express")
@@ -524,11 +524,162 @@ simple1 output
 ```
 
         
-    
+##### case : 2  
+- as soon as "res.end" line is executed there is not further execution of lower handler function.
+- when a request is send then it will execute all the route handlers serially. 
+- order me chalta hai 
+- order me chalte huye "response" aa gya toh agalo ki bari hi nhi aati
   
+```js
+
+const express = require("express")
+
+const app = express()
+
+app.get("/simple",function(req,res){
+    res.end("simple get ka output")
+})
+
+app.post("/simple",function(req,res){
+    res.end("simple post ka output")
+})
+
+app.patch("/simple",function(req,res){
+    res.end("simple patch ka output")
+})
+
+app.delete("/simple",function(req,res){
+    res.end("simple delete ka output")
+})
+
+app.use(function(req,res){
+    res.end("use will always run")
+})
+
+app.listen(4000,function(){
+    console.log("server started at port 4000")
+})
+
+```
+##### output :
+```js
+simple get ka output
+
+```
+--------------------  
+
+```js
+
+const express = require("express")
+
+const app = express()
+
+app.use(function(req,res){
+    res.end("use will always run")
+})
+
+app.get("/simple",function(req,res){
+    res.end("simple get ka output")
+})
+
+app.post("/simple",function(req,res){
+    res.end("simple post ka output")
+})
+
+app.patch("/simple",function(req,res){
+    res.end("simple patch ka output")
+})
+
+app.delete("/simple",function(req,res){
+    res.end("simple delete ka output")
+})
+
+app.listen(4000,function(){
+    console.log("server started at port 4000")
+})
+
+```
+##### output :
+```js
+use will always run
+
+```
+----------------------
+
+```js
+
+const express = require("express")
+
+const app = express()
 
 
-                  
+app.post("/simple",function(req,res){
+    res.end("simple post ka output")
+})
+
+app.use(function(req,res){
+    res.end("use will always run")
+})
+
+app.get("/simple",function(req,res){
+    res.end("simple get ka output")
+})
+
+app.patch("/simple",function(req,res){
+    res.end("simple patch ka output")
+})
+
+app.delete("/simple",function(req,res){
+    res.end("simple delete ka output")
+})
+
+app.listen(4000,function(){
+    console.log("server started at port 4000")
+})
+
+```
+##### output :
+```js
+simple post ka output
+
+```
+
+##### hmm chahte hai "app.use" k bad "app.post" chal jaye , toh yha "next" aayega
+
+```js
+
+const express = require("express")
+
+const app = express()
+
+app.use(function(req,res,next){
+    console.log("use will always run")
+    next()
+})
+
+app.post("/simple",function(req,res){
+    res.end("simple post ka output")
+})
+
+app.post("/simple",function(req,res){
+    res.end("simple1 post ka output")
+})
+
+
+app.listen(4000,function(){
+    console.log("server started at port 4000")
+})
+
+```
+##### output :
+```js
+// agar "console.log" se na print krr k "res.end" se print karate toh "app.use" wala hi bas frontend prr print hota "app.post" wala nhi hota
+Backend(node)     : use will always run      
+
+
+Frontend(postman) :   simple post ka output
+
+```
 
 # database handle
 
