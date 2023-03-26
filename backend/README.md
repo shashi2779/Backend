@@ -1115,7 +1115,11 @@ backend output : shashi
         * login
         * signup
 
-
+| sql | nosql |
+| --- | --- |
+| data represent -> table,row,column | data represent -> collection-> obj form|
+| relational database | very less relational are involved |
+| structured data | un-structured data|
 
 ===================================================================     
 
