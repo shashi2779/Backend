@@ -24,8 +24,8 @@ app.post("/signup", async function(req,res){
     let data = req.body; 
     console.log(data);  // frontend se data aaya
  
-    // apna jo data postman se aa rha h database se usse jodna h
-    let newUser = await FooduserModel.create(data)   // jo frontend se data aaya usse "db" me bhej diya 
+    // jo frontend se "data" aaya usse "db" me bhej diya 
+    let newUser = await FooduserModel.create(data)                
     console.log(newUser);
     res.end("post wala route se data")
   }catch(err){

@@ -1036,8 +1036,8 @@ backend output : shashi
        let data = req.body;
        console.log(data);   // frontend se data aaya [ postman se ]
  
-      // apna jo data postman se aa rha h database se usse jodna h
-      let newUser = await userModel.create(data)   // jo frontend se "data" aaya usse "db" me bhej diya 
+      // jo frontend se "data" aaya usse "db" me bhej diya 
+      let newUser = await userModel.create(data)   
       console.log(newUser);
       res.end("post wala route se data")
     })
