@@ -1158,10 +1158,10 @@ backend output : shashi
 
           bcz express ka server hai wo alag jagah par hai ,
           aur jo mongoDb ka server hai wo mongoDb atlas k upar h ,
-          toh ye create ki call async hoti h esliye hmne await lga diya 
-          ( promised based h )
-          bcz database m gaye create karega time lagega
-          toh database ki jitni bi call hoti h async hoti h
+          [toh ye create ki call async hoti h esliye hmne await lga diya 
+          ( promised based h )]
+          bcz database m gaye create karega time lagega,toh async-await use krr liya,
+          database ki jitni bi call hoti h async hoti h
 
           - koi bhi data ko aane me ya create hone me time lag rha 
             (promise based h )
