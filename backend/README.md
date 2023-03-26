@@ -1146,7 +1146,7 @@ backend output : shashi
        - schema     - inheritance
 
     - validators
-      - 1
+      - 1 :
         -  required : true ,
         - unique
         - default
