@@ -758,13 +758,17 @@ backend output : shashi
 
    - Follow
    - how to create a db --> [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) share  (setup mongoDb atlas)
+       
+        - 1st - database access --> add new "database user" --> yha se password bhi aa jayega (dblink me jo pass dal rhe uske liye)
+        - 2nd - network access --> add IP address --> access List entry [0.0.0.0] --> "allow access from anyware"
+        - 3rd - atlas --> connect --> connect your application --> dblink 
    - connect to my app --> with mongoose tools
           
           - mongoose lib use kiye connect karne k liye
           - [connect karne k liye ek tools lagane wale h , jiska naam mongoose h (npm i mongoose)]
           - npm i mongoose
           - const mongoose = require("mongoose")
-          - mongoose.connect() 
+          - mongoose.connect(dblink) 
     
 
    - how to create a schema
