@@ -771,7 +771,7 @@ backend output : shashi
           - mongoose.connect(dblink) 
     
 
-   - how to create a schema
+   - how to create a schema :=> search mongoose schema type
          
          - let userSchema = new mongoose.Schema({})
          - let FooduserModel = mongoose.model('foodUserModel',userSchema)
