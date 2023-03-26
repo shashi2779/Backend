@@ -1034,10 +1034,10 @@ backend output : shashi
 
     app.post("/signout", async function(req,res){
        let data = req.body;
-       console.log(data);
+       console.log(data);   // frontend se data aaya [ postman se ]
  
       // apna jo data postman se aa rha h database se usse jodna h
-      let newUser = await userModel.create(data)
+      let newUser = await userModel.create(data)   // jo frontend se "data" aaya usse "db" me bhej diya 
       console.log(newUser);
       res.end("post wala route se data")
     })
