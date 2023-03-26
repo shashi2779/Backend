@@ -774,7 +774,11 @@ backend output : shashi
    - how to create a schema
          
          - let userSchema = new mongoose.Schema({})
+         - let FooduserModel = mongoose.model('foodUserModel',userSchema)
+         - module.exports = FooduserModel;
    - how store values in it  
+       
+          
 
 ### create a cluster in mongoDb atlas
 [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) setup mongoDb atlas  
