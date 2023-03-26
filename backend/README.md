@@ -772,6 +772,8 @@ backend output : shashi
     
 
    - how to create a schema
+         
+         - let userSchema = new mongoose.Schema({})
    - how store values in it  
 
 ### create a cluster in mongoDb atlas
