@@ -757,7 +757,7 @@ backend output : shashi
 - Schema -
 
    - Follow
-   - how to create a db --> [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) share  (setup mongoDb atlas) then,
+   - how to create a db --> [link](https://www.youtube.com/watch?v=rPqRyYJmx2g) share  (setup mongoDb atlas) , then
        
         - 1st step - database access --> add new "database user" --> yha se password bhi aa jayega (dblink me jo pass dal rhe uske liye)
         - 2nd step - network access --> add IP address --> access List entry [0.0.0.0] --> "allow access from anyware"
