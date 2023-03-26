@@ -1146,12 +1146,26 @@ backend output : shashi
        - schema     - inheritance
 
     - validators
-        - required : true ,
+      - 1
+        -  required : true ,
         - unique
         - default
+        - string k sath - enum , min length , max length
+        - number k sath - min , max
         - enum : ["mon","tue","wed"] => day k ander mon,tue,wed k alawa kuchh aur huaa toh "error" de dega
-        - predefined
-        - userdefined
+      - 2 :
+        - error message
+             - required : [true,"name is not send"]
+             - minLength : [10,less than 10 numbers]
+      - 3:       
+        - custom validators :
+              
+                validate:{
+                     
+                     validator: fun(){..........},
+                     message:____
+                
+                }
 
 
 
