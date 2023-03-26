@@ -761,8 +761,8 @@ backend output : shashi
    - connect to my app --> with mongoose tools
           
           - mongoose lib use kiye connect karne k liye
+          - [connect karne k liye ek tools lagane wale h , jiska naam mongoose h (npm i mongoose)]
     
-    [connect karne k liye ek tools lagane wale h , jiska naam mongoose h (npm i mongoose)]
 
    - how to create a schema
    - how store values in it  
