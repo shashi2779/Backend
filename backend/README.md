@@ -1103,7 +1103,7 @@ backend output : shashi
               _id:new objectId("6304c80176c3ac80fce13f96)
 
 
-### lec-4    mongoose (schema) - getting started 
+### lec-4    mongoose (schema) - ( search on google "mongoose doc" )
 
      # topics:
         * mongoDb
@@ -1131,7 +1131,7 @@ backend output : shashi
 - aap kuchh bhi put karr sakte ho ek collection ke ander 
 ### Schema :
 - set of rules that a particular document should follow inorder to be CRUD in a collection(Model)
-- Schema k ander kya hote hai : ( mongoose doc se padhe )
+- Schema k ander kya hote hai : 
     
     - datatypes , 
        - string
