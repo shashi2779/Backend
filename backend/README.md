@@ -1121,6 +1121,37 @@ backend output : shashi
 | relational database | very less relational are involved |
 | structured data | un-structured data|
 
+
+### Model :
+- create a collection using some set of rules.
+- a collection in which document can be CRUD on the basis of some rules[schema].
+- rules hi Schema kahlate hai.
+### collection :
+- set of documents that are CRUD without any rules.
+- aap kuchh bhi put karr sakte ho ek collection ke ander 
+### Schema :
+- set of rules that a particular document should follow inorder to be CRUD in a collection(Model)
+- Schema k ander kya hote hai : ( mongoose doc se padhe )
+    
+    - datatypes , 
+       - string
+       - number
+       - date
+       - buffer
+       - boolean
+       - objID   - _id
+       - array
+       - decimal128 - float
+       - map        - obj
+       - schema     - inheritance
+
+    - validators
+        - required : true ,
+        - unique
+        - default
+        - enum : ["mon","tue","wed"] => day k ander mon,tue,wed k alawa kuchh aur huaa toh "error" de dega
+        - predefined
+        - userdefined
 ===================================================================     
 
     - server.js
@@ -1246,7 +1277,7 @@ backend output : shashi
       },
       days:{
         type:String,
-        enum:["mon","tue","wed"]
+        enum:["mon","tue","wed"] //day k ander [mon,tue,wed] k alawa kuchh aur huaa toh "error" de dega
       },
       address:{
         type:String
