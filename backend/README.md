@@ -762,6 +762,9 @@ backend output : shashi
           
           - mongoose lib use kiye connect karne k liye
           - [connect karne k liye ek tools lagane wale h , jiska naam mongoose h (npm i mongoose)]
+          - npm i mongoose
+          - const mongoose = require("mongoose")
+          - mongoose.connect() 
     
 
    - how to create a schema
