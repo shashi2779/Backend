@@ -1112,6 +1112,8 @@ backend output : shashi
         * mongoose
         * schema & model = ?
             - majorly used dataType
+        * login
+        * signup
 
 
 
