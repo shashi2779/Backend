@@ -1745,7 +1745,7 @@ backend output : shashi
 
   [login hone ka token mil jata hai]
 
-  abb wo banda dubara aata hai toh browser apne aap khud token le krr aata hai , apne aap khud token le krr aat hai 
+  abb wo banda dubara aata hai toh browser apne aap khud token le krr aata hai , apne aap khud token le krr aata hai 
 
   [mtlab req k sath cookie le krr jata hai , cookie me token hota hai ]
 
