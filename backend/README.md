@@ -1663,7 +1663,7 @@ backend output : shashi
 
    - req.cookies
 
- - cookie lene/dikhane k liye => [data aata hai] => esko dikhane k liye install , require , call karegen
+ - cookie lene/dikhane k liye => [data aata hai] => esko dikhane k liye install , require , call karegen cookie-parser ko
 
    - npm i cookie-parser
    - const cookieParser = require("cookie-parser")
