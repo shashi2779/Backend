@@ -1671,7 +1671,7 @@ backend output : shashi
 
 ![CHEESE!](image/users-5.jpg)
 
-- if verify that if your current user ia already logged In or not.
+- if verify that if your current user is already logged In or not.
 
 - cookie k ander hi bhejna hai JWT ko
 
