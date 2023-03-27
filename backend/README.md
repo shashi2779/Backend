@@ -1603,7 +1603,7 @@ backend output : shashi
 
 - cookie ka data dikha rhe => aapke pas ek function hota hai , jab banda req marta h ,toh "req.cookie" k ander data aata hai 
 
-   cookie lene k liye ek module hota h ,that is cookie-parser toh esko pahle install kiye ,phir require kiye , phir call kiye.
+   cookie lene/dikhane k liye ek module hota h ,that is cookie-parser toh esko pahle install kiye ,phir require kiye , phir call kiye.
 
    install - npm i cookie-parser
 
