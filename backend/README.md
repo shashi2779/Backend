@@ -1326,7 +1326,7 @@ backend output : shashi
 
 
     
-    
+  ```js  
     app.post("/login",async function(req,res){
       try{
           let data = req.body;
@@ -1352,7 +1352,7 @@ backend output : shashi
           res.end(err.message)
       }
     })
-
+```
 
 * Mongoose Queries
 
