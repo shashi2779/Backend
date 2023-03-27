@@ -1577,7 +1577,7 @@ backend output : shashi
           let data = req.body;
           // jo hmne email , password login karte wakt frontend se diya ,  "data" m wahi aaya
           let {email,password} = data; 
-          if(email){ 
+          if(email && password){ 
             //jo hmne email diya tha login k wakt , wo "user" database mai hai toh aaya
             let user = await FooduserModel.findOne({email : email})
             if(user){

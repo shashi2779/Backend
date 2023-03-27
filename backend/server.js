@@ -36,6 +36,8 @@ app.post("/login",async function(req,res){
           if(user.password == password){
             
                res.send("user logged In")
+            }else{
+              res.send("email or password does't match")
             }
             
         }else{
