@@ -1561,7 +1561,7 @@ backend output : shashi
 
  ![CHEESE!](image/users-4.jpg)
 
-- jab aap email , password put karte ho login k samay toh uske response me "res+token" bhi bhejte  hai
+- cookie se data bhej rhe =>  jab aap email , password put karte ho login k samay toh uske response me "res+token" bhi bhejte  hai
 
    toh aapke pas ek function hota hai , jisme aap data bhejte ho "res.cookie()"
 
@@ -1601,7 +1601,7 @@ backend output : shashi
     })
         
 
-- aapke pas ek function hota hai , jab banda req marta h ,toh "req.cookie" k ander data aata hai 
+- cookie ka data dikha rhe => aapke pas ek function hota hai , jab banda req marta h ,toh "req.cookie" k ander data aata hai 
 
    cookie lene k liye ek module hota h ,that is cookie-parser toh esko pahle install kiye ,phir require kiye , phir call kiye.
 
@@ -1612,6 +1612,8 @@ backend output : shashi
 
    
    call kiye - app.use(cookieParser())
+
+   console.log(req.cookie)
 
   #
 
