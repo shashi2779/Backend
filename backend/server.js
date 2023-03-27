@@ -4,6 +4,9 @@ const app = express();
 
 const cookieParser = require("cookie-parser")
 
+const secrets = require("./secrets")
+
+var jwt = require('jsonwebtoken');
 
 // represent -> collection
 const FooduserModel = require('./userModel')
@@ -40,9 +43,14 @@ app.post("/login",async function(req,res){
         if(user){
             
           if(user.password == password){
+
+            // token 
+            //payload , bydefault - algo [SHA256] , secrets
+            // expire date add kiye
+            const token = jwt.sign({ data:user["_id"], exp: Math.floor(Date.now() / 1000) + (60*60*24)}, secrets.JWTSECRET)
             
-            // data bhejte hai 
-               res.cookie("token","sample value")
+            // token/data bhejte hai <= cookie k ander
+               res.cookie("JWT",token)
 
                res.send("user logged In")
             }else{
@@ -75,9 +83,12 @@ app.get("/users", protectRoute, async function(req,res){
 
 function protectRoute(req,res,next){
   // req.cookie => k ander data aata hai
-  console.log(req.cookies)  
+  const cookies = req.cookies 
+  const JWT = cookies.JWT
   console.log("protect route encountered")
   //you are logged In then it will allow next fun to run
+  const token = jwt.verify(JWT,secrets.JWTSECRET)
+  console.log(token)
   next();
 }
 
