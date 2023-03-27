@@ -1769,3 +1769,6 @@ backend output : shashi
 
 - "/login"   ->->  JWT.sign()
 - "/users"   ->->  JWT.verify()
+
+
+### lec - 6 
