@@ -1777,7 +1777,7 @@ backend output : shashi
 - npm install jsonwebtoken
 - var jwt = require('jsonwebtoken');
 
-```js
+
           if(user.password == password){
 
             // token 
@@ -1793,9 +1793,9 @@ backend output : shashi
               res.send("email or password does't match")
           }
 
-```
+
 - verify
-```js
+
       function protectRoute(req,res,next){
         // req.cookie => k ander data aata hai
         const cookies = req.cookies 
@@ -1807,7 +1807,7 @@ backend output : shashi
         next();
       }
 
-```
+
 ##### output :
 ```js
       protect route encountered
