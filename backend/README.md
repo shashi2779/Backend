@@ -1316,11 +1316,11 @@ backend output : shashi
     Login :
             [email,password]
                |
-               * on the basis of email (check kiye)
+               * on the basis of email,password (check kiye)
                        |
-                       * USER mila 
+                       * USER nikale {on the basis of email }
                           |
-                          * password compair kiye
+                          * phir uss user ka password compair kiye
                                  1> login
                                  2> wrong email or password
 
@@ -1337,7 +1337,7 @@ backend output : shashi
           let data = req.body;
           // jo hmne email , password login karte wakt frontend se diya , "data" m wahi aaya
           let {email,password} = data; 
-          if(email){ 
+          if(email && password){ 
             //jo hmne email diya tha login k wakt , wo "user" database mai hai toh aaya
             let user = await FooduserModel.findOne({email : email})
             if(user){
