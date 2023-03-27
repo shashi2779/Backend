@@ -1655,11 +1655,11 @@ backend output : shashi
 
  ![CHEESE!](image/users-4.jpg)
 
-- cookies bhejegen 
+- cookies bhejegen  (data bhejte hai)
    
-   - res.cookie()
+   - res.cookie()  
 
-- cookies milega 
+- cookies milega  (data aata hai)
 
    - req.cookie
 

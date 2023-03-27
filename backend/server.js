@@ -35,6 +35,9 @@ app.post("/login",async function(req,res){
             
           if(user.password == password){
             
+            // data bhejte hai 
+               res.cookie("token","sample value")
+
                res.send("user logged In")
             }else{
               res.send("email or password does't match")
@@ -52,24 +55,25 @@ app.post("/login",async function(req,res){
 })
 
 
-// // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
-// app.get("/users",protectRoute,async function(req,res){
-//   try{
-//     let users = await FooduserModel.find();
-//     //to send json data
-//     res.json(users)
-//   }catch(err){
-//     res.end(err.message);
-//   }
-// })
+// users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
+app.get("/users", async function(req,res){
+  try{
+    let users = await FooduserModel.find();
+    //to send json data
+    res.json(users)
+  }catch(err){
+    res.end(err.message);
+  }
+})
 
 
-// function protectRoute(req,res,next){
-//   console.log(req.cookies)   // mila
-//   console.log("protect route encountered")
-//   //you are logged In then it will allow next fun to run
-//   next();
-// }
+function protectRoute(req,res,next){
+  // req.cookie => k ander data aata hai
+  console.log(req.cookies)   // mila
+  console.log("protect route encountered")
+  //you are logged In then it will allow next fun to run
+  next();
+}
 
 app.listen(3000,function(){
     console.log("server running on 3000 port")
