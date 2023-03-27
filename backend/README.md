@@ -1663,6 +1663,14 @@ backend output : shashi
 
    - req.cookie
 
+ - cookies milega  
+
+   - req.cookie // data aata hai => esko dikhane k liye install , require , call karegen
+   - cookie lene/dikhane k liye  => install, require , call 
+   - npm i cookie-parser
+   - const cookieParser = require("cookie-parser")
+   - app.use(cookieParser())
+
 - initially server cookie bhejta h phir jo bhi client request marega sath me cookie le krr aayega.  
 
 

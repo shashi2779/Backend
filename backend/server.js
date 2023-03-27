@@ -2,11 +2,17 @@ const express = require("express")
 
 const app = express();
 
+const cookieParser = require("cookie-parser")
+
+
 // represent -> collection
 const FooduserModel = require('./userModel')
 
 // to add post body data to req.body
 app.use(express.json())
+
+// call kiye
+app.use(cookieParser())
 
 app.post("/signup", async function(req,res){
   try{
@@ -56,7 +62,7 @@ app.post("/login",async function(req,res){
 
 
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
-app.get("/users", async function(req,res){
+app.get("/users", protectRoute, async function(req,res){
   try{
     let users = await FooduserModel.find();
     //to send json data
@@ -69,7 +75,7 @@ app.get("/users", async function(req,res){
 
 function protectRoute(req,res,next){
   // req.cookie => k ander data aata hai
-  console.log(req.cookies)   // mila
+  console.log(req.cookies)  
   console.log("protect route encountered")
   //you are logged In then it will allow next fun to run
   next();
