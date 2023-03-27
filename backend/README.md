@@ -1170,8 +1170,8 @@ backend output : shashi
 
 
 ===================================================================  
-- signup   
-
+## signup : user signup kiya
+```js
     - server.js
     ==================
     
@@ -1200,7 +1200,7 @@ backend output : shashi
         console.log("server running on 3000 port")
     })
 
-
+```
 
 
 =================================================================
@@ -1326,7 +1326,7 @@ backend output : shashi
 
 
 
-    
+  ## login : user login kiya
   ```js  
     // represent -> collection
     const FooduserModel = require("./userModel")
