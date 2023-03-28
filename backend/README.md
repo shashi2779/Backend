@@ -1798,14 +1798,14 @@ backend output : shashi
 - verify
 
       function protectRoute(req,res,next){
-        // req.cookie => k ander data aata hai
-        const cookies = req.cookies 
-        const JWT = cookies.JWT
-        console.log("protect route encountered")
-        //you are logged In then it will allow next fun to run
-        const token = jwt.verify(JWT.secrets.JWTSECRET)
-        console.log(token)
-        next();
+         //req.cookie => k ander data aata hai
+         const cookies = req.cookies 
+         const JWT = cookies.JWT
+         console.log("protect route encountered")
+         //you are logged In then it will allow next fun to run
+         const token = jwt.verify(JWT.secrets.JWTSECRET)
+         console.log(token)
+         next();
       }
 
 
