@@ -1103,7 +1103,10 @@ backend output : shashi
               _id:new objectId("6304c80176c3ac80fce13f96)
 
 
-### lec-4    mongoose (schema) - ( search on google "mongoose doc" )
+### lec-4    mongoose (schema) :
+- mongoose validation library npm
+- validator.js  (mongoose validation library npm) - bitcoin k liye bhi use kar sakte hai ese
+- mongoose doc : search on google
 
      # topics:
         * mongoDb
@@ -1899,3 +1902,56 @@ function protectRoute(req, res, next) {
 
 ```
 
+### user k profile ka data show karna hai :
+
+- user ki ID nikale
+```js
+function protectRoute(req, res, next) {
+  try {
+    // req.cookie => k ander data aata hai
+    const cookies = req.cookies
+    const JWT = cookies.JWT
+    if (cookies.JWT) {
+      console.log("protect route encountered")
+      //you are logged In then it will allow next fun to run
+      const token = jwt.verify(JWT, secrets.JWTSECRET)
+
+      // user ki Id nikal liye ###############
+       let userId = token.data;
+       req.userId = userId;   // ek obj par koi bhi "key"[req.userId me "userId"] add kar sakte hai
+      next();
+    } else {
+      res.send("you are not logged In kindly Login")
+    }
+
+  } catch (err) {
+    console.log(err)
+    if(err.message == "invalid signature"){
+      res.send("Token invalid kindly Login")
+    }else{
+      res.send(err.message)
+    }
+    
+  }
+}
+
+
+```
+- "user" k profile ka data show kiye - profile page
+```js
+app.get("/user",protectRoute ,async function(req,res){
+    // user k profile ka data show kiye
+   
+    try{
+       const userId = req.userId;
+       const user = await FooduserModel.findById(userId);
+       res.json({
+        data:user,
+        message:"Data about logged In user is send"
+       })
+    }catch(err){
+      res.end(err.message)
+    }
+})
+
+```

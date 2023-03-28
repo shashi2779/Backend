@@ -80,6 +80,22 @@ app.get("/users", protectRoute, async function (req, res) {
   }
 })
 
+// profile page
+app.get("/user", protectRoute, async function(req, res){
+    // user k profile ka data show kiye
+    try{
+       const userId = req.userId;
+       const user = await FooduserModel.findById(userId);
+       res.json({
+        data:user,
+        message:"Data about logged In user is send"
+       })
+    }catch(err){
+      res.end(err.message)
+    }
+})
+
+
 
 function protectRoute(req, res, next) {
   try {
@@ -90,8 +106,13 @@ function protectRoute(req, res, next) {
       console.log("protect route encountered")
       //you are logged In then it will allow next fun to run
       const token = jwt.verify(JWT, secrets.JWTSECRET)
-      console.log(token)
-      next();
+      console.log("Jwt decrypted",token)
+      // user ki Id nikal liye
+       let userId = token.data;
+       console.log("userId",userId)
+       req.userId = userId; 
+     
+       next();
     } else {
       res.send("you are not logged In kindly Login")
     }
