@@ -1887,7 +1887,7 @@ function protectRoute(req, res, next) {
       console.log("protect route encountered")
       //you are logged In then it will allow next fun to run
       const token = jwt.verify(JWT, secrets.JWTSECRET)
-      console.log(token)
+      console.log(token)  // esi ka "output" show kiya hai
       next();
     } else {
       res.send("you are not logged In kindly Login")
