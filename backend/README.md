@@ -1777,6 +1777,8 @@ backend output : shashi
 #### token == jwt , ko cookie k ander bhejte hai 
 - npm install jsonwebtoken
 - var jwt = require('jsonwebtoken');
+- jwt.sign()
+- jwt.verify()
 
 ```js
           if(user.password == password){
