@@ -1803,7 +1803,7 @@ backend output : shashi
          const JWT = cookies.JWT
          console.log("protect route encountered")
          //you are logged In then it will allow next fun to run
-         const token = jwt.verify(JWT.secrets.JWTSECRET)
+         const token = jwt.verify(JWT,secrets.JWTSECRET)
          console.log(token)
          next();
       }
