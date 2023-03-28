@@ -1838,18 +1838,6 @@ app.post("/login",async function(req,res){
 ```
 
 - verify
-```js
-      function protectRoute(req,res,next){
-         //req.cookie => k ander data aata hai
-         const cookies = req.cookies 
-         const JWT = cookies.JWT
-         console.log("protect route encountered")
-         //you are logged In then it will allow next fun to run
-         const token = jwt.verify(JWT,secrets.JWTSECRET)
-         console.log(token)
-         next();
-      }
-```
 
 ```js
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
