@@ -1796,30 +1796,6 @@ backend output : shashi
               res.send("email or password does't match")
           }
 ```
-
-- verify
-```js
-      function protectRoute(req,res,next){
-         //req.cookie => k ander data aata hai
-         const cookies = req.cookies 
-         const JWT = cookies.JWT
-         console.log("protect route encountered")
-         //you are logged In then it will allow next fun to run
-         const token = jwt.verify(JWT,secrets.JWTSECRET)
-         console.log(token)
-         next();
-      }
-```
-
-##### output :
-```js
-      protect route encountered
-      { data: '642169d3a89370656d059925', exp: 1680007896, iat: 1679921496 }
-
-```
-
-## In Brief :
-
 ```js
 app.post("/login",async function(req,res){
    try{
@@ -1860,6 +1836,20 @@ app.post("/login",async function(req,res){
 
 ```
 
+- verify
+```js
+      function protectRoute(req,res,next){
+         //req.cookie => k ander data aata hai
+         const cookies = req.cookies 
+         const JWT = cookies.JWT
+         console.log("protect route encountered")
+         //you are logged In then it will allow next fun to run
+         const token = jwt.verify(JWT,secrets.JWTSECRET)
+         console.log(token)
+         next();
+      }
+```
+
 ```js
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
 app.get("/users", protectRoute, async function(req,res){
@@ -1886,8 +1876,6 @@ function protectRoute(req,res,next){
 
 
 ```
-
-- protect route
 ```js
 function protectRoute(req, res, next) {
   try {
@@ -1910,3 +1898,12 @@ function protectRoute(req, res, next) {
 }
 
 ```
+
+
+##### output :
+```js
+      protect route encountered
+      { data: '642169d3a89370656d059925', exp: 1680007896, iat: 1679921496 }
+
+```
+
