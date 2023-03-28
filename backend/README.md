@@ -1781,12 +1781,12 @@ backend output : shashi
 
           if(user.password == password){
 
-            // token 
-            //payload , bydefault - algo [SHA256] , secrets
-            // expire date add kiye
-            const token = jwt.sign({ data:user["_id"], exp: Math.floor(Date.now() / 1000) + (60*60*24)}, secrets.JWTSECRET)
+              //token 
+              //payload , bydefault - algo [SHA256] , secrets
+              //expire date add kiye
+               const token = jwt.sign({ data:user["_id"], exp: Math.floor(Date.now() / 1000) + (60*60*24)}, secrets.JWTSECRET)
             
-            // token/data bhejte hai <= cookie k ander
+              //token/data bhejte hai <= cookie k ander
                res.cookie("JWT",token)
 
                res.send("user logged In")
