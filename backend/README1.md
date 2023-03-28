@@ -111,3 +111,27 @@ function protectRoute(req,res,next){
 
 
 ```
+
+- protect route
+```js
+function protectRoute(req, res, next) {
+  try {
+    // req.cookie => k ander data aata hai
+    const cookies = req.cookies
+    const JWT = cookies.JWT
+    if (cookies.JWT) {
+      console.log("protect route encountered")
+      //you are logged In then it will allow next fun to run
+      const token = jwt.verify(JWT, secrets.JWTSECRET)
+      console.log(token)
+      next();
+    } else {
+      res.send("you are not logged In kindly Login")
+    }
+
+  } catch (err) {
+    res.send(err.message)
+  }
+}
+
+```
