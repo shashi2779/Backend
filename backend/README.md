@@ -1837,7 +1837,7 @@ app.post("/login",async function(req,res){
 
 ```
 
-- verify : (protectRoute)
+- verify 
 
 ```js
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
