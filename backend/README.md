@@ -1876,6 +1876,7 @@ function protectRoute(req,res,next){
 
 
 ```
+- with try , catch
 ```js
 function protectRoute(req, res, next) {
   try {
