@@ -69,6 +69,55 @@ app.post("/login", async function (req, res) {
 })
 
 
+app.patch("/forgetPassword", async function(req,res){
+   try{
+     let { email } = req.body;
+     let otp = otpGenerator()
+     let user = await FooduserModel.findOneAndUpdate({email:email},{otp:otp},{new:true});   
+     // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+
+     console.log(user)
+
+     res.json({
+      data:user,
+      message:"otp send to your mail"
+     
+    })
+   }catch(err){
+    res.end(err.message)
+   }
+})
+
+
+app.patch("/resetPassword", async function(req,res){
+  try{
+    let { otp , password , confirmPassword } = req.body;
+     // otp k base par search karo 
+     //otp: undefined matlab otp remove ho gayi
+     // 1st --> jisse mai search kar rha hu
+     // 2nd --> jo hme update karna hai uss ke ander
+     // 3rd --> validator run k liye
+    let user = await FooduserModel.findOneAndUpdate({otp:otp},{password,confirmPassword,otp:undefined},{runValidators:true},{new:true});   
+    // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+    // eske ander validators chalte nhi , toh true kiya
+    console.log(user)
+
+    res.json({
+     data:user,
+     message:"password for the use is reset"
+    
+   })
+  }catch(err){
+   res.end(err.message)
+  }
+})
+
+function otpGenerator(){
+  return Math.floor(100000 + Math.random() * 900000);
+}
+
+
+
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
 app.get("/users", protectRoute, async function (req, res) {
   try {
@@ -79,23 +128,6 @@ app.get("/users", protectRoute, async function (req, res) {
     res.end(err.message);
   }
 })
-
-// profile page
-app.get("/user", protectRoute, async function(req, res){
-    // user k profile ka data show kiye
-    try{
-       const userId = req.userId;
-       const user = await FooduserModel.findById(userId);
-       res.json({
-        data:user,
-        message:"Data about logged In user is send"
-       })
-    }catch(err){
-      res.end(err.message)
-    }
-})
-
-
 
 function protectRoute(req, res, next) {
   try {
@@ -127,6 +159,26 @@ function protectRoute(req, res, next) {
     
   }
 }
+
+
+// profile page
+app.get("/user", protectRoute, async function(req, res){
+    // user k profile ka data show kiye
+    try{
+       const userId = req.userId;
+       const user = await FooduserModel.findById(userId);
+       res.json({
+        data:user,
+        message:"Data about logged In user is send"
+       })
+    }catch(err){
+      res.end(err.message)
+    }
+})
+
+
+
+
 
 app.listen(3000, function () {
   console.log("server running on 3000 port")
