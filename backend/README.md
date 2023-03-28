@@ -1779,11 +1779,13 @@ backend output : shashi
 - var jwt = require('jsonwebtoken');
 - jwt.sign() --> "/login" me
 - jwt.verify() --> "/users" me 
+- jwt.sign() se "token" nikal kar "cookie" k ander bhej diya
+- req.cookie k ander "data" aaya phir jwt.verify() se verify krr liya token ko 
 
 ```js
           if(user.password == password){
 
-              //token 
+              //token : token nikal kar cookie me bhej diya 
               //payload , bydefault - algo [SHA256] , secrets
               //expire date add kiye
                const token = jwt.sign({ data:user["_id"], exp: Math.floor(Date.now() / 1000) + (60*60*24)}, secrets.JWTSECRET)
