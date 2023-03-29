@@ -1995,6 +1995,7 @@ app.post("/signup", async function (req, res) {
      "conformPassword":"12345678910"
 }
 ```
+
 - login
 ```js
 app.post("/login", async function (req, res) {
@@ -2035,7 +2036,8 @@ app.post("/login", async function (req, res) {
 })
 
 ```
-- postman se 
+- postman se req mari
+- sabhi ka answer nhi likha hai
 - POST -> localhost:3000/login
 ```js
 {

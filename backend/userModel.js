@@ -56,6 +56,9 @@ let userSchema = new mongoose.Schema({
     type:String,
     enum:["mon","tue","wed"]
   },
+  otp :{
+    type:String
+  },
   address:{
     type:String
   }
