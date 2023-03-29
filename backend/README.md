@@ -2196,3 +2196,5 @@ app.patch("/resetPassword", async function(req,res){
 
 
 ```
+
+## lec - 7 :
