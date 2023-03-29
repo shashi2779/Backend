@@ -1802,6 +1802,7 @@ backend output : shashi
           }
 ```
 - login
+-  res.cookie("JWT",token) <= token/data bhejte hai
 ```js
 app.post("/login",async function(req,res){
    try{
@@ -1843,7 +1844,7 @@ app.post("/login",async function(req,res){
 ```
 
 - verify 
-
+- req.cookie => k ander data aata hai
 ```js
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
 app.get("/users", protectRoute, async function(req,res){

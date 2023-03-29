@@ -35,7 +35,7 @@ app.post("/login", async function (req, res) {
   try {
     let data = req.body;
     console.log(data)
-    // jo hmne email , password login karte wakt frontend(postman) se diya , "data" m wahi aaya
+    // jo hmne email , password login karte wakt frontend(postman) se diya , wahi "data" m aaya
     let { email, password } = data;
     if (email && password) {
       //jo hmne "email" diya tha login k wakt , wo "user" database mai hai toh aaya
@@ -46,7 +46,7 @@ app.post("/login", async function (req, res) {
 
           // token 
           //payload , bydefault - algo [SHA256] , secrets
-          // expire date add kiye
+          // expire date => kab hoga wo add kiya 
           const token = jwt.sign({ data: user["_id"], exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) }, secrets.JWTSECRET)
 
           // token/data bhejte hai <= cookie k ander
