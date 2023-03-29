@@ -1907,7 +1907,29 @@ function protectRoute(req, res, next) {
 
 ## user k profile => ka data show karna hai :
 
-- user ki ID nikale
+
+- "/user" route show kiya user ka profile => profile page 
+```js
+app.get("/user",protectRoute ,async function(req,res){
+    // user k profile ka data show kiye
+   
+    try{
+      //key access kya
+       const userId = req.userId;
+       // apne model me se "byId" fun se => user get karr legen
+       const user = await FooduserModel.findById(userId);
+       res.json({
+        data:user,
+        message:"Data about logged In user is send"
+       })
+    }catch(err){
+      res.end(err.message)
+    }
+})
+
+```
+
+- token k ander eske "data" property k ander user ki "ID" aati hai
 ```js
 function protectRoute(req, res, next) {
   try {
@@ -1919,9 +1941,13 @@ function protectRoute(req, res, next) {
       //you are logged In then it will allow next fun to run
       const token = jwt.verify(JWT, secrets.JWTSECRET)
 
-      // user ki Id nikal liye ###############
+     
+     // token k ander eske "data" property k ander user ki "ID" aati hai
        let userId = token.data;
-       req.userId = userId;   // ek obj par koi bhi "key"[req.userId me "userId"] add kar sakte hai
+      // req obj k ander userId property banao , aur usme userId put kar do 
+      // eska fayda ye hua ki => kis user ne "token" bheja hai pta lga sakte hai
+      // ek obj par koi bhi "key"[req.userId me "userId" key hai] add kar sakte hai
+      req.userId = userId;   
       next();
     } else {
       res.send("you are not logged In kindly Login")
@@ -1938,24 +1964,5 @@ function protectRoute(req, res, next) {
   }
 }
 
-
-```
-- "/user" route show kiya user ka profile => profile page
-- by ID
-```js
-app.get("/user",protectRoute ,async function(req,res){
-    // user k profile ka data show kiye
-   
-    try{
-       const userId = req.userId;
-       const user = await FooduserModel.findById(userId);
-       res.json({
-        data:user,
-        message:"Data about logged In user is send"
-       })
-    }catch(err){
-      res.end(err.message)
-    }
-})
 
 ```
