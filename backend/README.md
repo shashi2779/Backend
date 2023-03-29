@@ -1985,7 +1985,16 @@ app.post("/signup", async function (req, res) {
 })
 
 ```
-
+- postman se 
+- POST -> localhost:3000/signup
+```js
+{
+    "name":"vikash",
+    "email":"qwqw@321123",
+     "password":"12345678910",
+     "conformPassword":"12345678910"
+}
+```
 - login
 ```js
 app.post("/login", async function (req, res) {
@@ -2026,7 +2035,14 @@ app.post("/login", async function (req, res) {
 })
 
 ```
-
+- postman se 
+- POST -> localhost:3000/login
+```js
+{
+    "email":"qwqw@321123",
+    "password":"12345678910"
+}
+```
 - users
 ```js
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
@@ -2039,6 +2055,11 @@ app.get("/users", protectRoute, async function (req, res) {
     res.end(err.message);
   }
 })
+
+```
+- postman se 
+- GET -> localhost:3000/users
+```js
 
 ```
 - protectRoute
@@ -2094,6 +2115,11 @@ app.get("/user", protectRoute, async function(req, res){
 })
 
 ```
+- postman se 
+- GET -> localhost:3000/user
+```js
+
+```
 
 - pic dalni hai yha
 - forgetPassword
@@ -2121,6 +2147,14 @@ app.patch("/forgetPassword", async function(req,res){
    }
 })
 
+```
+- postman se 
+- PATCH -> localhost:3000/forgetPassword
+```js
+body -> raw -> json
+{
+    "email": "qwqw@321123"
+}
 ```
 - otpGenerator
 ```js
@@ -2152,5 +2186,10 @@ app.patch("/resetPassword", async function(req,res){
    res.end(err.message)
   }
 })
+
+```
+- postman se 
+- PATCH -> localhost:3000/resetPassword
+```js
 
 ```
