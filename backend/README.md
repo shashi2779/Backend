@@ -2100,11 +2100,15 @@ app.get("/user", protectRoute, async function(req, res){
 ```js
 app.patch("/forgetPassword", async function(req,res){
    try{
+    // req --> email 
      let { email } = req.body;
      let otp = otpGenerator()
+     // 1st - search user on the basis of "email"
+     // 2nd - send otp to that email
+     // 3rd - given permission to "update the value" by "{new:true}"
+     // "new" bydefault "false" hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
      let user = await FooduserModel.findOneAndUpdate({email:email},{otp:otp},{new:true});   
-     // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
-
+     
      console.log(user)
 
      res.json({
@@ -2130,9 +2134,8 @@ function otpGenerator(){
 app.patch("/resetPassword", async function(req,res){
   try{
     let { otp , password , confirmPassword } = req.body;
-     // otp k base par search karo 
      //otp: undefined matlab otp remove ho gayi
-     // 1st --> jisse mai search kar rha hu
+     //1st --> jisse mai search kar rha hu  ==> otp k base par search karo 
      // 2nd --> jo hme update karna hai uss ke ander
      // 3rd --> validator run k liye
     let user = await FooduserModel.findOneAndUpdate({otp:otp},{password,confirmPassword,otp:undefined},{runValidators:true},{new:true});   
