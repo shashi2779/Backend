@@ -2095,6 +2095,7 @@ app.get("/user", protectRoute, async function(req, res){
 
 ```
 
+- pic dalni hai yha
 - forgetPassword
 ```js
 app.patch("/forgetPassword", async function(req,res){
