@@ -2194,4 +2194,5 @@ app.patch("/resetPassword", async function(req,res){
 - PATCH -> localhost:3000/resetPassword
 ```js
 
+
 ```
