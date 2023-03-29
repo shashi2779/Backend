@@ -1940,7 +1940,8 @@ function protectRoute(req, res, next) {
 
 
 ```
-- "user" k profile ka data show kiye - profile page
+- "/user" route show kiya user ka profile => profile page
+- by ID
 ```js
 app.get("/user",protectRoute ,async function(req,res){
     // user k profile ka data show kiye
