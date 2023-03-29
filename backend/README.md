@@ -2036,7 +2036,7 @@ app.post("/login", async function (req, res) {
 })
 
 ```
-- postman se req mari
+- postman se "req" mari
 - sabhi ka answer nhi likha hai
 - POST -> localhost:3000/login
 ```js
