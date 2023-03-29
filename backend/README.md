@@ -1801,7 +1801,7 @@ backend output : shashi
               res.send("email or password does't match")
           }
 ```
-- login
+- login => user login kiya
 -  res.cookie("JWT",token) <= token/data bhejte hai
 ```js
 app.post("/login",async function(req,res){
@@ -1845,6 +1845,7 @@ app.post("/login",async function(req,res){
 
 - verify 
 - req.cookie => k ander data aata hai
+- "/users" route => get all the users
 ```js
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
 app.get("/users", protectRoute, async function(req,res){
