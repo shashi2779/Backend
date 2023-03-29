@@ -1902,7 +1902,7 @@ function protectRoute(req, res, next) {
       { data: '642169d3a89370656d059925', exp: 1680007896, iat: 1679921496 }
 
 ```
-
+------------------------
 ### user k profile ka data show karna hai :
 
 - user ki ID nikale
