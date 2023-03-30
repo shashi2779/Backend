@@ -125,19 +125,19 @@ app.patch("/resetPassword", async function (req, res) {
     } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
 
       // otp match kiya
-      if (user.otp != otp) {
+      if (user.otp != otp) { // "time" kam hai otp match nhi kiya 
         
         res.json({
           message: "otp does't match"
         })
-      } else {
+      } else { // time kam hai "otp" match ho gya toh password , conformPassword update karr diya
         //otp: undefined matlab otp remove ho gayi  
-        // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo 
+        // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo [in otp] => otp,email k base prr search krr liya [in otpExpire]
         // 2nd --> jo hme update karna hai uss ke ander
         // 3rd --> validator run k liye
         // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
         // eske ander validators chalte nhi , toh true kiya
-        user = await FooduserModel.findOneAndUpdate({ otp: otp }, { password, confirmPassword }, { runValidators: true, new: true });
+        user = await FooduserModel.findOneAndUpdate({ otp , email }, { password, confirmPassword }, { runValidators: true, new: true });
 
         // key delete -> get the document object -> modify that object by removing useless keys
         // otp remove kiye 

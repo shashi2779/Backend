@@ -2386,9 +2386,10 @@ function otpGenerator() {
              "email" match karegen [unique hota hai] , eske base par user nikal legen
 
 
-    // otpExpire k liye email get kiye 
+    // otpExpire k liye email get kiye , 
     let { otp, password, confirmPassword, email} = req.body;
     // search -> get the user
+    // email unique hai hamesa hame user unique hi milega 
     let user = await FooduserModel.findOne(email)
 
   
@@ -2401,16 +2402,16 @@ function otpGenerator() {
 app.patch("/resetPassword", async function (req, res) {
   try {
     let { otp, password, confirmPassword, email } = req.body;
-    // search -> get the user , for check otp expire or not
+    // search -> get the user , for check "otp" expire or not
     let user = await FooduserModel.findOne(email)
     let currentTime = Date.now()
     
-    // aapka currentTime otpExpire se jada hai toh aapka token expire ho gya hai
+    // aapka currentTime otpExpire se jada hai toh aapka "token" expire ho gya hai
     if (currentTime > user.otpExpiry) { 
       // otp remove kiye 
       //user.otp = undefined;
       delete user.otp;
-      // hmara token expire ho gya toh "undefined" kar diya
+      // otpExpire remove kiya
       // user.otpExpiry = undefined
       delete user.otpExpiry
       // save to save this doc in db
@@ -2423,14 +2424,15 @@ app.patch("/resetPassword", async function (req, res) {
 
     } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
 
-      // otp match kiya
-      if (user.otp != otp) {
+      // otp match nhi kiya
+      if (user.otp != otp) { // "time" kam hai otp match nhi kiya 
         res.json({
           message: "otp does't match"
         })
-      } else {
-        
-        user = await FooduserModel.findOneAndUpdate({ otp: otp }, { password, confirmPassword }, { runValidators: true, new: true });
+      } else { // time kam hai "otp" match ho gya toh password , conformPassword update karr diya
+        // otp,email k base prr search kar liya 
+        // password ,conform pass update kiya
+        user = await FooduserModel.findOneAndUpdate({ otp , email }, { password, confirmPassword }, { runValidators: true, new: true });
         // otp remove kiye 
         // user.otp = undefined;
         delete user.otp;
