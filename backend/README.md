@@ -2457,3 +2457,21 @@ app.patch("/resetPassword", async function (req, res) {
 })
 
 ```
+
+-------------------
+-------------------
+-------------------
+
+### structuring : 
+- start every route with "/api"
+- the route should have it's version appended after "/api"
+    - "/api/v1/user"
+    - routes are "noun" , 
+    - methods are "verbs
+
+- use get/post/patch/delete method for doing action
+    - route to represent  -> entity
+
+- Appropriate status code
+
+### MVC : (model view controller)

@@ -164,9 +164,6 @@ app.patch("/resetPassword", async function (req, res) {
 })
 
 
-
-
-
 // users -> get all the users ( sare users la kar de deta hai ) -> sensitive route -> protect route -> logged In i will only allow that person
 app.get("/users", protectRoute, async function (req, res) {
   try {
@@ -226,7 +223,8 @@ app.get("/user", protectRoute, async function (req, res) {
 })
 
 
-
+// user update route
+// user delete route
 
 
 app.listen(3000, function () {
