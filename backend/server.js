@@ -74,6 +74,7 @@ app.patch("/forgetPassword", async function(req,res){
     // req --> email 
      let { email } = req.body;
      let otp = otpGenerator()
+     console.log(otp)
      // 1st - search user on the basis of "email"
      // 2nd - send otp to that email
      // 3rd - given permission to "update the value" by "{new:true}"

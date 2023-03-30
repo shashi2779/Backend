@@ -2123,8 +2123,22 @@ app.get("/user", protectRoute, async function(req, res){
 
 ```
 
-- pic dalni hai yha
-- forgetPassword
+### forgetPassword :
+- req --> email => how to send email through a server
+- API :
+   
+   - send a OTP to the email
+   - search user on the basis of email --> phir usme "otp" put kar do 
+
+### resetPassword :
+- req --> otp, password, conformPassword , put kiye 
+- API :
+   
+   - search user on the basis of "otp"
+   - update password liye
+   - remove otp from user
+
+#### forgetPassword
 ```js
 app.patch("/forgetPassword", async function(req,res){
    try{
@@ -2165,7 +2179,7 @@ function otpGenerator(){
 }
 ```
 
-- resetPassword
+#### resetPassword
 ```js
 app.patch("/resetPassword", async function(req,res){
   try{
