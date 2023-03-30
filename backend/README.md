@@ -2214,7 +2214,12 @@ app.patch("/resetPassword", async function(req,res){
 - postman se 
 - PATCH -> localhost:3000/resetPassword
 ```js
-
+body -> raw -> json
+{
+"otp": "406216",
+"password": "12345678910",
+"conformPassword": "12345678910"
+}
 
 ```
 
