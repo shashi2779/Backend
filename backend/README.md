@@ -1968,6 +1968,28 @@ function protectRoute(req, res, next) {
 ```
 
 ## Note :
+- requirements npm
+```js
+const express = require("express")
+
+const app = express();
+
+const cookieParser = require("cookie-parser")
+
+const secrets = require("./secrets")
+
+var jwt = require('jsonwebtoken');
+
+// represent -> collection
+const FooduserModel = require('./userModel')
+
+// to add post body data to req.body
+app.use(express.json())
+
+// call kiye
+app.use(cookieParser())
+
+```
 - signup
 ```js
 app.post("/signup", async function (req, res) {
@@ -2224,3 +2246,212 @@ body -> raw -> json
 ```
 
 ## lec - 7 :
+
+- usermodel
+```js
+const mongoose = require("mongoose")
+
+
+//db server se connect --> mongoDb atlas se connect
+let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
+
+
+mongoose.connect(dblink)
+.then(function(){
+    console.log("connected")
+}).catch(function(err){
+    console.log("error",err)
+})
+
+
+// how to create a schema  
+// kahi kahi maine "required" nahi kar rkha toh eska matlab wo "entry" na bhi doge na , 
+// "user" banate wakt toh bhi kam chal jayega (required de diya toh wo entry jarur deni padegi)
+let userSchema = new mongoose.Schema({
+  name:{
+    type: String,
+    required:[true,"Name is not send"]
+  },
+   password:{
+    type:String,
+    required:[true,"password is missing"]
+  },
+  conformPassword:{
+    type:String,
+    required:[true,"conformPassword is missing"],
+    //custom validator
+    validate:{
+       validator:function(){
+          // "this" referes to the current entry
+          return this.password == this.conformPassword
+       },
+       //error message
+       message:"password is miss match"
+    }
+  },
+  email:{
+    type:String,
+    required:[true,"email is missing"],
+    unique:true
+  },
+  phonenumber:{
+    type:"String",
+    minLength:[10,"less than 10 number"],
+    maxLength:10
+  },
+  pic:{
+    type:String,
+    default:"shashidp.jpg"
+  },
+  days:{
+    type:String,
+    enum:["mon","tue","wed"]
+  },
+  otp :{
+    type:String
+  },
+  otpExpiry:{
+    type : Date
+  },
+  address:{
+    type:String
+  }
+})
+
+
+
+//model is similar to your collection
+//1st- name of collection(data base ka nam) - fooduserModel
+//2nd- the set of rules this collection should follow (schema k set of rules apply hogen) - userSchema 
+let FooduserModel = mongoose.model('foodUserModel',userSchema)
+module.exports = FooduserModel;
+
+```
+
+### OTP Expiry :
+- forgetPassword
+- add after 5 min otp are expired
+```js
+app.patch("/forgetPassword", async function (req, res) {
+  try {
+    // req --> email 
+    let { email } = req.body;
+    // otp expire after five min
+    let afterFiveMin = Date.now() + 5 * 60 * 1000;
+    let otp = otpGenerator()
+    console.log(otp)
+   
+    // otp expire after five min
+    let user = await FooduserModel.findOneAndUpdate({ email: email }, { otp: otp, otpExpiry: afterFiveMin }, { new: true });
+
+    console.log(user)
+
+    res.json({
+      data: user,
+      message: "otp send to your mail"
+
+    })
+  } catch (err) {
+    res.end(err.message)
+  }
+})
+
+```
+- otpGenerator
+```js
+function otpGenerator() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+```
+
+
+- resetPassword 
+- aapka currentTime otpExpire se jada hai toh aapka token expire ho gya hai
+- agar otp expire nhi huaa hai toh password,conformPassword update kar do & 
+  otp expire ko remove kar do
+- bugs :
+```js
+    let { otp, password, confirmPassword} = req.body;
+    // search -> get the user
+    let user = await FooduserModel.findOne(otp)
+
+
+    Note :
+          1- first user ka OTP = 1234
+             second user ka OTP = 1235
+
+             agar 2nd wale ne 1st wale ka "otp" dal diya toh uske base par hamm dhudh rhe honge "user", 
+
+             otpExpire k liye "otp" k base par user nhi nikalegen => 
+             "email" match karegen [unique hota hai] , eske base par user nikal legen
+
+
+    // otpExpire k liye email get kiye 
+    let { otp, password, confirmPassword, email} = req.body;
+    // search -> get the user
+    let user = await FooduserModel.findOne(email)
+
+  
+  Two step :
+   //  pahle otp check kaegen expire toh nhi na huyi , phir 
+   //  otp bad me compair karegen         
+
+```      
+```js
+app.patch("/resetPassword", async function (req, res) {
+  try {
+    let { otp, password, confirmPassword, email } = req.body;
+    // search -> get the user , for check otp expire or not
+    let user = await FooduserModel.findOne(email)
+    let currentTime = Date.now()
+    
+    // aapka currentTime otpExpire se jada hai toh aapka token expire ho gya hai
+    if (currentTime > user.otpExpiry) { 
+      // otp remove kiye 
+      //user.otp = undefined;
+      delete user.otp;
+      // hmara token expire ho gya toh "undefined" kar diya
+      // user.otpExpiry = undefined
+      delete user.otpExpiry
+      // save to save this doc in db
+      await user.save()
+      console.log(user)
+
+      res.json({
+         message: "otp Expired"
+      })
+
+    } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
+
+      // otp match kiya
+      if (user.otp != otp) {
+        res.json({
+          message: "otp does't match"
+        })
+      } else {
+        
+        user = await FooduserModel.findOneAndUpdate({ otp: otp }, { password, confirmPassword }, { runValidators: true, new: true });
+        // otp remove kiye 
+        // user.otp = undefined;
+        delete user.otp;
+        // and otp expire remove kar do 
+        // user.otpExpiry = undefined
+        delete user.otpExpiry
+        // save to save this doc in db (jo change hua usko db me save karr liya)
+        await user.save()
+        console.log(user)
+
+        res.json({
+          data: user,
+          message: "user password reset"
+
+        })
+      }
+    }
+
+  } catch (err) {
+    res.end(err.message)
+  }
+})
+
+```

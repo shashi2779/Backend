@@ -69,60 +69,97 @@ app.post("/login", async function (req, res) {
 })
 
 
-app.patch("/forgetPassword", async function(req,res){
-   try{
+app.patch("/forgetPassword", async function (req, res) {
+  try {
     // req --> email 
-     let { email } = req.body;
-     let otp = otpGenerator()
-     console.log(otp)
-     // 1st - search user on the basis of "email"
-     // 2nd - send otp to that email
-     // 3rd - given permission to "update the value" by "{new:true}"
-     // "new" bydefault "false" hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
-     let user = await FooduserModel.findOneAndUpdate({email:email},{otp:otp},{new:true});   
-     
-     console.log(user)
+    let { email } = req.body;
+    // otp expire after five min
+    let afterFiveMin = Date.now() + 5 * 60 * 1000;
+    let otp = otpGenerator()
+    console.log(otp)
+    // 1st - search user on the basis of "email"
+    // 2nd - send otp to that email
+    // 3rd - given permission to "update the value" by "{new:true}"
+    // "new" bydefault "false" hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+    // otp expire after five min
+    let user = await FooduserModel.findOneAndUpdate({ email: email }, { otp: otp, otpExpiry: afterFiveMin }, { new: true });
 
-     res.json({
-      data:user,
-      message:"otp send to your mail"
-     
-    })
-   }catch(err){
-    res.end(err.message)
-   }
-})
-
-function otpGenerator(){
-  return Math.floor(100000 + Math.random() * 900000);
-}
-
-app.patch("/resetPassword", async function(req,res){
-  try{
-    let { otp , password , confirmPassword } = req.body;
-     //otp: undefined matlab otp remove ho gayi  
-     // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo 
-     // 2nd --> jo hme update karna hai uss ke ander
-     // 3rd --> validator run k liye
-     // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
-    // eske ander validators chalte nhi , toh true kiya
-    let user = await FooduserModel.findOneAndUpdate({otp:otp},{password,confirmPassword},{runValidators:true,new:true});   
-    
-    // key delete -> get the document object -> modify that object by removing useless keys
-    // otp remove kiye 
-    user.otp = undefined;
-    
-    // save to save this doc in db
-    await user.save()
     console.log(user)
 
     res.json({
-     data:user,
-     message:"password for the use is reset"
-    
-   })
-  }catch(err){
-   res.end(err.message)
+      data: user,
+      message: "otp send to your mail"
+
+    })
+  } catch (err) {
+    res.end(err.message)
+  }
+})
+
+function otpGenerator() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+
+app.patch("/resetPassword", async function (req, res) {
+  try {
+    let { otp, password, confirmPassword, email } = req.body;
+    // search -> get the user 
+    let user = await FooduserModel.findOne(email)
+    let currentTime = Date.now()
+
+    if (currentTime > user.otpExpiry) { // aapka currentTime otpExpire se jada hai toh aapka token expire ho gya hai
+      // otp remove kiye 
+      // user.otp = undefined;
+      delete user.otp;
+      // hmara token expire ho gya toh "undefined" kar diya
+      // user.otpExpiry = undefined
+      delete user.otpExpiry;
+      // save to save this doc in db (jo change hua usko db me save karr liya)
+      await user.save()
+      console.log(user)
+
+      res.json({
+        message: "otp Expired"
+      })
+
+    } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
+
+      // otp match kiya
+      if (user.otp != otp) {
+        
+        res.json({
+          message: "otp does't match"
+        })
+      } else {
+        //otp: undefined matlab otp remove ho gayi  
+        // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo 
+        // 2nd --> jo hme update karna hai uss ke ander
+        // 3rd --> validator run k liye
+        // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+        // eske ander validators chalte nhi , toh true kiya
+        user = await FooduserModel.findOneAndUpdate({ otp: otp }, { password, confirmPassword }, { runValidators: true, new: true });
+
+        // key delete -> get the document object -> modify that object by removing useless keys
+        // otp remove kiye 
+        // user.otp = undefined;
+        delete user.otp;
+        // and otp expire remove kar do 
+        // user.otpExpiry = undefined
+        delete user.otpExpiry
+        // save to save this doc in db (jo change hua usko db me save karr liya)
+        await user.save()
+        console.log(user)
+
+        res.json({
+          data: user,
+          message: "user password reset"
+
+        })
+      }
+    }
+
+  } catch (err) {
+    res.end(err.message)
   }
 })
 
@@ -150,42 +187,42 @@ function protectRoute(req, res, next) {
       console.log("protect route encountered")
       //you are logged In then it will allow next fun to run
       const token = jwt.verify(JWT, secrets.JWTSECRET)
-      console.log("Jwt decrypted",token)
+      console.log("Jwt decrypted", token)
       // user ki Id nikal liye
-       let userId = token.data;
-       console.log("userId",userId)
-       req.userId = userId; 
-     
-       next();
+      let userId = token.data;
+      console.log("userId", userId)
+      req.userId = userId;
+
+      next();
     } else {
       res.send("you are not logged In kindly Login")
     }
 
   } catch (err) {
     console.log(err)
-    if(err.message == "invalid signature"){
+    if (err.message == "invalid signature") {
       res.send("Token invalid kindly Login")
-    }else{
+    } else {
       res.send(err.message)
     }
-    
+
   }
 }
 
 
 // profile page
-app.get("/user", protectRoute, async function(req, res){
-    // user k profile ka data show kiye
-    try{
-       const userId = req.userId;
-       const user = await FooduserModel.findById(userId);
-       res.json({
-        data:user,
-        message:"Data about logged In user is send"
-       })
-    }catch(err){
-      res.end(err.message)
-    }
+app.get("/user", protectRoute, async function (req, res) {
+  // user k profile ka data show kiye
+  try {
+    const userId = req.userId;
+    const user = await FooduserModel.findById(userId);
+    res.json({
+      data: user,
+      message: "Data about logged In user is send"
+    })
+  } catch (err) {
+    res.end(err.message)
+  }
 })
 
 
