@@ -104,9 +104,16 @@ app.patch("/resetPassword", async function(req,res){
      // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo 
      // 2nd --> jo hme update karna hai uss ke ander
      // 3rd --> validator run k liye
-    let user = await FooduserModel.findOneAndUpdate({otp:otp},{password,confirmPassword,otp:undefined},{runValidators:true},{new:true});   
-    // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+     // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
     // eske ander validators chalte nhi , toh true kiya
+    let user = await FooduserModel.findOneAndUpdate({otp:otp},{password,confirmPassword},{runValidators:true,new:true});   
+    
+    // key delete -> get the document object -> modify that object by removing useless keys
+    // otp remove kiye 
+    user.otp = undefined;
+    
+    // save to save this doc in db
+    await user.save()
     console.log(user)
 
     res.json({
