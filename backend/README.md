@@ -346,7 +346,7 @@
     
     const app = express();
     
-    app.use(express.json());
+    app.use(express.json());            //predefined middleware
 
     app.use(function(req,res,next){    // user define middle ware
       console.log("i will always ran")
