@@ -2471,7 +2471,9 @@ app.patch("/resetPassword", async function (req, res) {
     
 
 - use get/post/patch/delete method for doing an "action" & route to represent  -> entity
-    - routes are "noun" , 
+    - routes are "noun" 
+       - route to represent  -> entity
+            - eg. user , plans , auth , reviews , booking 
     - methods are "verbs
 
 - Appropriate status code
