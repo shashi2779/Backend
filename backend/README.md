@@ -736,7 +736,7 @@ backend output : shashi
 - fun that can modify req/res cycle are known as middleware
 - backend <------req----- frontend
 - "/user" <--- "/isAuthorized" <--- "/isLogin" <--- "/bodyChecker" <------req-------- frontend
-- jo jo fun aapke ess cycle ko change kar sakte hai unhe middleware kahte hai
+- jo bhi fun aapke req/res cycle ko change kar sakte hai unhe "middleware" kahte hai
 
 --------------------
 
