@@ -2470,7 +2470,7 @@ app.patch("/resetPassword", async function (req, res) {
     - "/api/v1/user"
     
 
-- use get/post/patch/delete method for doing an "action" , route to represent  -> entity
+- use get/post/patch/delete method for doing an "action" & route to represent  -> entity
     - routes are "noun" , 
     - methods are "verbs
 
