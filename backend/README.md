@@ -2149,8 +2149,9 @@ app.get("/user", protectRoute, async function(req, res){
 - req --> email => how to send email through a server
 - API :
    
-   - send a OTP to the email
    - search user on the basis of email --> phir usme "otp" put kar do 
+   - send a OTP to the email
+   
 
 ### resetPassword :
 - req --> otp, password, conformPassword , put kiye 
