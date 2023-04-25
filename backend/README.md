@@ -2463,7 +2463,7 @@ app.patch("/resetPassword", async function (req, res) {
 -------------------
 -------------------
 
-### structuring : Rules
+### structuring : 3-Rules : Good Practice
 - start every route with ==> "/api"
 - the route should have it's version appended after "/api"
     - kahne ka matlab har route aise start hona chahiye ==> "/api/v1/phir apna "user"
