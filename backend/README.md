@@ -2463,7 +2463,7 @@ app.patch("/resetPassword", async function (req, res) {
 -------------------
 -------------------
 
-### structuring : 3-Rules : Good Practice
+### Structuring : 4-Rules : Good Practice
 - start every route with ==> "/api"
     - yha se sirf "data" milega
 - the route should have it's version appended after "/api"
