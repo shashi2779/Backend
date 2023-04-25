@@ -2469,6 +2469,7 @@ app.patch("/resetPassword", async function (req, res) {
 - the route should have it's version appended after "/api"
     - kahne ka matlab har route aise start hona chahiye ==> "/api/v1/phir apna "user"
     - man lo ek hi chij ko multiple tarike se implement karna ho aur kuch set-of-version "v-1" par hi chalte ho , 
+    
     "v-2" par chal hi nhi sakte , toh "v-1" ko available rakhna padega.
     - "/api/v1/user"
     
