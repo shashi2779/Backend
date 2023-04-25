@@ -2463,7 +2463,7 @@ app.patch("/resetPassword", async function (req, res) {
 -------------------
 -------------------
 
-### structuring : 
+### structuring : Rules
 - start every route with ==> "/api"
 - the route should have it's version appended after "/api"
     - "/api/v1/user"
