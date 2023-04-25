@@ -2330,7 +2330,7 @@ module.exports = FooduserModel;
 ```
 
 ### OTP Expiry :
-- forgetPassword
+#### forgetPassword
 - add after 5 min otp are expired
 ```js
 app.patch("/forgetPassword", async function (req, res) {
@@ -2366,7 +2366,7 @@ function otpGenerator() {
 ```
 
 
-- resetPassword 
+#### resetPassword 
 - aapka currentTime otpExpire se jada hai toh aapka token expire ho gya hai
 - agar otp expire nhi huaa hai toh password,conformPassword update kar do & 
   otp expire ko remove kar do
