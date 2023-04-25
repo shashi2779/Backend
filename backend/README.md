@@ -820,7 +820,7 @@ backend output : shashi
     let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
     
     // mongoose connect 
-    //mongoose.connect() fun ye promise base h
+    //mongoose.connect() --> fun ye promise base h
     mongoose.connect(dblink)
     .then(function(){
         console.log("connected")
