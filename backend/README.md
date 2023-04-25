@@ -2468,11 +2468,11 @@ app.patch("/resetPassword", async function (req, res) {
 - the route should have it's version appended after "/api"
     - kahne ka matlab har route aise start hona chahiye ==> "/api/v1/phir apna "user"
     - "/api/v1/user"
+    
+
+- use get/post/patch/delete method for doing an "action" , route to represent  -> entity
     - routes are "noun" , 
     - methods are "verbs
-
-- use get/post/patch/delete method for doing action
-    - route to represent  -> entity
 
 - Appropriate status code
 
