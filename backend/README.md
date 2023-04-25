@@ -1909,6 +1909,46 @@ function protectRoute(req, res, next) {
 
 
 - "/user" route show kiya user ka profile => profile page 
+
+- token k ander , eske "data" property k ander , user ki "ID" aati hai
+```js
+function protectRoute(req, res, next) {
+  try {
+    // req.cookie => k ander data aata hai
+    const cookies = req.cookies
+    const JWT = cookies.JWT
+    if (cookies.JWT) {
+      console.log("protect route encountered")
+      //you are logged In then it will allow next fun to run
+      const token = jwt.verify(JWT, secrets.JWTSECRET)
+
+     
+     // token k ander eske "data" property k ander user ki "ID" aati hai
+       let userId = token.data;
+      // req obj k ander userId property banao , aur usme userId put kar do 
+      // eska fayda ye hua ki => kis user ne "token" bheja hai pta lga sakte hai
+      // ek obj par koi bhi "key"[req.userId me "userId" key hai] add kar sakte hai
+      req.userId = userId;   
+      next();
+    } else {
+      res.send("you are not logged In kindly Login")
+    }
+
+  } catch (err) {
+    console.log(err)
+    if(err.message == "invalid signature"){
+      res.send("Token invalid kindly Login")
+    }else{
+      res.send(err.message)
+    }
+    
+  }
+}
+
+
+```
+
+
 ```js
 app.get("/user",protectRoute ,async function(req,res){
     // user k profile ka data show kiye
@@ -1929,7 +1969,7 @@ app.get("/user",protectRoute ,async function(req,res){
 
 ```
 
-- token k ander eske "data" property k ander user ki "ID" aati hai
+- token k ander , eske "data" property k ander , user ki "ID" aati hai
 ```js
 function protectRoute(req, res, next) {
   try {
