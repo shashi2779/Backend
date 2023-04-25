@@ -2474,6 +2474,8 @@ app.patch("/resetPassword", async function (req, res) {
     - routes are "noun" 
        - route to represent  -> entity
             - eg. user , plans , auth , reviews , booking 
+            - primary entity : user , plans [ense derived entity]
+            - derived entity : auth, reviews , booking
     - methods are "verbs
 
 - Appropriate status code
