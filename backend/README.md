@@ -2581,18 +2581,28 @@ module.exports = FooduserModel;
 ###### controller k ander aap kya dalte ho ,
 - controller k ander aap ye sare fun'n dalte ho , jo kya karte hai => aayi huyi "req" ke hisab se apne "Model" se bat karte hai , aur aapko result dete hai.
 ```js
-async function getAllUsersController(req, res) {
+
+app.use("signup",function signup(req, res){
     try {
-      let users = await FooduserModel.find();
-      //to send json data
-      res.json(users)
+      let data = req.body;
+      console.log(data);  // frontend se data aaya
+  
+      // jo frontend se "data" aaya usse "db" me bhej diya 
+      let newUser = await FooduserModel.create(data)
+      console.log(newUser);
+      res.end("post wala route se data")
     } catch (err) {
-      res.end(err.message);
+      res.end(err.message)
     }
-  }
+  })
 
 
-//-----------------------------------------
+Note : 
+      ess functions ko hi hamm controller bolte hai.
+
+
+
+//-------------------Controller Function-----------
 
 
 
@@ -2611,10 +2621,16 @@ async function signupController(req, res) {
   }
 
 
-
-Note : 
-      ess functions ko hi hamm controller bolte hai.
-
+ 
+ async function getAllUsersController(req, res) {
+    try {
+      let users = await FooduserModel.find();
+      //to send json data
+      res.json(users)
+    } catch (err) {
+      res.end(err.message);
+    }
+  }
 
 
 ```
