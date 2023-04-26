@@ -2644,6 +2644,54 @@ async function signupController(req, res) {
     - "api/vi/auth/signup"   <== It is a good pratics but not a "developer friendly"
 
 
+### Good Approach :
+- pahle 
+```js
+const express = require("express")
+const app = express();
+
+// to add post body data to req.body
+app.use(express.json());
+
+app.post("/signup",signupController);    ❎
+
+OR 
+
+app.post("/api/v1/auth/signup",signupController);    ✅
+
+
+```
+- abb
+```js
+const express = require("express")
+const authRouter = express.Router()
+
+app.use("/api/v1/auth",authRouter)
+authRouter.post("/signup",signupController);       ✅
+
+```
+```js
+user k liye
+-------------
+const express = require("express")
+const userRouter = express.Router()
+
+app.use("/api/v1/user",userRouter)
+userRouter.post("/user",protectRouter,profileController);       ✅
+
+```
+#### Note :
+- etna sara likhane se axa hai : "for good approach" =>
+  
+     app.post("/api/v1/auth/signup",signupController); 
+  
+  ye likh do =>
+     
+     app.use("/api/v1/auth",authRouter)
+     authRouter.post("/signup",signupController);     ✅
+
+
+
 ### server.js
 - server.js/api.js
 ```js
@@ -2655,9 +2703,10 @@ const app = express();
 const cookieParser = require("cookie-parser")
 
 //jsonwebtoken
+// token name is -> JWT & mechanism -> cookies
 const jwt = require("jsonwebtoken");
 const secrets = require("./secrets");
-// token name is -> JWT & mechanism -> cookies
+
 
 const FooduserModel = require("./userModel");
 
@@ -2667,14 +2716,21 @@ app.use(express.json());
 // add cookies to req.cookies
 app.use(cookieParser());
 
-app.post("/signup",signupController);
-app.post("/login",loginController);
+const authRouter = express.Router()
+const userRouter = express.Router()
 
-app.patch("/forgetPassword",forgetPasswordController);
-app.patch("/resetPassword",resetPasswordController);
+app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/user", userRouter)
 
-app.get("/users",protectRoute,getAllUsersController);
-app.get("/user",protectRoute,profileController);
+//auth
+authRouter.post("/signup",signupController);
+authRouter.post("/login",loginController);
+authRouter.patch("/forgetPassword",forgetPasswordController);
+authRouter.patch("/resetPassword",resetPasswordController);
+
+// user
+userRouter.get("/users",protectRoute,getAllUsersController);
+userRouter.get("/user",protectRoute,profileController);
 
 
 
@@ -2910,48 +2966,3 @@ app.listen(3000, function () {
 
 ```
 
-### Good Approach :
-- pahle 
-```js
-const express = require("express")
-const app = express();
-
-// to add post body data to req.body
-app.use(express.json());
-
-app.post("/signup",signupController);    ❎
-
-OR 
-
-app.post("/api/v1/auth/signup",signupController);    ✅
-
-
-```
-- abb
-```js
-const express = require("express")
-const authRouter = express.Router()
-
-app.use("/api/v1/auth",authRouter)
-authRouter.post("/signup",signupController);       ✅
-
-```
-```js
-user k liye
--------------
-const express = require("express")
-const userRouter = express.Router()
-
-app.use("/api/v1/auth",userRouter)
-userRouter.post("/user",protectRouter,profileController);       ✅
-
-```
-#### Note :
-- etna sara likhane se axa hai : "for good approach" =>
-  
-     app.post("/api/v1/auth/signup",signupController); 
-  
-  ye likh do =>
-     
-     app.use("/api/v1/auth",authRouter)
-     authRouter.post("/signup",signupController);     ✅
