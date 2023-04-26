@@ -2939,5 +2939,6 @@ authRouter.post("/signup",signupController);       ✅
      app.post("/api/v1/auth/signup",signupController); 
   
   ye likh do =>
-  
-     authRouter.post("/signup",signupController);
+     
+     app.use("/api/v1/auth",authRouter)
+     authRouter.post("/signup",signupController);     ✅
