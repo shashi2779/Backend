@@ -2621,3 +2621,7 @@ Note :
 ### File structuring : IN MVC 
 -----------------------------
 ![](image/strFile.png)
+
+### Note : Good Approach
+- signup ka router kya hona chahiye 
+- api/vi/auth/signup
