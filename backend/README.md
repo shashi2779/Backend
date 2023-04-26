@@ -2602,10 +2602,10 @@ Note :
 
 
 
-//-------------------Controller Function-----------
+//-------------------Controller Function-----------------------
 
 
-
+//1=>
 async function signupController(req, res) {
     try {
       let data = req.body;
@@ -2621,7 +2621,7 @@ async function signupController(req, res) {
   }
 
 
- 
+//2=> 
  async function getAllUsersController(req, res) {
     try {
       let users = await FooduserModel.find();
