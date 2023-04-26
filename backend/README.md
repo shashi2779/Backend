@@ -2618,3 +2618,5 @@ Note :
 
 
 ```
+### File structuring : IN MVC 
+![](image/strFile.png)
