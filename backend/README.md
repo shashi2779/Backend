@@ -2488,3 +2488,48 @@ app.patch("/resetPassword", async function (req, res) {
 ### MVC : (model view controller) 
 ------------------
 ![mvc-img](image/mvc.png)
+#### Business Model :
+- ye wo area refer kar rha hai , jha aap apna schema define karte ho.
+
+  Database related chije hoti hai.
+- model should be thick ==> kahne ka matlab max'm logic should be here.  
+#### Controller :
+###### controller k ander aap kya dalte ho ,
+- controller k ander aap ye sare fun'n dalte ho , jo kya karte hai => aayi huyi "req" ke hisab se apne model se bat karte hai , aur aapko result dete hai.
+```js
+async function getAllUsersController(req, res) {
+    try {
+      let users = await FooduserModel.find();
+      //to send json data
+      res.json(users)
+    } catch (err) {
+      res.end(err.message);
+    }
+  }
+
+
+//-----------------------------------------
+
+
+
+async function signupController(req, res) {
+    try {
+      let data = req.body;
+      console.log(data);  // frontend se data aaya
+  
+      // jo frontend se "data" aaya usse "db" me bhej diya 
+      let newUser = await FooduserModel.create(data)
+      console.log(newUser);
+      res.end("post wala route se data")
+    } catch (err) {
+      res.end(err.message)
+    }
+  }
+
+
+
+
+
+
+
+```
