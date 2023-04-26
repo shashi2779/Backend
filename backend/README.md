@@ -2528,7 +2528,8 @@ async function signupController(req, res) {
 
 
 
-
+Note : 
+      ess functions ko hi hamm controller bolte hai.
 
 
 
