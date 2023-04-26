@@ -2485,4 +2485,5 @@ app.patch("/resetPassword", async function (req, res) {
 
 - Appropriate status code
 
-### MVC : (model view controller)
+### MVC : (model view controller) 
+![mvc-img](image/mvc.png)
