@@ -2934,4 +2934,8 @@ authRouter.post("/signup",signupController);
 
 ```
 #### Note :
-- app.post("/api/v1/auth/signup",signupController); => etna sara likhane se axa hai ye likh do => authRouter.post("/signup",signupController);
+- etna sara likhane se axa hai : "for good approach"
+  app.post("/api/v1/auth/signup",signupController); 
+  
+  ye likh do :
+  authRouter.post("/signup",signupController);
