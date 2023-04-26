@@ -2906,3 +2906,32 @@ app.listen(3000, function () {
 
 
 ```
+
+### Good Approach :
+- pahle 
+```js
+const express = require("express")
+const app = express();
+
+// to add post body data to req.body
+app.use(express.json());
+
+app.post("/signup",signupController);
+
+OR 
+
+app.post("/api/v1/auth/signup",signupController);
+
+
+```
+- abb
+```js
+const express = require("express")
+const authRouter = express.Router()
+
+app.use("/api/v1/auth",authRouter)
+authRouter.post("/signup",signupController);
+
+```
+#### Note :
+- app.post("/api/v1/auth/signup",signupController); => etna sara likhane se axa hai ye likh do => authRouter.post("/signup",signupController);
