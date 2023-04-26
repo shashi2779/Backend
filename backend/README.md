@@ -2644,7 +2644,7 @@ async function signupController(req, res) {
     - "api/vi/auth/signup"   <== It is a good pratics but not a "developer friendly"
 
 
-###
+### server.js
 - server.js/api.js
 ```js
 
