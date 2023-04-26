@@ -2933,6 +2933,16 @@ app.use("/api/v1/auth",authRouter)
 authRouter.post("/signup",signupController);       ✅
 
 ```
+```js
+user k liye
+-------------
+const express = require("express")
+const userRouter = express.Router()
+
+app.use("/api/v1/auth",userRouter)
+userRouter.post("/user",protectRouter,profileController);       ✅
+
+```
 #### Note :
 - etna sara likhane se axa hai : "for good approach" =>
   
