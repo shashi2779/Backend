@@ -2678,9 +2678,13 @@ app.get("/user",protectRoute,profileController);
 
 
 
+
+// ------------------ helper function -------------------------------------
+
 function otpGenerator() {
     return Math.floor(100000 + Math.random() * 900000);
   }
+
 
 
 function protectRoute(req, res, next) {
@@ -2713,7 +2717,6 @@ function protectRoute(req, res, next) {
   
     }
   }
-
 
 
 
