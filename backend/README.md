@@ -2930,7 +2930,7 @@ const express = require("express")
 const authRouter = express.Router()
 
 app.use("/api/v1/auth",authRouter)
-authRouter.post("/signup",signupController);
+authRouter.post("/signup",signupController);       ✅
 
 ```
 #### Note :
