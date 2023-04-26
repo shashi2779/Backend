@@ -2495,7 +2495,7 @@ app.patch("/resetPassword", async function (req, res) {
 - model should be thick ==> kahne ka matlab max'm logic should be here.  
 #### Controller :
 ###### controller k ander aap kya dalte ho ,
-- controller k ander aap ye sare fun'n dalte ho , jo kya karte hai => aayi huyi "req" ke hisab se apne model se bat karte hai , aur aapko result dete hai.
+- controller k ander aap ye sare fun'n dalte ho , jo kya karte hai => aayi huyi "req" ke hisab se apne "Model" se bat karte hai , aur aapko result dete hai.
 ```js
 async function getAllUsersController(req, res) {
     try {
