@@ -2606,6 +2606,7 @@ Note :
 
 
 //1=> controller fun'n
+
 async function signupController(req, res) {
     try {
       let data = req.body;
