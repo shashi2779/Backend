@@ -2582,7 +2582,7 @@ module.exports = FooduserModel;
 - controller k ander aap ye sare fun'n dalte ho , jo kya karte hai => aayi huyi "req" ke hisab se apne "Model" se bat karte hai , aur aapko result dete hai.
 ```js
 
-app.use("signup",function signup(req, res){
+app.use("signup",async function(req, res){
     try {
       let data = req.body;
       console.log(data);  // frontend se data aaya
