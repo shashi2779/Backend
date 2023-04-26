@@ -2916,11 +2916,11 @@ const app = express();
 // to add post body data to req.body
 app.use(express.json());
 
-app.post("/signup",signupController);
+app.post("/signup",signupController);    ❎
 
 OR 
 
-app.post("/api/v1/auth/signup",signupController);
+app.post("/api/v1/auth/signup",signupController);    ✅
 
 
 ```
