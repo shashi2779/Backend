@@ -2624,4 +2624,4 @@ Note :
 
 ### Note : Good Approach
 - signup ka router kya hona chahiye 
-    - "api/vi/auth/signup"
+    - "api/vi/auth/signup"   <== It is a good pratics but not a "developer friendly"
