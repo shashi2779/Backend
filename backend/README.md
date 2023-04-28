@@ -3505,3 +3505,93 @@ mailSender()
     })
     .catch(console.error);
 ```
+
+#### Integrate our frontend to our backend :
+* postman vs frontend
+    * req ka button press -> req send hogi || UI ka button press -> yha bhi req same tarike se send hogi + loder... (add krna hoga)
+    * response will you get || res will you get -> then you have do some change on UI
+  
+  * React code explain
+    * 1'st step -> add backend url as proxy to react package.json => http://localhost:3000/
+    * 2'nd step -> structuring
+      *  Top : Header -> Home, plan, login/user profile
+      *  Different pages
+         *  signup page , profile , login , forgetpassword 
+      * AuthProvider :
+        * sync -> if you have a user or not , on login and logout 
+        * It also exposes you lossley coupled auth functions -> login,logout,signup kisi   prr bhi shift ho sakta hai
+```js
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router';
+export const AuthContext = React.createContext();
+//custom hook that allows components to access context data
+export function useAuth() {
+    return useContext(AuthContext)
+}
+// sync -> if you have a user or not , on login and logout 
+// It also exposes you lossley coupled auth functions
+// 
+function AuthProvider({ children }) {
+    // const history = useHistory();
+    const [user, userSet] = useState("");  // user set hota hai
+    const [loading, setLoading] = useState(false); 
+    
+    async function signUp(name, password, email, confirm) {
+        try {
+            console.log("signup will be here");
+            let res = await axios.post
+                ("/api/v1/auth/signup", {
+                    name: name,
+                    password: password,
+                    confirmPassword: confirm,
+                    email
+                })
+            console.log("data", res.data);
+
+        } catch (err) {
+            console.log("err", err.message);
+        }
+    }
+   
+    async function login(email, password) {
+        try {
+            setLoading(true);
+            const res = await axios.post("/api/v1/auth/login", {
+                email: email,
+                password: password
+            });
+            setLoading(false);
+            // console.log("40",res.data);
+            userSet(res.data.user);
+        }
+        catch (err) {
+            console.log(err);
+            setLoading(false);
+        }
+        console.log("login will be here");
+    }
+    
+    function logout() {
+        // localStorage.removeItem("user")
+        // userSet(null);
+        console.log("logout will come here");
+    }
+
+    const value = {
+        user,
+        login,
+        signUp,
+        logout
+    }
+    return (
+        < AuthContext.Provider value={value} >
+            {/* if not loading show childrens -> agar loding nhi ho rahi toh children dikha do */}
+            {!loading && children}    
+        </AuthContext.Provider >
+    )
+}
+export default AuthProvider
+
+```   
+  * signup page :

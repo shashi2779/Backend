@@ -115,8 +115,21 @@ mailSender()
         console.log("mail send successfully")
     })
     .catch(console.error);
-    
+
 ```
 * 2- Integrate our frontend to our backend :
+  * postman vs frontend
+    * req ka button press -> req send hogi || UI ka button press -> yha bhi req same tarike se send hogi + loder... (add krna hoga)
+    * response will you get || res will you get -> then you have do some change on UI
+  
   * React code explain
-  * signup page , profile , login , forgetpassword , resetpassword
+    * 1'st step -> add backend url as proxy to react package.json => http://localhost:3000/
+    * 2'nd step -> structuring
+      *  Top : Header -> Home, plan, login/user profile
+      *  Different pages
+         *  signup page , profile , login , forgetpassword 
+      * AuthProvider :
+        * sync -> if you have a user or not , on login and logout 
+        * It also exposes you lossley coupled auth functions -> login,logout,signup kisi   prr bhi shift ho sakta hai 
+
+
