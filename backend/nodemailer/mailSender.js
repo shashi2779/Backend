@@ -10,7 +10,7 @@ async function mailSender() {
         // port: 587,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: "yadavshashikant2779@gmail.com", // generated ethereal user
+            user: secrets.APP_EMAIL, // generated ethereal user
             pass: secrets.APP_PASSWORD, // generated ethereal password
         },
     });

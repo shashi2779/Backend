@@ -3403,6 +3403,7 @@ module.exports = FooduserModel;
 - npm install nodemailer
 - nodemailer[folder] -> mailSender[file]
    - RUN : node .\mailSender
+- search on google : "email template html css github" for learn email UI  
 
 - secrets.js[file]
 ```js
@@ -3452,8 +3453,18 @@ mailSender()
     })
     .catch(console.error);
 
-``` 
-- another with token
+```
+#### another with token
+- secrets.js
+```js
+module.exports={
+    JWTSECRET:"qwertyasdgh",
+    DB_LINK : "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority",
+    APP_PASSWORD : "flhgqrcakvcgjobn",
+    APP_EMAIL : "yadavshashikant2779@gmail.com"
+}
+```
+-mailSender.js 
 ```js
 const nodemailer = require("nodemailer");
 let secrets = require("../secrets")
@@ -3467,7 +3478,7 @@ async function mailSender() {
         // port: 587,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: "yadavshashikant2779@gmail.com", // generated ethereal user
+            user: secrets.APP_EMAIL, // generated ethereal user
             pass: secrets.APP_PASSWORD, // generated ethereal password
         },
     });
@@ -3493,5 +3504,4 @@ mailSender()
         console.log("mail send successfully")
     })
     .catch(console.error);
-    
 ```
