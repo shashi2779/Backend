@@ -3355,3 +3355,47 @@ let FooduserModel = mongoose.model('foodUserModel',userSchema)
 module.exports = FooduserModel;
 
 ```
+
+### secrets.js
+- secrets.js 
+```js
+module.exports={
+    JWTSECRET:"qwertyasdgh",
+    DB_LINK : "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
+}
+
+```
+### model
+- userModel.js
+```js
+const mongoose = require("mongoose")
+
+
+//db server se connect --> mongoDb atlas se connect
+let secrets = require("../secrets")
+
+
+mongoose.connect(secrets.DB_LINK)
+.then(function(){
+    console.log("connected")
+}).catch(function(err){
+    console.log("error",err)
+})
+
+let userSchema = new mongoose.Schema({
+  name:{
+    type: String,
+    required:[true,"Name is not send"]
+  },
+   password:{
+    type:String,
+    required:[true,"password is missing"]
+  }
+})
+
+let FooduserModel = mongoose.model('foodUserModel',userSchema)
+module.exports = FooduserModel;
+
+```
+
+### lec - 8 

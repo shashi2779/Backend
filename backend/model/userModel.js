@@ -2,10 +2,10 @@ const mongoose = require("mongoose")
 
 
 //db server se connect --> mongoDb atlas se connect
-let dblink = "mongodb+srv://yadavshashi:Ief8kvPHtozTckmj@freecluster.bmcxj8d.mongodb.net/?retryWrites=true&w=majority"
+let secrets = require("../secrets")
 
 
-mongoose.connect(dblink)
+mongoose.connect(secrets.DB_LINK)
 .then(function(){
     console.log("connected")
 }).catch(function(err){

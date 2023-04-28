@@ -61,3 +61,22 @@
      - reviews , books
 
 - top 3 plans
+
+## 9 agst / 2022  :  IMP
+* 1- How to send automated Email via node.js --> nodemailer
+     * Email : me HTML,CSS "inline" hoti hai -> modern css does't work in email
+     * mail send -> nodemailer , transport ->gmail
+        * "mail" send karne k liye ek "module" chahiye hota hai - > nodemailer
+         
+          aur sath-2 "transport" chahiye hota hai -> "transport" mtlb kiske through "mail" bhejna chahte ho -> "gmail" k through 
+            * 1'st step :=> gmail se "app" identify karne k liye -> app-id , app-password
+            * 1'st step : gmail se "app" identify karne k liye -> aapko ek unique "app id" nikalni hoti hai , aur "app-password" [bcz ho sakta hai ek banda multiple application k liye multiple bar use kare uska]
+            
+            [ http stateless hoti hai -> esko nhi pta ki pichhali bar kaun aaya tha , toh gamil or email bhejne k liye aapko ek "app id" di jati hai <- ye "app-id" aapko uniquely identify karta hai , aur ess "app" ka "app-password" diya jata hai bcz ho sakta hai ek banda multiple application k liye multiple bar use kare uska , kab kaun si application aapki email ka uske liye hota hai. ]
+            
+            * 2nd step :=> templete -> string form html
+            * 3rd step :=> node mailer use -> send the mail
+
+* 2- Integrate our frontend to our backend :
+  * React code explain
+  * signup page , profile , login , forgetpassword , resetpassword
