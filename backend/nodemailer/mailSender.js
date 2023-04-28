@@ -15,12 +15,15 @@ async function mailSender() {
         },
     });
 
+       
+    let token = "hsdyjsdjcjhk"
+    
     let dataObj = {
         from: '"Fred Foo 👻" <foo@example.com>', // sender address
         to: "yadavofficial2779@gmail.com", // list of receivers
         subject: "Hello ✔ Testing for email", // Subject line
         text: "Hello world?", // plain text body
-        html: "<b>HTML text testing email for fjp ?</b>", // html body
+        html: `<b>HTML text testing email for fjp with token : ${token} </b>`, // html body
     }
 
     // send mail with defined transport object
