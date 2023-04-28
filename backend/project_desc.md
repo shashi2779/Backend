@@ -69,14 +69,54 @@
         * "mail" send karne k liye ek "module" chahiye hota hai - > nodemailer
          
           aur sath-2 "transport" chahiye hota hai -> "transport" mtlb kiske through "mail" bhejna chahte ho -> "gmail" k through 
-            * 1'st step :=> gmail se "app" identify karne k liye -> app-id , app-password
-            * 1'st step : gmail se "app" identify karne k liye -> aapko ek unique "app id" nikalni hoti hai , aur "app-password" [bcz ho sakta hai ek banda multiple application k liye multiple bar use kare uska]
+            * 1'st step :=> gmail se -> "app" identify karne k liye -> app-id , app-password
+               * search gmail -> & go to your google account -> & go to security ->signing in to google -> enable 2 factor authentication -> then u found "app-password" : generate new "app-password"
             
-            [ http stateless hoti hai -> esko nhi pta ki pichhali bar kaun aaya tha , toh gamil or email bhejne k liye aapko ek "app id" di jati hai <- ye "app-id" aapko uniquely identify karta hai , aur ess "app" ka "app-password" diya jata hai bcz ho sakta hai ek banda multiple application k liye multiple bar use kare uska , kab kaun si application aapki email ka uske liye hota hai. ]
+            [ 1'st step : gmail se "app" identify karne k liye -> aapko ek unique "app id" nikalni hoti hai , aur "app-password" [bcz ho sakta hai ek banda multiple application k liye multiple bar use kare uska]]
+            
+            [ http stateless hoti hai -> esko nhi pta ki pichhali bar kaun aaya tha , toh gamil/email bhejne k liye aapko ek "app id" di jati hai <- ye "app-id" aapko uniquely identify karta hai , aur ess "app" ka "app-password" diya jata hai bcz multiple app aapka ek hi gmail se mail bhej sakte hai , toh banda kisko mail bhej rha "app-password" se hi pta ho sakta hai] <= generate "app-password"
+
             
             * 2nd step :=> templete -> string form html
             * 3rd step :=> node mailer use -> send the mail
+```js
+const nodemailer = require("nodemailer");
+let secrets = require("../secrets")
 
+async function mailSender() {
+    // input through which mechanism send your email -> port , facilitator(technical details lena )
+    // aapke pas port number kya hoga , aapke pas sender kaun hoga 
+    let transporter = nodemailer.createTransport({
+        service:"gmail",
+        host: "smtp.gmail.com",
+        // port: 587,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: "yadavshashikant2779@gmail.com", // generated ethereal user
+            pass: secrets.APP_PASSWORD, // generated ethereal password
+        },
+    });
+
+    let dataObj = {
+        from: '"Fred Foo 👻" <foo@example.com>', // sender address
+        to: "yadavofficial2779@gmail.com", // list of receivers
+        subject: "Hello ✔ Testing for email", // Subject line
+        text: "Hello world?", // plain text body
+        html: "<b>HTML text testing email for fjp ?</b>", // html body
+    }
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail(dataObj);
+
+}
+
+mailSender()
+    .then(function () {
+        console.log("mail send successfully")
+    })
+    .catch(console.error);
+    
+```
 * 2- Integrate our frontend to our backend :
   * React code explain
   * signup page , profile , login , forgetpassword , resetpassword
