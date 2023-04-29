@@ -130,6 +130,8 @@ mailSender()
          *  signup page , profile , login , forgetpassword 
       * AuthProvider :
         * sync -> if you have a user or not , on login and logout 
-        * It also exposes you lossley coupled auth functions -> login,logout,signup kisi   prr bhi shift ho sakta hai 
+        * It also exposes you lossley coupled auth functions -> all are together [app.js -> AuthProvider -> routes]
+      
+      * signup page :
 
 
