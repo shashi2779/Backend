@@ -3464,7 +3464,7 @@ module.exports={
     APP_EMAIL : "yadavshashikant2779@gmail.com"
 }
 ```
--mailSender.js 
+- mailSender.js 
 ```js
 const nodemailer = require("nodemailer");
 let secrets = require("../secrets")
