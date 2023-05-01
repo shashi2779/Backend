@@ -40,8 +40,15 @@ const secrets = require("../secrets")
   
             // token/data bhejte hai <= cookie k ander
             res.cookie("JWT", token)
-  
-            res.send("user logged In")
+           
+            // user login hua hai use "save" karna hai , without password and conform password
+             delete user.password 
+             delete user.conformPassword
+            // before sending to frontend , remove password & conform password
+            res.status(200).json({
+              user
+            })
+
           } else {
             res.send("email or password does't match")
           }

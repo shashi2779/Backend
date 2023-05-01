@@ -3669,5 +3669,23 @@ function AuthProvider({ children }) {
 export default AuthProvider
 
 ```
+### proxy : search on google -> "using proxy create-react-app"
+- npm install http-proxy-middleware --save
+- src[folder] -> setupProxy.js[file]
+```js
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
+module.exports = function (app) {
+    app.use("/api",
+        createProxyMiddleware({
+            // server ke home page ka link
+            target: 'http://localhost:3000',
+            changeOrigin: true,
+        })
+    );
+};
+
+```
+##### Note: 
+- You do not need to import this file anywhere. It is automatically registered when you start the development server.
   
