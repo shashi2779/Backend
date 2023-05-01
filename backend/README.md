@@ -3454,7 +3454,7 @@ mailSender()
     .catch(console.error);
 
 ```
-#### another with token
+#### nodemailer with token
 - secrets.js
 ```js
 module.exports={
