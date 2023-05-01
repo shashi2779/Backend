@@ -132,6 +132,15 @@ mailSender()
         * sync -> if you have a user or not , on login and logout 
         * It also exposes you lossley coupled auth functions -> all are together [app.js -> AuthProvider -> routes]
       
-      * signup page :
+      * signup page : complete
+      * Login page : complete
+
+## 11/aug/2022
+* login , signup (backend frontend) -> bugs
+  * Profile page -> UI
+  * forgate password & reset password -> UI
+  * Plans schema : name , duration , price , discount
+  * To be added later : reviews -> later , averagerating
+  * All plans page creation 
 
 

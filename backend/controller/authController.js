@@ -50,17 +50,29 @@ const secrets = require("../secrets")
             })
 
           } else {
-            res.send("email or password does't match")
+            // email or password missmatch
+            res.status(400).json({
+              result : "email or password does't match"
+            })
           }
   
         } else {
-          res.end("user with this email Id is not found. kindly sign up")
+          //user not found
+          res.status(404).json({
+            result :"user not found"
+          })
         }
       } else {
-        res.end("kindly enter email & password both")
+        //something is missing
+        res.status(400).json({
+          result:"user not found kindly signup"
+        })
       }
     } catch (err) {
-      res.end(err.message)
+      //server crashed 
+      res.status(500).json({
+        result: err.message
+      })
     }
   }
   

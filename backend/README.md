@@ -3750,3 +3750,21 @@ module.exports = function (app) {
 ##### Note: 
 - You do not need to import this file anywhere. It is automatically registered when you start the development server.
   
+
+
+### lec - 9 :
+#### contents :
+- 1xx : Informational Response  – the request was received, continuing process
+- 2xx : Successful – the request was successfully received, understood, and accepted
+- 3xx : Redirection – further action needs to be taken in order to complete the request
+- 4xx : Client Errors – the request contains bad syntax or cannot be fulfilled
+- 5xx : Server Errors – the server failed to fulfil an apparently valid request
+
+#### status code :
+- Switching Protocols - 101 
+- OK - 200
+- Created - 201
+- NOT FOUND - 404
+- Bad Request - 400
+- Internal Server Error - 500
+- 
