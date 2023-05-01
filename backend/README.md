@@ -3669,6 +3669,67 @@ function AuthProvider({ children }) {
 export default AuthProvider
 
 ```
+- backend --> contolller --> authcontroller --> loginController
+```js
+
+            // token/data bhejte hai <= cookie k ander
+            res.cookie("JWT", token)
+           
+            // user login hua hai use "save" karna hai , without password and conform password
+             delete user.password 
+             delete user.conformPassword
+            // before sending to frontend , remove password & conform password
+            res.status(200).json({
+              user
+            })
+```
+```js 
+  
+  async function loginController(req, res) {
+    try {
+      let data = req.body;
+      console.log(data)
+      // jo hmne email , password login karte wakt frontend(postman) se diya , wahi "data" m aaya
+      let { email, password } = data;
+      if (email && password) {
+        //jo hmne "email" diya tha login k wakt , wo "user" database mai hai toh aaya
+        let user = await FooduserModel.findOne({ email: email })
+        if (user) {
+  
+          if (user.password == password) {
+  
+            // token 
+            //payload , bydefault - algo [SHA256] , secrets
+            // expire date => kab hoga wo add kiya 
+            const token = jwt.sign({ data: user["_id"], exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) }, secrets.JWTSECRET)
+  
+            // token/data bhejte hai <= cookie k ander
+            res.cookie("JWT", token)
+           
+            // user login hua hai use "save" karna hai , without password and conform password
+             delete user.password 
+             delete user.conformPassword
+            // before sending to frontend , remove password & conform password
+            res.status(200).json({
+              user
+            })
+
+          } else {
+            res.send("email or password does't match")
+          }
+  
+        } else {
+          res.end("user with this email Id is not found. kindly sign up")
+        }
+      } else {
+        res.end("kindly enter email & password both")
+      }
+    } catch (err) {
+      res.end(err.message)
+    }
+  }
+
+```
 ### proxy : search on google -> "using proxy create-react-app"
 - npm install http-proxy-middleware --save
 - src[folder] -> setupProxy.js[file]
