@@ -3769,7 +3769,7 @@ module.exports = function (app) {
 - Internal Server Error - 500
 
 ### login ka status code :
-- login status code
+- login status code - backend
 ```js
      if (user.password == password) {
   
@@ -3875,7 +3875,7 @@ module.exports = function (app) {
       })
     }
   }
-  
+
 ```
 - login status code with authProvider on frontend
 ```js
