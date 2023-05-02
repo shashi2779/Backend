@@ -3877,7 +3877,7 @@ module.exports = function (app) {
   }
 
 ```
-- login status code with authProvider on frontend
+- login status code with authProvider(Context API) on frontend
 ```js
 async function login(email, password) {
         // return status
