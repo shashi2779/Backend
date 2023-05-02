@@ -3916,3 +3916,56 @@ async function login(email, password) {
     }
     
 ```
+#### signup status code :
+- signup status code - backend
+```js
+
+// *************************controller function**********************
+  async function signupController(req, res) {
+    try {
+      let data = req.body;
+      console.log(data);  // frontend se data aaya
+  
+      // jo frontend se "data" aaya usse "db" me bhej diya 
+      let newUser = await FooduserModel.create(data)
+      console.log(newUser);
+      res.status(201).json({
+        result :"user signed up"
+      })
+    } catch (err) {
+        //server crashed 
+        res.status(400).json({
+          result: err.message
+        })
+    }
+  }
+
+```
+- signup status code with authProvider(Context API) on frontend
+```js
+
+async function signUp(name, password, email, confirm) {
+        try {
+            setLoading(true)
+            console.log("signup will be here");
+            let res = await axios.post
+                ("/api/v1/auth/signup", {
+                    name: name,
+                    password: password,
+                    confirmPassword: confirm,
+                    email
+                })
+            if(res.status == 400){
+                alert("improper user data entry")
+               
+            }
+            setLoading(false)
+            console.log("data", res.data);
+
+        } catch (err) {
+            console.log("err", err.message);
+            setLoading(false)
+        }
+    }
+
+```

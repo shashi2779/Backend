@@ -13,9 +13,14 @@ const secrets = require("../secrets")
       // jo frontend se "data" aaya usse "db" me bhej diya 
       let newUser = await FooduserModel.create(data)
       console.log(newUser);
-      res.end("post wala route se data")
+      res.status(201).json({
+        result :"user signed up"
+      })
     } catch (err) {
-      res.end(err.message)
+        //server crashed 
+        res.status(400).json({
+          result: err.message
+        })
     }
   }
   
