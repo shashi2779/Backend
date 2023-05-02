@@ -3767,4 +3767,310 @@ module.exports = function (app) {
 - NOT FOUND - 404
 - Bad Request - 400
 - Internal Server Error - 500
-- 
+
+### login ka status code :
+- login status code
+```js
+     if (user.password == password) {
+  
+            // // token 
+            // //payload , bydefault - algo [SHA256] , secrets
+            // // expire date => kab hoga wo add kiya 
+            // const token = jwt.sign({ data: user["_id"], exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) }, secrets.JWTSECRET)
+  
+            // // token/data bhejte hai <= cookie k ander
+            // res.cookie("JWT", token)
+           
+            // // user login hua hai use "save" karna hai , without password and conform password
+            //  delete user.password 
+            //  delete user.conformPassword
+            // before sending to frontend , remove password & conform password
+            res.status(200).json({    // 1st
+              user
+            })
+
+          } else {
+            // email or password missmatch
+            res.status(400).json({    // 2nd
+              result : "email or password does't match"
+            })
+          }
+  
+        } else {
+          //user not found
+          res.status(404).json({ // 3rd
+            result :"user not found"
+          })
+        }
+      } else {
+        //something is missing
+        res.status(400).json({ // 4th
+          result:"user not found kindly signup"
+        })
+      }
+    } catch (err) {
+      //server crashed 
+      res.status(500).json({   // 5th
+        result: err.message
+      })
+    }
+
+```
+```js
+// represent -> collection
+const FooduserModel = require('../model/userModel')
+var jwt = require('jsonwebtoken');
+const secrets = require("../secrets")
+
+
+// *************************controller function**********************
+  async function signupController(req, res) {
+    try {
+      let data = req.body;
+      console.log(data);  // frontend se data aaya
+  
+      // jo frontend se "data" aaya usse "db" me bhej diya 
+      let newUser = await FooduserModel.create(data)
+      console.log(newUser);
+      res.end("post wala route se data")
+    } catch (err) {
+      res.end(err.message)
+    }
+  }
+  
+  
+  async function loginController(req, res) {
+    try {
+      let data = req.body;
+      console.log(data)
+      // jo hmne email , password login karte wakt frontend(postman) se diya , wahi "data" m aaya
+      let { email, password } = data;
+      if (email && password) {
+        //jo hmne "email" diya tha login k wakt , wo "user" database mai hai toh aaya
+        let user = await FooduserModel.findOne({ email: email })
+        if (user) {
+  
+          if (user.password == password) {
+  
+            // token 
+            //payload , bydefault - algo [SHA256] , secrets
+            // expire date => kab hoga wo add kiya 
+            const token = jwt.sign({ data: user["_id"], exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) }, secrets.JWTSECRET)
+  
+            // token/data bhejte hai <= cookie k ander
+            res.cookie("JWT", token)
+           
+            // user login hua hai use "save" karna hai , without password and conform password
+             delete user.password 
+             delete user.conformPassword
+            // before sending to frontend , remove password & conform password
+            res.status(200).json({
+              user
+            })
+
+          } else {
+            // email or password missmatch
+            res.status(400).json({
+              result : "email or password does't match"
+            })
+          }
+  
+        } else {
+          //user not found
+          res.status(404).json({
+            result :"user not found"
+          })
+        }
+      } else {
+        //something is missing
+        res.status(400).json({
+          result:"user not found kindly signup"
+        })
+      }
+    } catch (err) {
+      //server crashed 
+      res.status(500).json({
+        result: err.message
+      })
+    }
+  }
+  
+  async function forgetPasswordController(req, res) {
+    try {
+      // req --> email 
+      let { email } = req.body;
+      // otp expire after five min
+      let afterFiveMin = Date.now() + 5 * 60 * 1000;
+      let otp = otpGenerator()
+      console.log(otp)
+      // 1st - search user on the basis of "email"
+      // 2nd - send otp to that email
+      // 3rd - given permission to "update the value" by "{new:true}"
+      // "new" bydefault "false" hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+      // otp expire after five min
+      let user = await FooduserModel.findOneAndUpdate({ email: email }, { otp: otp, otpExpiry: afterFiveMin }, { new: true });
+  
+      console.log(user)
+  
+      res.json({
+        data: user,
+        message: "otp send to your mail"
+  
+      })
+    } catch (err) {
+      res.end(err.message)
+    }
+  }
+  
+  async function resetPasswordController(req, res) {
+    try {
+      let { otp, password, confirmPassword, email } = req.body;
+      // search -> get the user 
+      let user = await FooduserModel.findOne(email)
+      let currentTime = Date.now()
+  
+      if (currentTime > user.otpExpiry) { // aapka currentTime otpExpire se jada hai toh aapka token expire ho gya hai
+        // otp remove kiye 
+        // user.otp = undefined;
+        delete user.otp;
+        // hmara token expire ho gya toh "undefined" kar diya
+        // user.otpExpiry = undefined
+        delete user.otpExpiry;
+        // save to save this doc in db (jo change hua usko db me save karr liya)
+        await user.save()
+        console.log(user)
+  
+        res.json({
+          message: "otp Expired"
+        })
+  
+      } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
+  
+        // otp match kiya
+        if (user.otp != otp) { // "time" kam hai otp match nhi kiya 
+          
+          res.json({
+            message: "otp does't match"
+          })
+        } else { // time kam hai "otp" match ho gya toh password , conformPassword update karr diya
+          //otp: undefined matlab otp remove ho gayi  
+          // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo [in otp] => otp,email k base prr search krr liya [in otpExpire]
+          // 2nd --> jo hme update karna hai uss ke ander
+          // 3rd --> validator run k liye
+          // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+          // eske ander validators chalte nhi , toh true kiya
+          user = await FooduserModel.findOneAndUpdate({ otp , email }, { password, confirmPassword }, { runValidators: true, new: true });
+  
+          // key delete -> get the document object -> modify that object by removing useless keys
+          // otp remove kiye 
+          // user.otp = undefined;
+          delete user.otp;
+          // and otp expire remove kar do 
+          // user.otpExpiry = undefined
+          delete user.otpExpiry
+          // save to save this doc in db (jo change hua usko db me save karr liya)
+          await user.save()
+          console.log(user)
+  
+          res.json({
+            data: user,
+            message: "user password reset"
+  
+          })
+        }
+      }
+  
+    } catch (err) {
+      res.end(err.message)
+    }
+  }
+  
+  
+  
+  //********************helper function**********************
+  
+  function otpGenerator() {
+    return Math.floor(100000 + Math.random() * 900000);
+  }
+  
+  function protectRoute(req, res, next) {
+    try {
+      // req.cookie => k ander data aata hai
+      const cookies = req.cookies
+      const JWT = cookies.JWT
+      if (cookies.JWT) {
+        console.log("protect route encountered")
+        //you are logged In then it will allow next fun to run
+        const token = jwt.verify(JWT, secrets.JWTSECRET)
+        console.log("Jwt decrypted", token)
+        // user ki Id nikal liye
+        let userId = token.data;
+        console.log("userId", userId)
+        req.userId = userId;
+  
+        next();
+      } else {
+        res.send("you are not logged In kindly Login")
+      }
+  
+    } catch (err) {
+      console.log(err)
+      if (err.message == "invalid signature") {
+        res.send("Token invalid kindly Login")
+      } else {
+        res.send(err.message)
+      }
+  
+    }
+  }
+
+
+
+module.exports = {
+    signupController,
+    loginController,
+    forgetPasswordController,
+    resetPasswordController,
+    protectRoute
+}
+
+```
+- login status code with authProvider on frontend
+```js
+async function login(email, password) {
+        // return status
+        let flag = true
+        try {
+            setLoading(true);
+            const res = await axios.post("/api/v1/auth/login", {
+                email: email,
+                password: password
+            });
+           
+            // checks
+            if(res.status == 404){
+                alert("Password or Email may be wrong")
+                flag = false
+            }else if(res.status == 400){
+                alert("user not found kindly login")
+                flag = false
+            }else if(res.status == 500){
+                alert("Internal server error")
+                flag = false
+            }else{
+                userSet(res.data.user);
+            }
+            setLoading(false);
+           // console.log("40",res.data)
+           return flag;
+        }
+        catch (err) {
+            flag = false
+            console.log(err);
+            setLoading(false); // error aaya toh
+            return flag
+        }
+        console.log("login will be here");
+    }
+    
+```
