@@ -3707,8 +3707,8 @@ export default AuthProvider
             res.cookie("JWT", token)
            
             // user login hua hai use "save" karna hai , without password and conform password
-             delete user.password 
-             delete user.conformPassword
+             user.password = undefined;
+             user.conformPassword = undefined;
             // before sending to frontend , remove password & conform password
             res.status(200).json({
               user
@@ -3782,8 +3782,8 @@ module.exports = function (app) {
             // res.cookie("JWT", token)
            
             // // user login hua hai use "save" karna hai , without password and conform password
-            //  delete user.password 
-            //  delete user.conformPassword
+            //  user.password = undefined;
+            //  user.conformPassword = undefined;
             // before sending to frontend , remove password & conform password
             res.status(200).json({    // 1st
               user
@@ -3842,8 +3842,8 @@ module.exports = function (app) {
             res.cookie("JWT", token)
            
             // user login hua hai use "save" karna hai , without password and conform password
-             delete user.password 
-             delete user.conformPassword
+             user.password = undefined;
+             user.conformPassword = undefined;
             // before sending to frontend , remove password & conform password
             res.status(200).json({
               user
@@ -3972,5 +3972,256 @@ async function signUp(name, password, email, confirm) {
 
 #### profile :
 - profile page k liye :
-   - frontend  prr --> profile page [esme user mil ja rha toh backend ki jarurat nhi huyi]
-   
+   - frontend  prr --> profile page [par "user" mil ja rha toh "backend" se user lane ki jarurat nhi huyi]
+- Profile Page --> profile.js
+```js
+import React, { useState } from 'react';
+import '../Styles/profile.css';
+import { useAuth } from '../Context/AuthProvider';
+import axios from 'axios';
+
+function Profile() {
+    const { user } = useAuth();
+    // const [password, passwordSet] = useState(user.user.password)
+    // const [passwordCnf, passwordCnfSet] = useState(user.user.password)
+    // const [email, emailSet] = useState(user.user.email);
+    // const [name, nameSet] = useState(user.user.name);
+
+    // const handleClick = async () => {
+    //     try {
+    //         console.log(user.user._id);
+    //         const data = await axios.patch("/api/users/" + user.user._id,
+    //          { headers: { "Authorization": `Bearer ${user.token}` } }, {
+    //             email,
+    //             name,
+    //             password,
+    //             confirmPassword: passwordCnf,
+    //             role: user.user.role,
+    //             _id:user.user._id
+    //         });
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    console.log(user);
+    return (
+        <div className="container-grey">
+            <div className="form-container">
+                <div className='h1Box'>
+                    <h1 className='h1'>Profile</h1>
+                    <div className="line"></div>
+                    <div className="profileImage">
+                        <img src={user.pic} />
+                    </div>
+                </div>
+                <div className="loginBox">
+                    {/* <div className="entryBox">
+                        <input type="file" />
+                    </div> */}
+                    <div className="entryBox">
+                        <div className="entryText">Email</div>
+                        <input className="email input" type="email" value={user.email} />
+                    </div>
+                    {/* <div className="entryBox">
+                        <div className="entryText">Password</div>
+                        <input className="password input" type="text" value={password} onChange={(e) => passwordSet(e.target.value)} />
+                    </div> */}
+                    {/* <div className="entryBox">
+                        <div className="entryText">Confirm Password</div>
+                        <input className="password input" type="text" value={passwordCnf} onChange={(e) => passwordCnfSet(e.target.value)} />
+                    </div> */}
+                    <div className="entryBox">
+                        <div className="entryText">Name</div>
+                        <input className="password input" type="text" value={user.name} />
+                    </div>
+                    {/* <button className="loginBtn  form-button" type="submit" onClick={handleClick}>
+                        Update Profile
+                    </button> */}
+                </div>
+            </div>
+        </div>
+        
+        // update details
+        // reviews
+        // bookings
+    )
+}
+
+export default Profile
+
+``` 
+
+#### Forgate Password :
+###### forgate password k liye "email" hi lega 
+- backend -> nodemailer -> "mailSender"
+```js
+const nodemailer = require("nodemailer");
+let secrets = require("../secrets")
+
+// mailSender ko ek email send karna hoga with "forgate password"
+async function mailSender(email,token) {
+    // input through which mechanism send your email -> port , facilitator(technical details lena )
+    // aapke pas port number kya hoga , aapke pas sender kaun hoga 
+    let transporter = nodemailer.createTransport({
+        service:"gmail",
+        host: "smtp.gmail.com",
+        // port: 587,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: secrets.APP_EMAIL, // generated ethereal user
+            pass: secrets.APP_PASSWORD, // generated ethereal password
+        },
+    });
+
+    
+    let dataObj = {
+        from: '"Food_App clone 👻" <foo@example.com>', // sender address
+        to: "yadavofficial2779@gmail.com", // list of receivers [jisko bhejna hai]
+        subject: "Hello ✔ your reset token", // Subject line
+        text: "Hello world?", // plain text body
+        html: `<b>your reset token is : ${token} </b>`, // html body
+    }
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail(dataObj);
+
+}
+
+
+// esko call nhi karegen - forget password me call krr rhe 
+// mailSender(email,token)
+//     .then(function () {
+//         console.log("mail send successfully")
+//     })
+//   
+
+module.exports = mailSender    
+
+```
+- Frontend prr -> ForgetPassword
+```js
+import React, { useState } from 'react';
+import '../Styles/login.css'
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { useAuth } from '../Context/AuthProvider';
+function ForgetPassword() {
+    const [email, emailSet] = useState("");
+    const history = useHistory();
+    
+    const sendEmail = async () => {
+        // request -> forgetPassword Route
+        try {
+            let res = await axios.patch("/api/v1/auth/forgetPassword", { email });
+            if(res.status == 404){
+                alert("user with this email not found");
+            }else if(res.status == 500){
+                alert("Internal server error");
+            }else{
+                alert("Mail send to your registered email Id "); // mail k account se jo login kiya tha
+            }
+            
+        } catch (err) {
+            console.log(err.message);
+        }
+        // send to resetPassword Page
+    }
+    return (
+        <div className="container-grey">
+            <div className="form-container">
+                <div className='h1Box'>
+                    <h1 className='h1'>FORGET PASSWORD</h1>
+                    <div className="line"></div>
+                </div>
+                <div className="loginBox">
+                    <div className="entryBox">
+                        <div className="entryText">Email</div>
+                        <input className="email input"
+                            type="email" name="Email" placeholder="Your Email"
+                            onChange={(e) => emailSet(e.target.value)} />
+                    </div>
+                    <button className="loginBtn  form-button"
+                        onClick={sendEmail}>
+                        Send Email
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default ForgetPassword
+
+```
+- backend prr -> authController --> forgetPasswordController
+   - ye jo code hai , esse axa niche wala code hai - clean
+   ```js
+      async function forgetPasswordController(req, res) {
+          try {
+            // req --> email 
+            let { email } = req.body;
+            // otp expire after five min
+            let afterFiveMin = Date.now() + 5 * 60 * 1000;
+            let otp = otpGenerator()
+            console.log(otp)
+            // 1st - search user on the basis of "email"
+            // 2nd - send otp to that email
+            // 3rd - given permission to "update the value" by "{new:true}"
+            // "new" bydefault "false" hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+            // otp expire after five min
+            let user = await FooduserModel.findOneAndUpdate({ email: email }, { otp: otp, otpExpiry: afterFiveMin }, { new: true });
+        
+            console.log(user)
+        
+            res.json({
+              data: user,
+              message: "otp send to your mail"
+        
+            })
+          } catch (err) {
+            res.end(err.message)
+          }
+        }
+   ```
+   - ye clean code hai 
+   ```js
+       // represent -> collection
+        const FooduserModel = require('../model/userModel')
+        var jwt = require('jsonwebtoken');
+        const secrets = require("../secrets")
+        // mailSender ko require kiye , forget password krne k  liye
+        const mailSender = require("../nodemailer/mailSender")
+
+
+      async function forgetPasswordController(req, res) {
+            try {
+                let { email } = req.body;
+                //    mail
+                // by default -> FindAndUpdate -> not updated send document, 
+                // new =true -> you will get updated doc
+                // email -> do we have a user -> no user 
+                // update
+                let user = await FooduserModel.findOne({ email });
+                if (user) {
+                    let otp = otpGenerator();
+                    let afterFiveMin = Date.now() + 5 * 60 * 1000;
+                    await mailSender(email, otp);
+                    user.otp = otp;
+                    user.otpExpiry = afterFiveMin;
+                    await user.save();
+                    res.status(204).json({
+                        data: user,
+                        result: "Otp send to your mail"
+                    })
+                } else {
+                    res.status(404).json({
+                        result: "user with this email not found"
+                    })
+                }
+            } catch (err) {
+                res.status(500).json(err.message);
+            }
+        }
+   ```   

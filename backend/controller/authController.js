@@ -2,7 +2,7 @@
 const FooduserModel = require('../model/userModel')
 var jwt = require('jsonwebtoken');
 const secrets = require("../secrets")
-
+const mailSender = require("../nodemailer/mailSender")
 
 // *************************controller function**********************
 
@@ -48,8 +48,8 @@ const secrets = require("../secrets")
             res.cookie("JWT", token)
            
             // user login hua hai use "save" karna hai , without password and conform password
-             delete user.password 
-             delete user.conformPassword
+             user.password = undefined
+             user.conformPassword = undefined
             // before sending to frontend , remove password & conform password
             console.log(user)
             res.status(200).json({
@@ -85,30 +85,37 @@ const secrets = require("../secrets")
   
   async function forgetPasswordController(req, res) {
     try {
-      // req --> email 
-      let { email } = req.body;
-      // otp expire after five min
-      let afterFiveMin = Date.now() + 5 * 60 * 1000;
-      let otp = otpGenerator()
-      console.log(otp)
-      // 1st - search user on the basis of "email"
-      // 2nd - send otp to that email
-      // 3rd - given permission to "update the value" by "{new:true}"
-      // "new" bydefault "false" hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
-      // otp expire after five min
-      let user = await FooduserModel.findOneAndUpdate({ email: email }, { otp: otp, otpExpiry: afterFiveMin }, { new: true });
-  
-      console.log(user)
-  
-      res.json({
-        data: user,
-        message: "otp send to your mail"
-  
-      })
+        let { email } = req.body;
+        //    mail
+        // by default -> FindAndUpdate -> not updated send document, 
+        // new =true -> you will get updated doc
+        // email -> do we have a user -> no user 
+        // update
+        let user = await FooduserModel.findOne({ email });
+        if (user) {
+            let otp = otpGenerator();
+            let afterFiveMin = Date.now() + 5 * 60 * 1000;
+            
+            await mailSender(email, otp);
+            
+            user.otp = otp;
+            user.otpExpiry = afterFiveMin;
+            await user.save();
+            
+            res.status(204).json({
+                data: user,
+                result: "Otp send to your mail"
+            })
+        
+          } else {
+            res.status(404).json({
+                result: "user with this email not found"
+            })
+        }
     } catch (err) {
-      res.end(err.message)
+        res.status(500).json(err.message);
     }
-  }
+}
   
   async function resetPasswordController(req, res) {
     try {
