@@ -4120,6 +4120,7 @@ function ForgetPassword() {
                 alert("Internal server error");
             }else{
                 alert("Mail send to your registered email Id "); // mail k account se jo login kiya tha
+                // send to a resetPassword page
             }
             
         } catch (err) {
