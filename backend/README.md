@@ -4231,3 +4231,11 @@ export default ForgetPassword
             }
         }
    ```   
+
+#### Reset Password :
+###### Reset Password k liye chahiye hota hai => 1- otp , 2- password , 3- conform password
+###### 1st - hamm email send karte hai , apne mail-account prr
+###### 2nd - phir apne mail-accout prr "otp" se verify karte hai  <=== eska ek page banaye
+###### 3rd - phir password , and conform password set karte hai <=== aur eska ek page banaye
+
+
