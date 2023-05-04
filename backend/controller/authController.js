@@ -89,18 +89,19 @@ const mailSender = require("../nodemailer/mailSender")
         //    mail
         // by default -> FindAndUpdate -> not updated send document, 
         // new =true -> you will get updated doc
-        // email -> do we have a user -> no user 
+        // email -> email k base prr "user" find kiye , user nhi mila toh "user not found" , then update
         // update
         let user = await FooduserModel.findOne({ email });
         if (user) {
+          // user mila toh "otp" generate kiye , 5min bad expire ho , mail send kar diye "user jis email se login huaa tha" - mail account
             let otp = otpGenerator();
             let afterFiveMin = Date.now() + 5 * 60 * 1000;
             
             await mailSender(email, otp);
             
-            user.otp = otp;
+            user.otp = otp; // jo otp generate kiye user otp me bhej diye
             user.otpExpiry = afterFiveMin;
-            await user.save();
+            await user.save();  // user save kiye - update 
             
             res.status(204).json({
                 data: user,

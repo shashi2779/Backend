@@ -3767,6 +3767,7 @@ module.exports = function (app) {
 - NOT FOUND - 404
 - Bad Request - 400
 - Internal Server Error - 500
+- Resource Update Successfully - 204
 
 ### login ka status code :
 - login status code - backend
@@ -4110,8 +4111,9 @@ function ForgetPassword() {
     const [email, emailSet] = useState("");
     const history = useHistory();
     
+    // email send karne ko mannage krr rhe -> email kha send karna "hamne jo  mail account banaya tha wha"
     const sendEmail = async () => {
-        // request -> forgetPassword Route
+        // request kiye -> forgetPassword Route k liye , with email 
         try {
             let res = await axios.patch("/api/v1/auth/forgetPassword", { email });
             if(res.status == 404){
@@ -4202,16 +4204,19 @@ export default ForgetPassword
                 //    mail
                 // by default -> FindAndUpdate -> not updated send document, 
                 // new =true -> you will get updated doc
-                // email -> do we have a user -> no user 
+                // email -> email k base prr "user" find kiye , user nhi mila toh "user not found" , then update
                 // update
                 let user = await FooduserModel.findOne({ email });
                 if (user) {
+                  // user mila toh "otp" generate kiye , 5min bad expire ho , mail send kar diye "user jis email se login huaa tha" - mail account
                     let otp = otpGenerator();
                     let afterFiveMin = Date.now() + 5 * 60 * 1000;
+
                     await mailSender(email, otp);
-                    user.otp = otp;
+
+                    user.otp = otp; // jo otp generate kiye user otp me bhej diye
                     user.otpExpiry = afterFiveMin;
-                    await user.save();
+                    await user.save();     // user save kiye - update 
                     res.status(204).json({
                         data: user,
                         result: "Otp send to your mail"
