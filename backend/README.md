@@ -3969,3 +3969,8 @@ async function signUp(name, password, email, confirm) {
     }
 
 ```
+
+#### profile :
+- profile page k liye :
+   - frontend  prr --> profile page [esme user mil ja rha toh backend ki jarurat nhi huyi]
+   

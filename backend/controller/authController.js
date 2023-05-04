@@ -5,6 +5,7 @@ const secrets = require("../secrets")
 
 
 // *************************controller function**********************
+
   async function signupController(req, res) {
     try {
       let data = req.body;
@@ -50,6 +51,7 @@ const secrets = require("../secrets")
              delete user.password 
              delete user.conformPassword
             // before sending to frontend , remove password & conform password
+            console.log(user)
             res.status(200).json({
               user
             })

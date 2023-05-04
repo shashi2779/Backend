@@ -136,8 +136,8 @@ mailSender()
       * Login page : complete
 
 ## 11/aug/2022
-* login , signup (backend frontend) -> bugs
-  * Profile page -> UI
+* login , signup (backend frontend) -> bugs --> status code addition
+  * Profile page -> UI --> backend k ander route dekhna hai phir --> UI se link
   * forgate password & reset password -> UI
   * Plans schema : name , duration , price , discount
   * To be added later : reviews -> later , averagerating
