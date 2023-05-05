@@ -136,8 +136,8 @@ const mailSender = require("../nodemailer/mailSender")
         await user.save()
         console.log(user)
   
-        res.json({
-          message: "otp Expired"
+        res.status(400).json({
+          result: "otp Expired"
         })
   
       } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
@@ -145,8 +145,8 @@ const mailSender = require("../nodemailer/mailSender")
         // otp match kiya
         if (user.otp != otp) { // "time" kam hai otp match nhi kiya 
           
-          res.json({
-            message: "otp does't match"
+          res.status(400).json({
+            result: "wrong otp"
           })
         } else { // time kam hai "otp" match ho gya toh password , conformPassword update karr diya
           //otp: undefined matlab otp remove ho gayi  
@@ -168,7 +168,7 @@ const mailSender = require("../nodemailer/mailSender")
           await user.save()
           console.log(user)
   
-          res.json({
+          res.status(201).json({
             data: user,
             message: "user password reset"
   
@@ -177,7 +177,9 @@ const mailSender = require("../nodemailer/mailSender")
       }
   
     } catch (err) {
-      res.end(err.message)
+      res.status(500).json({
+        result:err.message
+      })
     }
   }
   
