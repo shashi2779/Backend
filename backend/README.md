@@ -4450,6 +4450,7 @@ function PasswordReset() {
             // backend me - resetPassword kya kya leta hai -> otp, password, confirmPassword, email
             // backend prr request mara
             let res = await axios.patch("/api/v1/auth/resetPassword", {
+              // sab otp,email,password,conformPassword set krr diye [jo global se bhi email,otp aayi thi ]
                 otp: otpPassEmail,
                 email: resetPassEmail,
                 password: password,
