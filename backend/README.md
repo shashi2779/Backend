@@ -4449,6 +4449,7 @@ function PasswordReset() {
         // no done -> email ,otp-> null => done ho chahe not done toh bhi hmm email,otp ko null kar degen ki page open ho dubara
         try {
             // backend me - resetPassword kya kya leta hai -> otp, password, confirmPassword, email
+            // backend prr request mara
             let res = await axios.patch("/api/v1/auth/resetPassword", {
                 otp: otpPassEmail,
                 email: resetPassEmail,
@@ -4651,7 +4652,7 @@ async function resetPasswordController(req, res) {
       })
     }
   }
-  
+
 ```
 
 
