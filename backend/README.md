@@ -4379,8 +4379,7 @@ function OTP() {
     const { resetPassEmail, setOtpPassEmail } = useAuth();
     
     const saveOTP = async () => {
-        setOtpPassEmail(otp); // otp set/put kiye 
-        //[ otp match kiya toh passwordReset page prr bhej dega ]
+        setOtpPassEmail(otp); // otp set/put kiye ==> ye setOtpPassEmail[ otp ] "PasswordReset" page me ja kar "otp" me set krr denge
         // send to password and confirm password page => yha se send kiye password,conform-password page par 
         history.push("/passwordReset") 
         
