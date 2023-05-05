@@ -4242,8 +4242,8 @@ export default ForgetPassword
 ![](image/resetPassword.png)
 
 - Frontend prr
-- email, otp globally save krr liye
-- AuthProvider
+- email, otp globally save krr liye "AuthProvider" me
+- AuthProvider.js
 ```js
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
