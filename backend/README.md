@@ -4586,7 +4586,7 @@ export default App;
 
 ```
 
-- backend --> authController.js
+- backend --> controller --> authController.js
 ```js
 async function resetPasswordController(req, res) {
     try {
