@@ -4585,6 +4585,73 @@ export default App;
 
 ```
 
-
+- backend --> authController.js
+```js
+async function resetPasswordController(req, res) {
+    try {
+      let { otp, password, confirmPassword, email } = req.body;
+      // search -> get the user 
+      let user = await FooduserModel.findOne(email)
+      let currentTime = Date.now()
+  
+      if (currentTime > user.otpExpiry) { // aapka currentTime otpExpire se jada hai toh aapka token expire ho gya hai
+        // otp remove kiye 
+        // user.otp = undefined;
+        delete user.otp;
+        // hmara token expire ho gya toh "undefined" kar diya
+        // user.otpExpiry = undefined
+        delete user.otpExpiry;
+        // save to save this doc in db (jo change hua usko db me save karr liya)
+        await user.save()
+        console.log(user)
+  
+        res.status(400).json({
+          result: "otp Expired"
+        })
+  
+      } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
+  
+        // otp match kiya
+        if (user.otp != otp) { // "time" kam hai otp match nhi kiya 
+          
+          res.status(400).json({
+            result: "wrong otp"
+          })
+        } else { // time kam hai "otp" match ho gya toh password , conformPassword update karr diya
+          //otp: undefined matlab otp remove ho gayi  
+          // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo [in otp] => otp,email k base prr search krr liya [in otpExpire]
+          // 2nd --> jo hme update karna hai uss ke ander
+          // 3rd --> validator run k liye
+          // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+          // eske ander validators chalte nhi , toh true kiya
+          user = await FooduserModel.findOneAndUpdate({ otp , email }, { password, confirmPassword }, { runValidators: true, new: true });
+  
+          // key delete -> get the document object -> modify that object by removing useless keys
+          // otp remove kiye 
+          // user.otp = undefined;
+          delete user.otp;
+          // and otp expire remove kar do 
+          // user.otpExpiry = undefined
+          delete user.otpExpiry
+          // save to save this doc in db (jo change hua usko db me save karr liya)
+          await user.save()
+          console.log(user)
+  
+          res.status(201).json({
+            data: user,
+            message: "user password reset"
+  
+          })
+        }
+      }
+  
+    } catch (err) {
+      res.status(500).json({
+        result:err.message
+      })
+    }
+  }
+  
+```
 
 
