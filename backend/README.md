@@ -4381,13 +4381,14 @@ function OTP() {
     const saveOTP = async () => {
         setOtpPassEmail(otp); // otp set kiye 
         // send to password and confirm password page => yha se send kiye password,conform-password page par 
-        history.push("/passwordReset")
+        history.push("/passwordReset") 
         
     }
    
    return (<>
         {
-            resetPassEmail != null ?
+          // resetPassEmail not null hai toh ye page dikha do [send email hai toh hi ye page khule ] --> otp wala page dikha do 
+            resetPassEmail != null ?       
                 <div className="container-grey">
                     <div className="form-container">
                         <div className='h1Box'>
