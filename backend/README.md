@@ -4423,7 +4423,7 @@ export default OTP;
 
 ```
 
-- Login Page --> PasswordReset [resetPassword]
+- Login Page --> PasswordReset [ resetPassword page ]
 ```js
 // esme [ password , conform-password ] wala "page" hoga
 // ess page parr email,otp dono chahiye
@@ -4434,6 +4434,7 @@ import { useAuth } from '../Context/AuthProvider';
 import { useHistory } from "react-router-dom";
 
 function PasswordReset() {
+  // password aur conformPassword set karne k liye "state" liye
     const [password, passwordSet] = useState("");
     const [passwordCnf, passwordCnfSet] = useState("");
     const { resetPassEmail, setResetEmail, otpPassEmail, setOtpPassEmail } = useAuth();
