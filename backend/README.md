@@ -4726,7 +4726,7 @@ async function resetPasswordController(req, res) {
 ```
 
 ## Main code of signUp , Login , LogOut , forgetPassword , resetPassword : 
-- Frontend : AuthProvider (global State h)
+- Frontend : AuthProvider.js (global State h)
 ```js
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
