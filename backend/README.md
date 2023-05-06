@@ -4491,7 +4491,7 @@ export default OTP;
 
 ```
 
-- Login Page --> PasswordReset [ resetPassword page ]
+- Login Page --> PasswordReset.js [ resetPassword page ]
 ```js
 // esme [ password , conform-password ] wala "page" hoga
 // ess page parr email,otp dono chahiye
@@ -4502,7 +4502,7 @@ import { useAuth } from '../Context/AuthProvider';
 import { useHistory } from "react-router-dom";
 
 function PasswordReset() {
-  // password aur conformPassword set karne k liye "state" liye
+    // password aur conformPassword set karne k liye "state" liye
     const [password, passwordSet] = useState("");
     const [passwordCnf, passwordCnfSet] = useState("");
     const { resetPassEmail, setResetEmail, otpPassEmail, setOtpPassEmail } = useAuth();
@@ -4517,9 +4517,8 @@ function PasswordReset() {
         // no done -> email ,otp-> null => done ho chahe not done toh bhi hmm email,otp ko null kar degen ki page open ho dubara
         try {
             // backend me - resetPassword kya kya leta hai -> otp, password, confirmPassword, email
-            // backend prr request mara
             let res = await axios.patch("/api/v1/auth/resetPassword", {
-              // sab otp,email,password,conformPassword set krr diye [jo global se bhi email,otp aayi thi ]
+                // sab otp,email,password,conformPassword set krr diye [jo global se bhi email,otp aayi thi ]
                 otp: otpPassEmail,
                 email: resetPassEmail,
                 password: password,
@@ -4587,9 +4586,7 @@ function PasswordReset() {
 }
 
 export default PasswordReset
-
 ```
-
 - App.js
 ```js
 import React from 'react';
