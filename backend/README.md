@@ -4161,7 +4161,7 @@ export default ForgetPassword
 - backend prr -> authController --> forgetPasswordController
    - ye jo code hai , esse axa niche wala code hai - clean
    ```js
-      async function forgetPasswordController(req, res) {
+        async function forgetPasswordController(req, res) {
           try {
             // req --> email 
             let { email } = req.body;
