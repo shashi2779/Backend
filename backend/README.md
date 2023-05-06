@@ -4722,6 +4722,6 @@ async function resetPasswordController(req, res) {
       })
     }
   }
-  
+
 ```
 
