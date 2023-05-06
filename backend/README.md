@@ -4725,3 +4725,768 @@ async function resetPasswordController(req, res) {
 
 ```
 
+## Main code of signUp , Login , LogOut , forgetPassword , resetPassword : 
+- Frontend : AuthProvider (global State h)
+```js
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router';
+export const AuthContext = React.createContext();
+//custom hook that allows components to access context data
+export function useAuth() {
+    return useContext(AuthContext)
+}
+// sync -> if you have a user or not , on login and logout 
+// It also exposes you lossley coupled auth functions
+// 
+function AuthProvider({ children }) {
+    // const history = useHistory();
+    const [user, userSet] = useState("");  // user set hota hai
+    const [loading, setLoading] = useState(false); 
+    
+    // resetpassword karne ja rhe tab -> otp,email ki jarurat hogi
+    // eamil,otp globally save karr liye
+    const [resetPassEmail, setResetEmail] = useState(null);
+    const [otpPassEmail, setOtpPassEmail] = useState(null);
+
+
+    
+    async function signUp(name, password, email, confirm) {
+        try {
+            setLoading(true)
+            console.log("signup will be here");
+            let res = await axios.post
+                ("/api/v1/auth/signup", {
+                    name: name,
+                    password: password,
+                    confirmPassword: confirm,
+                    email
+                })
+           
+                
+            setLoading(false)
+            console.log("data", res.data);
+
+        } catch (err) {
+            console.log("err", err.message);
+            if (err.message == "Request failed with status code 400") {
+                alert("user not found kindly login");
+                setLoading(false)
+                
+            } 
+            
+        }
+    }
+   
+    async function login(email, password) {
+        // return status
+        let flag = true
+
+        try {
+            setLoading(true);
+            const res = await axios.post("/api/v1/auth/login", {
+                email: email,
+                password: password
+            });
+            
+            // checks
+            if(res.status == 404){
+                alert("Password or Email may be wrong")
+                flag = false
+            }else if(res.status == 400){
+                alert("user not found kindly login")
+                flag = false
+            }else if(res.status == 500){
+                alert("Internal server error")
+                flag = false
+            }else{
+                userSet(res.data.user);
+            }
+            setLoading(false);
+           console.log("rtgrwtyw",res.data)
+           return flag;
+        }
+        catch (err) {
+            flag = false
+            console.log(err.message);
+            alert("Password or email may be wrong");
+            if (err.message == "Request failed with status code 404") {
+                alert("Password or email may be wrong");
+                flag = false;
+            } else if (err.message == "Request failed with status code 400") {
+                alert("user not found kindly login");
+                flag = false;
+            } else if (err.message == "Request failed with status code 500") {
+                alert("Internal server error")
+                flag = false;
+            }
+            setLoading(false); // error aaya toh
+            /* `// return flag` is returning a boolean flag that indicates whether the login was
+            successful or not. It is used in the `login` function to check if there was an error
+            during the login process and to handle it accordingly. If there was an error, the flag
+            is set to `false` and the function returns `false`. Otherwise, the flag is set to `true`
+            and the function returns `true`. This flag can be used by the calling component to
+            determine if the login was successful or not. */
+            return flag
+        }
+        console.log("login will be here");
+    }
+    
+    function logout() {
+        // localStorage.removeItem("user")
+        // userSet(null);
+        console.log("logout will come here");
+    }
+
+    const value = {
+        user,
+        login,
+        signUp,
+        logout,
+        resetPassEmail,
+        setResetEmail,
+        otpPassEmail,
+        setOtpPassEmail
+    }
+    return (
+        < AuthContext.Provider value={value} >
+            {/* if not loading show childrens -> agar loding nhi ho rahi toh "children" dikha do */}
+            {!loading && children}    
+        </AuthContext.Provider >
+    )
+}
+export default AuthProvider
+
+```
+- signUp : Frontend
+```js
+import React, { useState } from 'react';
+import axios from 'axios';
+import '../Styles/login.css';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../Context/AuthProvider';
+
+function Signup(props) {
+    // react-router-dom
+    const history = useHistory();
+    const { signUp } = useAuth()
+    const [name, nameSet] = useState("");
+    const [password, passwordSet] = useState("");
+    const [email, emailSet] = useState("");
+    const [confirm, setConfirm] = useState("");
+    
+    const handleSignup = async () => {
+        try {
+            console.log("sending request");
+            // do signup
+            await signUp(name, password, email, confirm);
+            
+            // send user to login 
+            history.push("/login");
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+// click
+    return (
+        <div className="container-grey">
+            <div className="form-container">
+                <div className='h1Box'>
+                    <h1 className='h1'>SIGN UP</h1>
+                    <div className="line"></div>
+                </div>
+                <div className="loginBox">
+                    <div className="entryBox">
+                        <div className="entryText">Name</div>
+                        <input className="name input" type="text" name="Name" placeholder="Your Name" required="" onChange={(e) => nameSet(e.target.value)} />
+                    </div>
+                    <div className="entryBox">
+                        <div className="entryText">Email</div>
+                        <input className="email input" type="email" name="Email" placeholder="Your Email" required="" onChange={(e) => emailSet(e.target.value)} />
+                    </div>
+                    <div className="entryBox">
+                        <div className="entryText">Password</div>
+                        <input className="password input" type="password" name="Password" placeholder="**********" onChange={(e) => passwordSet(e.target.value)} />
+                    </div>
+                    <div className="entryBox">
+                        <div className="entryText">Confirm  Password</div>
+                        <input className="confirmPassword input" type="password" name="ConfirmPassword" placeholder="**********" onChange={(e) => setConfirm(e.target.value)} />
+                    </div>
+                    <button className="loginBtn  form-button" type="submit" onClick={handleSignup}>
+                        Sign Up
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Signup;
+
+```
+- signUp : Backend - signUpController
+```js
+async function signupController(req, res) {
+    try {
+      let data = req.body;
+      console.log(data);  // frontend se data aaya
+  
+      // jo frontend se "data" aaya usse "db" me bhej diya 
+      let newUser = await FooduserModel.create(data)
+      console.log(newUser);
+      res.status(201).json({
+        result :"user signed up"
+      })
+    } catch (err) {
+        //server crashed 
+        res.status(400).json({
+          result: err.message
+        })
+    }
+  }
+
+```
+- Login : Frontend
+```js
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../Context/AuthProvider';
+import axios from 'axios';
+import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import '../Styles/login.css'
+
+function Login() {
+
+    const history = useHistory();
+    const [password, passwordSet] = useState("")
+    const [email, emailSet] = useState("");
+    const [loading, setLoading] = useState(false);
+    const {login, user} = useContext(AuthContext);
+
+
+
+    const handleLogin = async () => {
+        try {
+            console.log(email,password)
+           let flag = await login(email, password)
+           console.log("flag",flag)
+           if(flag){
+             history.push("/")
+           }
+          } catch(err) {
+            console.log(err.message);
+          }
+    }
+
+    return (
+        <div className="container-grey">
+            <div className="form-container">
+                <div className='h1Box'>
+                    <h1 className='h1'>LOGIN</h1>
+                    <div className="line"></div>
+                </div>
+
+                <div className="loginBox">
+                    <div className="entryBox">
+                        <div className="entryText">Email</div>
+                        <input className="email input" type="email" name="Email" placeholder="Your Email" required="" onChange={(e) => emailSet(e.target.value)} />
+                    </div>
+                    <div className="entryBox">
+                        <div className="entryText">Password</div>
+                        <input className="password input" type="password" name="Password" placeholder="**********" onChange={(e) => passwordSet(e.target.value)} />
+                    </div>
+                    <button className="loginBtn  form-button"  onClick={handleLogin}>
+                        Login
+                    </button>
+                    <div className='otherOption'>
+                        <button className=" otherbtns form-button" type="submit" >
+                            <Link to="/signup" className="otherbtns">Sign Up</Link>
+                        </button>
+                        <button className=" otherbtns form-button" type="submit">
+                            <Link to="/forgetPassword" className="otherbtns">Forget Password</Link>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Login;
+
+```
+- login : Backend 
+```js
+ async function loginController(req, res) {
+    try {
+      let data = req.body;
+      console.log(data)
+      // jo hmne email , password login karte wakt frontend(postman) se diya , wahi "data" m aaya
+      let { email, password } = data;
+      if (email && password) {
+        //jo hmne "email" diya tha login k wakt , wo "user" database mai hai toh aaya
+        let user = await FooduserModel.findOne({ email: email })
+        if (user) {
+  
+          if (user.password == password) {
+  
+            // token 
+            //payload , bydefault - algo [SHA256] , secrets
+            // expire date => kab hoga wo add kiya 
+            const token = jwt.sign({ data: user["_id"], exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) }, secrets.JWTSECRET)
+  
+            // token/data bhejte hai <= cookie k ander
+            res.cookie("JWT", token)
+           
+            // user login hua hai use "save" karna hai , without password and conform password
+             user.password = undefined
+             user.conformPassword = undefined
+            // before sending to frontend , remove password & conform password
+            console.log(user)
+            res.status(200).json({
+              user
+            })
+
+          } else {
+            // email or password missmatch
+            res.status(400).json({
+              result : "email or password does't match"
+            })
+          }
+  
+        } else {
+          //user not found
+          res.status(404).json({
+            result :"user not found"
+          })
+        }
+      } else {
+        //something is missing
+        res.status(400).json({
+          result:"user not found kindly signup"
+        })
+      }
+    } catch (err) {
+      //server crashed 
+      res.status(500).json({
+        result: err.message
+      })
+    }
+  }
+
+```
+- forgetPassword : Frontend
+```js
+import React, { useState } from 'react';
+import '../Styles/login.css'
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { useAuth } from '../Context/AuthProvider';
+
+function ForgetPassword() {
+    const [email, emailSet] = useState("");
+    //
+    const { setResetEmail } = useAuth();
+    const history = useHistory();
+
+     // email send karne ko mannage krr rhe -> email kha send karna "hamne jo  mail account banaya tha wha"
+    const sendEmail = async () => {
+        // request kiye -> forgetPassword Route k liye , with email
+        try {
+            let res = await axios.patch("/api/v1/auth/forgetPassword", { email });
+
+            alert("Mail send to your registerd email ID");
+            // esse kya hoga -> context[AuthProvider] k pass chali jayegi ye "email" --> next page ko de paunga ki "open" hoga ya nhi
+            // mail save kiya 
+            // forget password karte wakt email managa wahi diye , ye global store me save hoga , phir wha se otp page me jayea aur check karega yehi email hai toh otp page open hoga
+            setResetEmail(email);
+            // send to your restpasswordPage
+            // then otp wale page prr bhej diya
+            history.push("/otp");
+
+        } catch (err) {
+            console.log(err.message);
+            if (err.message == "Request failed with status code 404") {
+                alert("user with this email not found");
+            } else if (err.message == "Request failed with status code 500") {
+                alert("Internal server error");
+            }
+        }
+        // send to resetPassword Page
+    }
+    return (
+        <div className="container-grey">
+            <div className="form-container">
+                <div className='h1Box'>
+                    <h1 className='h1'>FORGET PASSWORD</h1>
+                    <div className="line"></div>
+                </div>
+                <div className="loginBox">
+                    <div className="entryBox">
+                        <div className="entryText">Email</div>
+                        <input className="email input"
+                            type="email" name="Email" placeholder="Your Email"
+                            onChange={(e) => emailSet(e.target.value)} />
+                    </div>
+                    <button className="loginBtn  form-button"
+                        onClick={sendEmail}>
+                        Send Email
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default ForgetPassword
+
+```
+- forgetPassword : Backend - forgetPasswordController
+```js
+ async function forgetPasswordController(req, res) {
+    try {
+        let { email } = req.body;
+        //    mail
+        // by default -> FindAndUpdate -> not updated send document, 
+        // new =true -> you will get updated doc
+        // email -> email k base prr "user" find kiye , user nhi mila toh "user not found" , then update
+        // update
+        let user = await FooduserModel.findOne({ email });
+        if (user) {
+          // user mila toh "otp" generate kiye , 5min bad expire ho , mail send kar diye "user jis email se login huaa tha" - mail account
+            let otp = otpGenerator();
+            let afterFiveMin = Date.now() + 5 * 60 * 1000;
+            
+            await mailSender(email, otp);
+            
+            user.otp = otp; // jo otp generate kiye user otp me bhej diye
+            user.otpExpiry = afterFiveMin;
+            await user.save();  // user save kiye - update 
+            
+            res.status(204).json({
+                data: user,
+                result: "Otp send to your mail"
+            })
+        
+          } else {
+            res.status(404).json({
+                result: "user with this email not found"
+            })
+        }
+    } catch (err) {
+        res.status(500).json(err.message);
+    }
+}
+
+```
+- Backend : nodemailer  -> mailSender.js
+```js
+const nodemailer = require("nodemailer");
+let secrets = require("../secrets")
+
+// mailSender ko ek email send karna hoga with "forgate password"
+async function mailSender(email,token) {
+    // input through which mechanism send your email -> port , facilitator(technical details lena )
+    // aapke pas port number kya hoga , aapke pas sender kaun hoga 
+    let transporter = nodemailer.createTransport({
+        service:"gmail",
+        host: "smtp.gmail.com",
+        // port: 587,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: secrets.APP_EMAIL, // generated ethereal user
+            pass: secrets.APP_PASSWORD, // generated ethereal password
+        },
+    });
+
+    
+    let dataObj = {
+        from: '"Food_App clone 👻" <foo@example.com>', // sender address
+        to: "yadavofficial2779@gmail.com", // list of receivers [jisko bhejna hai]
+        subject: "Hello ✔ your reset token", // Subject line
+        text: "Hello world?", // plain text body
+        html: `<b>your reset token is : ${token} </b>`, // html body
+    }
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail(dataObj);
+
+}
+
+// esko call nhi karegen - forget password me call krr rhe 
+// mailSender(email,token)
+//     .then(function () {
+//         console.log("mail send successfully")
+//     })
+//     .catch(console.error);
+
+module.exports = mailSender    
+
+```
+- resetPassword --> PasswordReset.js : Frontend
+```js
+// esme [ password , conform-password ] wala "page" hoga
+// ess page parr email,otp dono chahiye
+
+import axios from 'axios';
+import React, { useState } from 'react'
+import { useAuth } from '../Context/AuthProvider';
+import { useHistory } from "react-router-dom";
+
+function PasswordReset() {
+    // password aur conformPassword set karne k liye "state" liye
+    const [password, passwordSet] = useState("");
+    const [passwordCnf, passwordCnfSet] = useState("");
+    const { resetPassEmail, setResetEmail, otpPassEmail, setOtpPassEmail } = useAuth();
+    const history = useHistory();
+
+    // email,otp  => ess page ko open karne k liye email, otp dono chahiye  
+    // ye send karega request to your reset password 
+    const resetPassword = async () => {
+        // i will send evrything jo required 
+        // -> done  -> email,otp -> null => email,otp ko null kar degen ki page open ho jaye dubara 
+        // send to login page  => agar kam ho jaye " password reset karne ka " to bhej degen "login" page par
+        // no done -> email ,otp-> null => done ho chahe not done toh bhi hmm email,otp ko null kar degen ki page open ho dubara
+        try {
+            // backend me - resetPassword kya kya leta hai -> otp, password, confirmPassword, email
+            let res = await axios.patch("/api/v1/auth/resetPassword", {
+                // sab otp,email,password,conformPassword set krr diye [jo global se bhi email,otp aayi thi ]
+                otp: otpPassEmail,
+                email: resetPassEmail,
+                password: password,
+                confirmPassword: passwordCnf
+            })
+            if (res.status == 201) {
+                alert("password changed successfully");
+                setOtpPassEmail(null); // enn dono ko null kar diya ki koi miss use na karr paye
+                setResetEmail(null);  
+                history.push("/login");  // login prr bhej diya , password change hone k bad 
+            } else if (res.status == 200) {
+                if (res.message == "Otp Expired") {
+                    alert("Otp expried kindly regenerate ")
+                } else if (res.message == "wrong otp") {
+                    alert("wrong otp");
+                }
+                setOtpPassEmail(null);
+                setResetEmail(null);
+            }
+        } catch (err) {
+            console.log(err.message);
+            if (err.message == "Request failed with status code 500") {
+                alert("Internal server error");
+            }
+            setOtpPassEmail(null);
+            setResetEmail(null);
+        }
+    }
+
+    return (
+        <>
+            {
+                // email,otp aayi ho toh open kar do page ko
+                resetPassEmail && otpPassEmail ?
+                    <div className="container-grey">
+                        <div className="form-container">
+                            <div className='h1Box'>
+                                <h1 className='h1'>RESET PASSWORD</h1>
+                                <div className="line"></div>
+                            </div>
+                            <div className="loginBox">
+                                <div className="entryBox">
+                                    <div className="entryText">Password</div>
+                                    <input className="password input" type="text" value={password} onChange={(e) => passwordSet(e.target.value)} />
+                                </div>
+                                <div className="entryBox">
+                                    <div className="entryText">Confirm Password</div>
+                                    <input className="password input" type="text" value={passwordCnf} onChange={(e) => passwordCnfSet(e.target.value)} />
+                                </div>
+                                <button className="loginBtn  form-button"
+                                    onClick={resetPassword}>
+                                    Send OTP
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    : <h2 className='container-grey'>First go to your Forget Password</h2>
+
+            }
+        </>
+
+
+    )
+}
+
+export default PasswordReset
+
+```
+- Frontend : Otp.js
+```js
+import React, { useState } from 'react';
+import '../Styles/login.css'
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { useAuth } from '../Context/AuthProvider';
+
+function OTP() {
+    const [otp, otpSet] = useState("");
+    const history = useHistory();
+
+    const { resetPassEmail, setOtpPassEmail } = useAuth();
+    
+    const saveOTP = async () => {
+        setOtpPassEmail(otp); // otp set/put kiye ==> ye setOtpPassEmail[ otp ] "PasswordReset" page me ja kar "otp" me set krr denge
+        // send to password and confirm password page => yha se send kiye password,conform-password page par 
+        history.push("/passwordReset")
+        
+    }
+   
+   return (<>
+        {
+            // forget password se jo email bheja maine global store me save huaa , ye wahi eamil hai , check krr rhe agar email null nhi hai toh ye page open karo
+            resetPassEmail != null ?
+                <div className="container-grey">
+                    <div className="form-container">
+                        <div className='h1Box'>
+                            <h1 className='h1'>ENTER OTP</h1>
+                            <div className="line"></div>
+                        </div>
+                        <div className="loginBox">
+                            <div className="entryBox">
+                                <div className="entryText">OTP</div>
+                                <input className="email input" value={otp}
+                                    type="text" name="Email" placeholder="Your OTP"
+                                    onChange={(e) => otpSet(e.target.value)} />
+                            </div>
+                            <button className="loginBtn  form-button"
+                                onClick={saveOTP}>
+                                Send OTP
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                : <h2 className='container-grey'>First go to your Forget Password</h2>
+        }
+    </>
+
+
+    )
+}
+
+export default OTP;
+
+```
+- resetPassword : Backend --> resetPasswordController
+```js
+ async function resetPasswordController(req, res) {
+    try {
+      let { otp, password, confirmPassword, email } = req.body;
+      // search -> get the user 
+      let user = await FooduserModel.findOne(email)
+      let currentTime = Date.now()
+  
+      if (currentTime > user.otpExpiry) { // aapka currentTime otpExpire se jada hai toh aapka token expire ho gya hai
+        // otp remove kiye 
+        // user.otp = undefined;
+        delete user.otp;
+        // hmara token expire ho gya toh "undefined" kar diya
+        // user.otpExpiry = undefined
+        delete user.otpExpiry;
+        // save to save this doc in db (jo change hua usko db me save karr liya)
+        await user.save()
+        console.log(user)
+  
+        res.status(200).json({
+          result: "Otp Expired"
+        })
+  
+      } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
+  
+        // otp match kiya
+        if (user.otp != otp) { // "time" kam hai otp match nhi kiya 
+          
+          res.status(200).json({
+            result: "wrong otp"
+        })
+        } else { // time kam hai "otp" match ho gya toh password , conformPassword update karr diya
+          //otp: undefined matlab otp remove ho gayi  
+          // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo [in otp] => otp,email k base prr search krr liya [in otpExpire]
+          // 2nd --> jo hme update karna hai uss ke ander
+          // 3rd --> validator run k liye
+          // new bydefault false hota hai , new ko true krr dene se findOneAndUpdate value ko update kar dega
+          // eske ander validators chalte nhi , toh true kiya
+          user = await FooduserModel.findOneAndUpdate({ otp , email }, { password, confirmPassword }, { runValidators: true, new: true });
+  
+          // key delete -> get the document object -> modify that object by removing useless keys
+          // otp remove kiye 
+          // user.otp = undefined;
+          delete user.otp;
+          // and otp expire remove kar do 
+          // user.otpExpiry = undefined
+          delete user.otpExpiry
+          // save to save this doc in db (jo change hua usko db me save karr liya)
+          await user.save()
+          console.log(user)
+  
+          res.status(201).json({
+            data: user,
+            message: "user password reset"
+  
+          })
+        }
+      }
+  
+    } catch (err) {
+      res.status(500).json({
+        result:err.message
+      })
+    }
+  }
+
+```
+- Backend : otpGenerator
+```js
+  function otpGenerator() {
+    return Math.floor(100000 + Math.random() * 900000);
+  }
+```
+- Backend : protectRoute
+```js
+function protectRoute(req, res, next) {
+    try {
+      // req.cookie => k ander data aata hai
+      const cookies = req.cookies
+      const JWT = cookies.JWT
+      if (cookies.JWT) {
+        console.log("protect route encountered")
+        //you are logged In then it will allow next fun to run
+        const token = jwt.verify(JWT, secrets.JWTSECRET)
+        console.log("Jwt decrypted", token)
+        // user ki Id nikal liye
+        let userId = token.data;
+        console.log("userId", userId)
+        req.userId = userId;
+  
+        next();
+      } else {
+        res.send("you are not logged In kindly Login")
+      }
+  
+    } catch (err) {
+      console.log(err)
+      if (err.message == "invalid signature") {
+        res.send("Token invalid kindly Login")
+      } else {
+        res.send(err.message)
+      }
+  
+    }
+  }
+
+```
+
+
