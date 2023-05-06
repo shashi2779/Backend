@@ -4188,50 +4188,43 @@ export default ForgetPassword
           }
         }
    ```
-   - ye clean code hai 
-   ```js
-       // represent -> collection
-        const FooduserModel = require('../model/userModel')
-        var jwt = require('jsonwebtoken');
-        const secrets = require("../secrets")
-        // mailSender ko require kiye , forget password krne k  liye
-        const mailSender = require("../nodemailer/mailSender")
-
-
-      async function forgetPasswordController(req, res) {
-            try {
-                let { email } = req.body;
-                //    mail
-                // by default -> FindAndUpdate -> not updated send document, 
-                // new =true -> you will get updated doc
-                // email -> email k base prr "user" find kiye , user nhi mila toh "user not found" , then update
-                // update
-                let user = await FooduserModel.findOne({ email });
-                if (user) {
-                  // user mila toh "otp" generate kiye , 5min bad expire ho , mail send kar diye "user jis email se login huaa tha" - mail account
-                    let otp = otpGenerator();
-                    let afterFiveMin = Date.now() + 5 * 60 * 1000;
-
-                    await mailSender(email, otp);
-
-                    user.otp = otp; // jo otp generate kiye user otp me bhej diye
-                    user.otpExpiry = afterFiveMin;
-                    await user.save();     // user save kiye - update 
-                    res.status(204).json({
-                        data: user,
-                        result: "Otp send to your mail"
-                    })
-                } else {
-                    res.status(404).json({
-                        result: "user with this email not found"
-                    })
-                }
-            } catch (err) {
-                res.status(500).json(err.message);
+   - ye clean code hai "forgetPasswordController" ka
+    ```js
+    async function forgetPasswordController(req, res) {
+        try {
+            let { email } = req.body;
+            //    mail
+            // by default -> FindAndUpdate -> not updated send document, 
+            // new =true -> you will get updated doc
+            // email -> email k base prr "user" find kiye , user nhi mila toh "user not found" , then update
+            // update
+            let user = await FooduserModel.findOne({ email });
+            if (user) {
+              // user mila toh "otp" generate kiye , 5min bad expire ho , mail send kar diye "user jis email se login huaa tha" - mail account
+                let otp = otpGenerator();
+                let afterFiveMin = Date.now() + 5 * 60 * 1000;
+                
+                await mailSender(email, otp);
+                
+                user.otp = otp; // jo otp generate kiye user otp me bhej diye
+                user.otpExpiry = afterFiveMin;
+                await user.save();  // user save kiye - update 
+                
+                res.status(204).json({
+                    data: user,
+                    result: "Otp send to your mail"
+                })
+            
+              } else {
+                res.status(404).json({
+                    result: "user with this email not found"
+                })
             }
+        } catch (err) {
+            res.status(500).json(err.message);
         }
-   ```   
-
+    }
+    ```
 #### Reset Password :
 - resetPassword k liye Frontend & Backend dono ki jarurat hogi
 ###### Reset Password k liye chahiye hota hai => 1- otp , 2- password , 3- conform password  
