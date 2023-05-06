@@ -4430,9 +4430,7 @@ function ForgetPassword() {
 }
 
 export default ForgetPassword
-
 ```
-
 - Login Page --> Otp.js
 ```js
 import React, { useState } from 'react';
