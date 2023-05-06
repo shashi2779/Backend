@@ -139,8 +139,16 @@ mailSender()
 * login , signup (backend frontend) -> bugs --> status code addition
   * Profile page -> UI --> backend k ander route dekhna hai phir --> UI se link
   * forgate password & reset password -> UI
+
+## 21/agust/2022
+  * Rectifying status code error --> axios
   * Plans schema : name , duration , price , discount
-  * To be added later : reviews -> later , averagerating
   * All plans page creation 
+  * To be added later : reviews -> later , averagerating
+  * Deployment + stripe integration / razorpay
+
+## 22/agust/2022
+* Presisting Login -> JWT and may i will be local storage
+  
 
 

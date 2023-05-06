@@ -4656,6 +4656,7 @@ export default App;
 ```
 
 - backend --> controller --> authController.js
+- resetPasswordController
 ```js
 async function resetPasswordController(req, res) {
     try {
@@ -4675,8 +4676,8 @@ async function resetPasswordController(req, res) {
         await user.save()
         console.log(user)
   
-        res.status(400).json({
-          result: "otp Expired"
+        res.status(200).json({
+          result: "Otp Expired"
         })
   
       } else {  // agar otp expire nahi huaa hai yoh password,conformPassword update kar do 
@@ -4684,9 +4685,9 @@ async function resetPasswordController(req, res) {
         // otp match kiya
         if (user.otp != otp) { // "time" kam hai otp match nhi kiya 
           
-          res.status(400).json({
+          res.status(200).json({
             result: "wrong otp"
-          })
+        })
         } else { // time kam hai "otp" match ho gya toh password , conformPassword update karr diya
           //otp: undefined matlab otp remove ho gayi  
           // 1st --> jisse mai search kar rha hu  ==> otp k base par search karo [in otp] => otp,email k base prr search krr liya [in otpExpire]
@@ -4721,7 +4722,6 @@ async function resetPasswordController(req, res) {
       })
     }
   }
-
+  
 ```
-
 
