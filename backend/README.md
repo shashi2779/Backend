@@ -4279,16 +4279,19 @@ function AuthProvider({ children }) {
                     confirmPassword: confirm,
                     email
                 })
-            if(res.status == 400){
-                alert("improper user data entry")
-               
-            }
+           
+                
             setLoading(false)
             console.log("data", res.data);
 
         } catch (err) {
             console.log("err", err.message);
-            setLoading(false)
+            if (err.message == "Request failed with status code 400") {
+                alert("user not found kindly login");
+                setLoading(false)
+                
+            } 
+            
         }
     }
    
@@ -4324,6 +4327,16 @@ function AuthProvider({ children }) {
             flag = false
             console.log(err.message);
             alert("Password or email may be wrong");
+            if (err.message == "Request failed with status code 404") {
+                alert("Password or email may be wrong");
+                flag = false;
+            } else if (err.message == "Request failed with status code 400") {
+                alert("user not found kindly login");
+                flag = false;
+            } else if (err.message == "Request failed with status code 500") {
+                alert("Internal server error")
+                flag = false;
+            }
             setLoading(false); // error aaya toh
             /* `// return flag` is returning a boolean flag that indicates whether the login was
             successful or not. It is used in the `login` function to check if there was an error
@@ -4343,7 +4356,6 @@ function AuthProvider({ children }) {
     }
 
     const value = {
-      // global store se pass kiye 
         user,
         login,
         signUp,
